@@ -1,35 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Layout } from 'antd'
+
 import './App.css'
-import { Breadcrumb, Layout, Menu } from 'antd'
+import TopicMenu from './components/TopicMenu/TopicMenu'
+import NavBar from './components/layout/Navbar/NavBar'
 import SideBar from './components/layout/sider/SideBar'
 
-const { Header, Content, Footer, Sider } = Layout
-const { SubMenu } = Menu
-
-const App = () => {
+function App() {
+  const topics = ['Профиль', 'Денежные операции', 'Заявки']
+  const [contentIndex, setContentIndex] = useState(0)
+  const [selectedKey, setSelectedKey] = useState('0')
+  const changeSelectedKey = event => {
+    const key = event.key
+    setSelectedKey(key)
+    setContentIndex(+key)
+  }
+  const Menu = (
+    <TopicMenu
+      topics={topics}
+      selectedKey={selectedKey}
+      changeSelectedKey={changeSelectedKey}
+    />
+  )
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <SideBar />
-      <Layout className="site-layout">
-        {/*<Header*/}
-        {/*  className="site-layout-sub-header-background"*/}
-        {/*  style={{ padding: 0 }}*/}
-        {/*/>*/}
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            className="site-layout-background"
-            style={{ padding: 24, minHeight: '100%' }}>
-            Bill is a cat.
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>yo yo yo</Footer>
+    <div className="App">
+      <NavBar menu={Menu} />
+      <Layout>
+        <SideBar menu={Menu} />
+        <Layout.Content className="content">
+          {topics[contentIndex]}
+        </Layout.Content>
       </Layout>
-    </Layout>
+    </div>
   )
 }
-
 export default App
