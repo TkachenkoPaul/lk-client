@@ -1,4 +1,17 @@
 @import '~antd/dist/antd.css';
-.content {
-  padding: 1rem;
+.logo {
+  float: left;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+}
+.site-layout .site-layout-background {
+  background: #fff;
+}
+body {
+  background: #fff;
+}
+
+.site-page-header-ghost-wrapper {
+  padding: 24px;
+  background-color: #f5f5f5;
 }
