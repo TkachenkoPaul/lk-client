@@ -1,18 +1,8 @@
 import React from 'react'
-import {
-  Breadcrumb,
-  Button,
-  Card,
-  Col,
-  Descriptions,
-  Layout,
-  PageHeader,
-  Row,
-} from 'antd'
+import { BackTop, Col, Layout, Row } from 'antd'
 import './App.css'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
-import InfoBoxes from './components/common/InfoBoxes/InfoBoxes'
 import Profile from './components/Profile/Profile'
 
 const { Header, Content } = Layout
@@ -28,6 +18,16 @@ function App() {
       breadcrumbName: 'Профиль',
     },
   ]
+  const style = {
+    height: 40,
+    width: 40,
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#1088e9',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+  }
   return (
     <div style={{ height: '100%' }}>
       <Layout style={{ minHeight: '100vh' }}>
@@ -48,6 +48,11 @@ function App() {
             </Col>
           </Row>
         </Layout>
+        <BackTop visibilityHeight={400}>
+          <div style={style} className="align-middle">
+            <i className="fas fa-angle-double-up" />
+          </div>
+        </BackTop>
         <Footer />
       </Layout>
     </div>

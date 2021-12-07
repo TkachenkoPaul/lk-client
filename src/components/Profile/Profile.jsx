@@ -22,7 +22,7 @@ const Profile = () => {
         ghost={false}
         onBack={() => window.history.back()}
         title="Профиль"
-        subTitle=""
+        subTitle="erem-7-001"
         extra={[
           <Button key="1" type="primary">
             Действие
@@ -33,55 +33,34 @@ const Profile = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
+            {' '}
             <Descriptions
-              size="middle"
-              title={<Divider orientation="left">Личная информация</Divider>}
+              size="small"
+              title={<Divider orientation="left">Финансы</Divider>}
               bordered
-              column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}>
-              <Descriptions.Item label="ФИО" span={2}>
-                Тестеров Тестер Тестерович
+              column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
+              <Descriptions.Item label="Баланс руб.">
+                <div style={{ fontSize: '16px' }}>120</div>
               </Descriptions.Item>
-              <Descriptions.Item
-                label="Л/С"
-                contentStyle={{ whiteSpace: 'nowrap' }}
-                span={1}>
-                902145
+              <Descriptions.Item label="Тарифный пакет" span={2}>
+                <div style={{ fontSize: '16px' }}>
+                  Интернет 100 + IPTV + Кабельное ТВ
+                </div>
               </Descriptions.Item>
-              <Descriptions.Item label="Логин">erem-7-001</Descriptions.Item>
-              <Descriptions.Item label="Улица">
-                Шевченко Т.Г улица
+              <Descriptions.Item label="Оплачено дней">31</Descriptions.Item>
+              <Descriptions.Item label="Дата окончания тарифа">
+                2021-12-19
               </Descriptions.Item>
-              <Descriptions.Item label="Дом">4</Descriptions.Item>
-              <Descriptions.Item label="Кваритра">124</Descriptions.Item>
-              <Descriptions.Item
-                label="Тел. основной"
-                contentStyle={{ whiteSpace: 'nowrap' }}>
-                0721044880
+
+              <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки">
+                Интернет 100 + IPTV: 11 руб./сутки
+                <br />
+                Кабельное ТВ: 2.5 руб./сутки
+                <br />
+                Реальный IP-адрес: 2.8 руб./сутки
               </Descriptions.Item>
-              <Descriptions.Item
-                label="Тел. доп."
-                contentStyle={{ whiteSpace: 'nowrap' }}>
-                0664841472
-              </Descriptions.Item>
-              <Descriptions.Item
-                label="№ договра"
-                contentStyle={{ whiteSpace: 'nowrap' }}>
-                045789
-              </Descriptions.Item>
-              <Descriptions.Item
-                label="Дата заключения"
-                contentStyle={{ whiteSpace: 'nowrap' }}>
-                2021-11-21
-              </Descriptions.Item>
-              <Descriptions.Item
-                label="Дата регистрации"
-                contentStyle={{ whiteSpace: 'nowrap' }}>
-                2021-11-19
-              </Descriptions.Item>
-              <Descriptions.Item
-                label="Дата активации"
-                contentStyle={{ whiteSpace: 'nowrap' }}>
-                2021-11-22
+              <Descriptions.Item label="К оплате, руб./сутки">
+                <div style={{ fontSize: '16px' }}>12.05</div>
               </Descriptions.Item>
             </Descriptions>
           </Col>
@@ -89,91 +68,71 @@ const Profile = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
-            {' '}
-            <Descriptions
-              size="small"
-              title={<Divider orientation="left">Финансы</Divider>}
-              bordered
-              column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
-              <Descriptions.Item label="Тарифный пакет" span={2}>
-                Интернет 100 + IPTV + Кабельное ТВ
-              </Descriptions.Item>
-              <Descriptions.Item label="Оплачено дней">31</Descriptions.Item>
-              <Descriptions.Item label="Дата окончания тарифа">
-                2021-12-19
-              </Descriptions.Item>
-              <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
-              <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
-              <Descriptions.Item label="Official">$60.00</Descriptions.Item>
-              <Descriptions.Item label="Config Info">
-                Data disk type: MongoDB
-                <br />
-                Database version: 3.4
-                <br />
-                Package: dds.mongo.mid
-                <br />
-                Storage space: 10 GB
-                <br />
-                Replication factor: 3
-                <br />
-                Region: East China 1
-              </Descriptions.Item>
-            </Descriptions>
+            <div className="mb-4">
+              <Descriptions
+                layout="vertical"
+                size="middle"
+                title={<Divider orientation="left">Личная информация</Divider>}
+                bordered
+                column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}>
+                <Descriptions.Item label="ФИО" span={2}>
+                  Тестеров Тестер Тестерович
+                </Descriptions.Item>
+                <Descriptions.Item label="Логин">erem-7-001</Descriptions.Item>
+                <Descriptions.Item
+                  label="Л/С"
+                  contentStyle={{ whiteSpace: 'nowrap' }}
+                  span={1}>
+                  902145
+                </Descriptions.Item>
+                <Descriptions.Item label="Улица" span={2}>
+                  Шевченко Т.Г улица
+                </Descriptions.Item>
+                <Descriptions.Item label="Дом">4</Descriptions.Item>
+                <Descriptions.Item label="Кваритра">124</Descriptions.Item>
+                <Descriptions.Item label="Паспорт выдан" span={2}>
+                  Ленинским РО УМВД Украины в Луганской области
+                </Descriptions.Item>
+                <Descriptions.Item label="№ паспорта">
+                  ЕК 141029
+                </Descriptions.Item>
+                <Descriptions.Item label="Дата выдачи">
+                  2021-11-21
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label="Тел. основной"
+                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  0721044880
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label="Тел. доп."
+                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  0664841472
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label="№ договра"
+                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  045789
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label="Договор от"
+                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  2021-11-21
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label="Дата регистрации"
+                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  2021-11-19
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label="Дата активации"
+                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  2021-11-22
+                </Descriptions.Item>
+              </Descriptions>
+            </div>
           </Col>
         </Row>
-        <Descriptions
-          size="small"
-          title="Личная информация"
-          bordered
-          column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
-          <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
-          <Descriptions.Item label="Billing">Prepaid</Descriptions.Item>
-          <Descriptions.Item label="time">18:00:00</Descriptions.Item>
-          <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
-          <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
-          <Descriptions.Item label="Official">$60.00</Descriptions.Item>
-          <Descriptions.Item label="Config Info">
-            Data disk type: MongoDB
-            <br />
-            Database version: 3.4
-            <br />
-            Package: dds.mongo.mid
-            <br />
-            Storage space: 10 GB
-            <br />
-            Replication factor: 3
-            <br />
-            Region: East China 1
-          </Descriptions.Item>
-        </Descriptions>
-        <Descriptions size="small" column={3}>
-          <Descriptions.Item label="Created">Lili Qu</Descriptions.Item>
-          <Descriptions.Item label="Association">
-            <a>421421</a>
-          </Descriptions.Item>
-          <Descriptions.Item label="Creation Time">
-            2017-01-10
-          </Descriptions.Item>
-          <Descriptions.Item label="Effective Time">
-            2017-10-10
-          </Descriptions.Item>
-          <Descriptions.Item label="Remarks">
-            Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
-          </Descriptions.Item>
-        </Descriptions>
-        <div>
-          Alias autem beatae consequatur culpa cumque dicta distinctio doloribus
-          eius enim ex ipsum laborum magni maiores maxime minima nisi officiis
-          optio perspiciatis praesentium quae quaerat quis ratione rem, sed
-          voluptas!
-        </div>
-
-        <div>
-          Accusantium alias corporis eaque ipsam, minus neque nulla praesentium
-          quod tempora! Aliquam commodi dicta dolores eius error est hic illo
-          illum laudantium necessitatibus quasi quod saepe, soluta, ullam vero,
-          voluptates.
-        </div>
       </PageHeader>
     </>
   )
