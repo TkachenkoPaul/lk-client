@@ -33,7 +33,7 @@ function App() {
       <Layout style={{ minHeight: '100vh' }}>
         <NavBar />
         <Layout>
-          <Row type="flex">
+          <Row>
             <Col
               xs={{ span: 24 }}
               md={{ span: 20, offset: 2 }}
