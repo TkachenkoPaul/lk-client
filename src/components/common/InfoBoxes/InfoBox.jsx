@@ -1,15 +1,10 @@
+import styles from './InfoBoxes.module.scss'
 const InfoBox = props => {
-  let sizeStyle = ``
-  props.sm ? (sizeStyle += `col-sm-${props.sm} `) : (sizeStyle += '')
-  props.md ? (sizeStyle += `col-md-${props.md} `) : (sizeStyle += '')
-  props.xs ? (sizeStyle += `col-xs-${props.xs} `) : (sizeStyle += '')
-  console.log(sizeStyle)
-  console.log('TEST')
   return (
-    <div className={sizeStyle}>
-      <div className="info-box elevation-3">
+    <div className="col-md-6 col-sm-6 col-lg-3 col-12">
+      <div className={`info-box elevation-3 ${styles.scale}`}>
         <span
-          className={`info-box-icon ${props.iconBg} elevation-2 hidden-sm-up hidden-md-up`}>
+          className={`info-box-icon ${props.iconBg}  elevation-2 hidden-sm-up hidden-md-up`}>
           <i className={props.iconStyle} />
         </span>
         <div className="info-box-content">

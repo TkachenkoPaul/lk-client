@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import './NavBar.css'
+import './NavBar.module.scss'
 import logoImage from '../sider/smallLogo.png'
 import { Col, Layout, Menu, Row } from 'antd'
 import {
   AppstoreOutlined,
+  CommentOutlined,
   DashboardOutlined,
   ExportOutlined,
+  IdcardOutlined,
   ProfileOutlined,
+  WalletOutlined,
 } from '@ant-design/icons'
-
-const { SubMenu } = Menu
 
 const NavBar = ({ menu }) => {
   const [currentKey, setCurrentKey] = useState('1')
@@ -19,7 +20,13 @@ const NavBar = ({ menu }) => {
   }
   return (
     <>
-      <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      <Layout.Header
+        style={{
+          position: 'fixed',
+          zIndex: 1,
+          width: '100%',
+          padding: '0 15px',
+        }}>
         <Row>
           <Col
             xs={{ span: 24 }}
@@ -31,13 +38,13 @@ const NavBar = ({ menu }) => {
               onClick={handleClick}
               selectedKeys={[currentKey]}
               mode="horizontal">
-              <Menu.Item key="1" icon={<ProfileOutlined />}>
+              <Menu.Item key="1" icon={<IdcardOutlined />}>
                 Профиль
               </Menu.Item>
-              <Menu.Item key="2" icon={<ProfileOutlined />}>
+              <Menu.Item key="2" icon={<WalletOutlined />}>
                 Денежные операции
               </Menu.Item>
-              <Menu.Item key="3" icon={<AppstoreOutlined />}>
+              <Menu.Item key="3" icon={<CommentOutlined />}>
                 Заявки
               </Menu.Item>
               <Menu.Item key="4" icon={<DashboardOutlined />}>
