@@ -3,16 +3,15 @@ import './NavBar.module.scss'
 import logoImage from '../sider/smallLogo.png'
 import { Col, Layout, Menu, Row } from 'antd'
 import {
-  AppstoreOutlined,
+  AppstoreAddOutlined,
   CommentOutlined,
   DashboardOutlined,
   ExportOutlined,
   IdcardOutlined,
-  ProfileOutlined,
   WalletOutlined,
 } from '@ant-design/icons'
 
-const NavBar = ({ menu }) => {
+const NavBar = () => {
   const [currentKey, setCurrentKey] = useState('1')
   const handleClick = e => {
     console.log('click ', e)
@@ -46,6 +45,9 @@ const NavBar = ({ menu }) => {
               </Menu.Item>
               <Menu.Item key="3" icon={<CommentOutlined />}>
                 Заявки
+              </Menu.Item>
+              <Menu.Item key="3" icon={<AppstoreAddOutlined />}>
+                Услуги
               </Menu.Item>
               <Menu.Item key="4" icon={<DashboardOutlined />}>
                 <a

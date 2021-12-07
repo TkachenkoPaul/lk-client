@@ -1,6 +1,7 @@
 import React from 'react'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
-import { Button, Col, Descriptions, PageHeader, Row } from 'antd'
+import { Button, Col, Descriptions, Divider, PageHeader, Row } from 'antd'
+
 const Profile = () => {
   const routes = [
     {
@@ -33,25 +34,32 @@ const Profile = () => {
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
             <Descriptions
-              size="default"
-              title="Личная информация"
+              size="middle"
+              title={<Divider orientation="left">Личная информация</Divider>}
               bordered
-              column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
-              <Descriptions.Item label="ФИО">
+              column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}>
+              <Descriptions.Item label="ФИО" span={2}>
                 Тестеров Тестер Тестерович
               </Descriptions.Item>
               <Descriptions.Item
                 label="Л/С"
-                contentStyle={{ whiteSpace: 'nowrap' }}>
+                contentStyle={{ whiteSpace: 'nowrap' }}
+                span={1}>
                 902145
               </Descriptions.Item>
+              <Descriptions.Item label="Логин">erem-7-001</Descriptions.Item>
+              <Descriptions.Item label="Улица">
+                Шевченко Т.Г улица
+              </Descriptions.Item>
+              <Descriptions.Item label="Дом">4</Descriptions.Item>
+              <Descriptions.Item label="Кваритра">124</Descriptions.Item>
               <Descriptions.Item
-                label="Основной тел.номер"
+                label="Тел. основной"
                 contentStyle={{ whiteSpace: 'nowrap' }}>
                 0721044880
               </Descriptions.Item>
               <Descriptions.Item
-                label="Доп. тел.номер"
+                label="Тел. доп."
                 contentStyle={{ whiteSpace: 'nowrap' }}>
                 0664841472
               </Descriptions.Item>
@@ -75,12 +83,6 @@ const Profile = () => {
                 contentStyle={{ whiteSpace: 'nowrap' }}>
                 2021-11-22
               </Descriptions.Item>
-              <Descriptions.Item label="Логин">erem-7-001</Descriptions.Item>
-              <Descriptions.Item label="Улица">
-                Шевченко Т.Г улица
-              </Descriptions.Item>
-              <Descriptions.Item label="Дом">4</Descriptions.Item>
-              <Descriptions.Item label="Кваритра">124</Descriptions.Item>
             </Descriptions>
           </Col>
           <Col
@@ -90,7 +92,7 @@ const Profile = () => {
             {' '}
             <Descriptions
               size="small"
-              title="Финансы"
+              title={<Divider orientation="left">Финансы</Divider>}
               bordered
               column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
               <Descriptions.Item label="Тарифный пакет" span={2}>
