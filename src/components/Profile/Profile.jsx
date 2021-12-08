@@ -35,7 +35,8 @@ const Profile = () => {
             lg={{ span: 24, offset: 0 }}>
             {' '}
             <Descriptions
-              size="small"
+              // layout="vertical"
+              // size="middle"
               title={<Divider orientation="left">Финансы</Divider>}
               bordered
               column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
@@ -71,7 +72,7 @@ const Profile = () => {
             <div className="mb-4">
               <Descriptions
                 layout="vertical"
-                size="middle"
+                // size="middle"
                 title={<Divider orientation="left">Личная информация</Divider>}
                 bordered
                 column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}>
