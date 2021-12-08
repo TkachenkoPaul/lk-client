@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
 import Profile from './components/Profile/Profile'
 import Transactions from './components/Transactions/Transactions'
+import Support from './components/Support/Support'
 
 const { Header, Content } = Layout
 
@@ -44,7 +45,8 @@ function App() {
                 style={{ padding: '0 15px', marginTop: 80 }}>
                 {/*content block*/}
                 {/*<Profile />*/}
-                <Transactions />
+                {/*<Transactions />*/}
+                <Support />
                 {/*end of content block*/}
               </Content>
             </Col>

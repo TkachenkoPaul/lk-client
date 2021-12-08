@@ -13,6 +13,7 @@ import {
 
 const NavBar = () => {
   const [currentKey, setCurrentKey] = useState('1')
+  const links = [{}]
   const handleClick = e => {
     console.log('click ', e)
     setCurrentKey(e.key)
@@ -41,15 +42,15 @@ const NavBar = () => {
                 Профиль
               </Menu.Item>
               <Menu.Item key="2" icon={<WalletOutlined />}>
-                Денежные операции
+                Финансы
               </Menu.Item>
               <Menu.Item key="3" icon={<CommentOutlined />}>
                 Заявки
               </Menu.Item>
-              <Menu.Item key="3" icon={<AppstoreAddOutlined />}>
+              <Menu.Item key="4" icon={<AppstoreAddOutlined />}>
                 Услуги
               </Menu.Item>
-              <Menu.Item key="4" icon={<DashboardOutlined />}>
+              <Menu.Item key="5" icon={<DashboardOutlined />}>
                 <a
                   href="https://www.speedtest.net/ru"
                   target="_blank"
@@ -57,7 +58,7 @@ const NavBar = () => {
                   Speedtest
                 </a>
               </Menu.Item>
-              <Menu.Item key="5" icon={<ExportOutlined />}>
+              <Menu.Item key="6" icon={<ExportOutlined />}>
                 Выход
               </Menu.Item>
             </Menu>

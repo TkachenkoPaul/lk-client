@@ -361,7 +361,7 @@ const Transactions = () => {
         breadcrumb={{ routes }}
         ghost={false}
         onBack={() => window.history.back()}
-        title="Денежные операции"
+        title="Финансы"
         subTitle="erem-7-001"
         extra={[]}>
         <Row gutter={[16, 16]}>
