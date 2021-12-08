@@ -4,6 +4,7 @@ import './App.css'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
 import Profile from './components/Profile/Profile'
+import Transactions from './components/Transactions/Transactions'
 
 const { Header, Content } = Layout
 
@@ -42,7 +43,8 @@ function App() {
                 className="site-layout"
                 style={{ padding: '0 15px', marginTop: 80 }}>
                 {/*content block*/}
-                <Profile />
+                {/*<Profile />*/}
+                <Transactions />
                 {/*end of content block*/}
               </Content>
             </Col>
