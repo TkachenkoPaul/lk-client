@@ -1,16 +1,5 @@
-import React, { useState } from 'react'
-import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
-import {
-  Button,
-  Col,
-  Descriptions,
-  Divider,
-  PageHeader,
-  Pagination,
-  Row,
-  Space,
-  Table,
-} from 'antd'
+import React from 'react'
+import { Button, Col, Divider, PageHeader, Row, Space, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 
 const Support = () => {
@@ -55,19 +44,39 @@ const Support = () => {
       chapter: 'Технические вопросы',
       state: 'Открыта',
     },
+    {
+      key: 2,
+      id: 2,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
+    {
+      key: 3,
+      id: 3,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
+    {
+      key: 4,
+      id: 4,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
+    {
+      key: 5,
+      id: 5,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
   ]
-  function itemRender(current, type, originalElement) {
-    if (type === 'prev') {
-      return <a>Previous</a>
-    }
-    if (type === 'next') {
-      return <a>Next</a>
-    }
-    return originalElement
-  }
-
-  const [loading, setLoading] = useState(false)
-  const [hasData, setHasData] = useState(false)
   return (
     <>
       <PageHeader
