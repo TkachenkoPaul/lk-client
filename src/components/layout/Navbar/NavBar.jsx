@@ -13,7 +13,6 @@ import {
 
 const NavBar = () => {
   const [currentKey, setCurrentKey] = useState('1')
-  const links = [{}]
   const handleClick = e => {
     console.log('click ', e)
     setCurrentKey(e.key)

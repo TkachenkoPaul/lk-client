@@ -1,15 +1,5 @@
 import React, { useState } from 'react'
-import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
-import {
-  Button,
-  Col,
-  Descriptions,
-  Divider,
-  PageHeader,
-  Pagination,
-  Row,
-  Table,
-} from 'antd'
+import { Button, Col, Divider, PageHeader, Row, Table } from 'antd'
 
 const Transactions = () => {
   const routes = [
@@ -331,26 +321,6 @@ const Transactions = () => {
         'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
     },
   ]
-  const state = {
-    loading: false,
-    size: 'default',
-    expandable: true,
-    title: undefined,
-    scroll: undefined,
-    hasData: false,
-    tableLayout: undefined,
-    top: 'topRight',
-    bottom: 'bottomRight',
-  }
-  function itemRender(current, type, originalElement) {
-    if (type === 'prev') {
-      return <a>Previous</a>
-    }
-    if (type === 'next') {
-      return <a>Next</a>
-    }
-    return originalElement
-  }
 
   const [loading, setLoading] = useState(false)
   const [hasData, setHasData] = useState(false)

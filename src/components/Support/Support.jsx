@@ -9,8 +9,8 @@ const Support = () => {
       breadcrumbName: 'Домашняя',
     },
     {
-      path: '/transactions',
-      breadcrumbName: 'Денежные операции',
+      path: '/support',
+      breadcrumbName: 'Заявки',
     },
   ]
   const columns = [
@@ -24,13 +24,14 @@ const Support = () => {
       key: 'state',
       responsive: ['md'],
     },
-    { title: '-', dataIndex: 'opt', key: 'opt' },
     {
-      title: '-',
+      title: '',
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button type="primary">Просмотр {record.id}</Button>
+          <Button onClick={() => alert(record.id)} type="primary">
+            Просмотр
+          </Button>
         </Space>
       ),
     },
@@ -91,7 +92,6 @@ const Support = () => {
             Создать заявку
           </Button>,
         ]}>
-        >
         <Row gutter={[16, 16]}>
           <Col
             xs={{ span: 24 }}
@@ -111,7 +111,7 @@ const Support = () => {
                 total: data.length,
                 showTotal: (total, range) =>
                   `${range[0]}-${range[1]} из ${total} записей`,
-                defaultPageSize: 1,
+                defaultPageSize: 5,
                 showSizeChanger: true,
                 pageSizeOptions: ['1', '2', '3', '4', '5'],
               }}
