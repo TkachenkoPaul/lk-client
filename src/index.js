@@ -5,12 +5,15 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { ConfigProvider } from 'antd'
 import ruRu from 'antd/lib/locale/ru_RU'
+import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.render(
   <React.StrictMode>
-    <ConfigProvider locale={ruRu}>
-      <App />
-    </ConfigProvider>
+    <BrowserRouter>
+      <ConfigProvider locale={ruRu}>
+        <App />
+      </ConfigProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 )

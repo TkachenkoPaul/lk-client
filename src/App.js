@@ -4,6 +4,7 @@ import './App.css'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
 import Services from './components/Services/Services'
+import { Routes } from 'react-router-dom'
 
 const { Content } = Layout
 
@@ -31,6 +32,7 @@ function App() {
               <Content
                 className="site-layout"
                 style={{ padding: '0 15px', marginTop: 80 }}>
+                <Routes path="/" elements={}></Routes>
                 {/*content block*/}
                 {/*<Profile />*/}
                 {/*<Transactions />*/}
@@ -50,5 +52,8 @@ function App() {
       </Layout>
     </div>
   )
+}
+const Content = () => {
+  return
 }
 export default App
