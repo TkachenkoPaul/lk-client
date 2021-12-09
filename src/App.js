@@ -3,23 +3,11 @@ import { BackTop, Col, Layout, Row } from 'antd'
 import './App.css'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
-import Profile from './components/Profile/Profile'
-import Transactions from './components/Transactions/Transactions'
-import Support from './components/Support/Support'
+import Services from './components/Services/Services'
 
-const { Header, Content } = Layout
+const { Content } = Layout
 
 function App() {
-  const routes = [
-    {
-      path: 'index',
-      breadcrumbName: 'Домашняя',
-    },
-    {
-      path: '/profile',
-      breadcrumbName: 'Профиль',
-    },
-  ]
   const style = {
     height: 40,
     width: 40,
@@ -46,7 +34,8 @@ function App() {
                 {/*content block*/}
                 {/*<Profile />*/}
                 {/*<Transactions />*/}
-                <Support />
+                {/*<Support />*/}
+                <Services />
                 {/*end of content block*/}
               </Content>
             </Col>
