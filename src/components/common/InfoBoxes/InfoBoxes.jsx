@@ -2,7 +2,7 @@ import InfoBox from './InfoBox'
 import React from 'react'
 import styles from './InfoBoxes.module.scss'
 
-const InfoBoxes = props => {
+const InfoBoxes = () => {
   console.log(styles)
   return (
     <>
@@ -27,7 +27,7 @@ const InfoBoxes = props => {
           value="35"
           measurement=" дней"
         />
-        <div className="clearfix hidden-md-up"></div>
+        <div className="clearfix hidden-md-up">{''}</div>
         <InfoBox
           iconBg={'bg-gradient-primary'}
           iconStyle={'fas fa-clock'}
