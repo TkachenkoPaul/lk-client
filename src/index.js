@@ -9,11 +9,11 @@ import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ConfigProvider locale={ruRu}>
+    <ConfigProvider locale={ruRu}>
+      <BrowserRouter>
         <App />
-      </ConfigProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ConfigProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

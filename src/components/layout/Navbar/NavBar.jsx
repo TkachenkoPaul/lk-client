@@ -10,12 +10,16 @@ import {
   IdcardOutlined,
   WalletOutlined,
 } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
+  const navigate = useNavigate()
   const [currentKey, setCurrentKey] = useState('1')
   const handleClick = e => {
-    console.log('click ', e)
-    setCurrentKey(e.key)
+    if (e.key !== '/speedtest') {
+      navigate(e.key)
+      setCurrentKey(e.key)
+    }
   }
   return (
     <>
@@ -37,19 +41,19 @@ const NavBar = () => {
               onClick={handleClick}
               selectedKeys={[currentKey]}
               mode="horizontal">
-              <Menu.Item key="1" icon={<IdcardOutlined />}>
+              <Menu.Item key="/" icon={<IdcardOutlined />}>
                 Профиль
               </Menu.Item>
-              <Menu.Item key="2" icon={<WalletOutlined />}>
+              <Menu.Item key="/transactions" icon={<WalletOutlined />}>
                 Финансы
               </Menu.Item>
-              <Menu.Item key="3" icon={<CommentOutlined />}>
+              <Menu.Item key="/support" icon={<CommentOutlined />}>
                 Заявки
               </Menu.Item>
-              <Menu.Item key="4" icon={<AppstoreAddOutlined />}>
+              <Menu.Item key="/services" icon={<AppstoreAddOutlined />}>
                 Услуги
               </Menu.Item>
-              <Menu.Item key="5" icon={<DashboardOutlined />}>
+              <Menu.Item key="/speedtest" icon={<DashboardOutlined />}>
                 <a
                   href="https://www.speedtest.net/ru"
                   target="_blank"
@@ -57,7 +61,7 @@ const NavBar = () => {
                   Speedtest
                 </a>
               </Menu.Item>
-              <Menu.Item key="6" icon={<ExportOutlined />}>
+              <Menu.Item key="/logout" icon={<ExportOutlined />}>
                 Выход
               </Menu.Item>
             </Menu>

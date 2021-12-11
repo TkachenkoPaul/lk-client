@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Col, Divider, PageHeader, Row, Space, Table } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
 
 const Support = () => {
   const routes = [
@@ -77,6 +76,38 @@ const Support = () => {
       chapter: 'Технические вопросы',
       state: 'Открыта',
     },
+    {
+      key: 5,
+      id: 5,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
+    {
+      key: 5,
+      id: 5,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
+    {
+      key: 5,
+      id: 5,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
+    {
+      key: 5,
+      id: 5,
+      date: '2021-09-12 10:43:01',
+      subject: 'Не работает интернет',
+      chapter: 'Технические вопросы',
+      state: 'Открыта',
+    },
   ]
   return (
     <>
@@ -87,11 +118,13 @@ const Support = () => {
         onBack={() => window.history.back()}
         title="Заявки"
         subTitle="erem-7-001"
-        extra={[
-          <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
-            Создать заявку
-          </Button>,
-        ]}>
+        extra={
+          [
+            // <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
+            //   Создать заявку
+            // </Button>,
+          ]
+        }>
         <Row gutter={[16, 16]}>
           <Col
             xs={{ span: 24 }}
@@ -111,9 +144,9 @@ const Support = () => {
                 total: data.length,
                 showTotal: (total, range) =>
                   `${range[0]}-${range[1]} из ${total} записей`,
-                defaultPageSize: 5,
+                defaultPageSize: 10,
                 showSizeChanger: true,
-                pageSizeOptions: ['1', '2', '3', '4', '5'],
+                pageSizeOptions: ['5', '10', '15', '20', '25'],
               }}
             />
           </Col>
