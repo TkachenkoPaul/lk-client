@@ -18,7 +18,7 @@ const NavBar = () => {
     if (currentKey === null) {
       setCurrentKey(location.pathname)
     }
-  })
+  }, [currentKey, location.pathname])
 
   const navigate = useNavigate()
   const menus = [

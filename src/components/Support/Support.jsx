@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Col, Divider, PageHeader, Row, Space, Table } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 const Support = () => {
   const routes = [
@@ -118,13 +119,11 @@ const Support = () => {
         onBack={() => window.history.back()}
         title="Заявки"
         subTitle="erem-7-001"
-        extra={
-          [
-            // <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
-            //   Создать заявку
-            // </Button>,
-          ]
-        }>
+        extra={[
+          <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
+            Создать заявку
+          </Button>,
+        ]}>
         <Row gutter={[16, 16]}>
           <Col
             xs={{ span: 24 }}

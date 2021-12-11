@@ -1,8 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
-import { Button, Col, Descriptions, Divider, PageHeader, Row } from 'antd'
+import {
+  Button,
+  Col,
+  Descriptions,
+  Divider,
+  Form,
+  Input,
+  Modal,
+  PageHeader,
+  Row,
+  Switch,
+  Typography,
+} from 'antd'
 
 const Profile = () => {
+  const [switchBoxes, setSwitchBoxes] = useState(false)
+  const [visible, setVisible] = React.useState(false)
+  const [confirmLoading, setConfirmLoading] = React.useState(false)
+  const [modalText, setModalText] = React.useState('Content of the modal')
+  const [phone, setPhone] = useState({
+    main: '0721044880',
+    secondary: '0664841472',
+  })
+
+  const showModalPhoneEdit = () => {
+    setVisible(true)
+  }
+
+  const handleOk = () => {
+    setModalText('The modal will be closed after two seconds')
+    setConfirmLoading(true)
+    setTimeout(() => {
+      setVisible(false)
+      setConfirmLoading(false)
+    }, 2000)
+  }
+  const onCreate = values => {
+    console.log('Received values of form: ', values)
+    setPhone({ main: values.mainPhone, secondary: values.secondaryPhone })
+    setVisible(false)
+  }
+  const handleCancel = () => {
+    setVisible(false)
+  }
   const routes = [
     {
       path: 'index',
@@ -15,7 +56,14 @@ const Profile = () => {
   ]
   return (
     <>
-      <InfoBoxes />
+      <CollectionCreateForm
+        visible={visible}
+        onCreate={onCreate}
+        onCancel={handleCancel}
+        phone={phone}
+        sms={false}
+      />
+      <InfoBoxes switch={switchBoxes} />
       <PageHeader
         style={{ height: '100%' }}
         breadcrumb={{ routes }}
@@ -24,9 +72,21 @@ const Profile = () => {
         title="Профиль"
         subTitle="erem-7-001"
         extra={[
-          <Button key="1" type="primary">
-            Действие
+          <Button key="1" type="primary" onClick={showModalPhoneEdit}>
+            Редактировать телефон
           </Button>,
+          <Switch
+            style={{ marginLeft: '1em' }}
+            onChange={() => {
+              setSwitchBoxes(!switchBoxes)
+            }}
+            checkedChildren={
+              <Typography.Paragraph>Вариент 1</Typography.Paragraph>
+            }
+            unCheckedChildren={
+              <Typography.Paragraph>Вариант 2</Typography.Paragraph>
+            }
+          />,
         ]}>
         <Row gutter={[16, 16]}>
           <Col
@@ -84,7 +144,15 @@ const Profile = () => {
                   label="Л/С"
                   contentStyle={{ whiteSpace: 'nowrap' }}
                   span={1}>
-                  902145
+                  <Typography.Paragraph
+                    copyable={{
+                      tooltips: [
+                        'Нажмите, чтобы скопировать текст в буфер обмена',
+                        'Успешно скопировано',
+                      ],
+                    }}>
+                    902145
+                  </Typography.Paragraph>
                 </Descriptions.Item>
                 <Descriptions.Item label="Улица" span={2}>
                   Шевченко Т.Г улица
@@ -103,12 +171,12 @@ const Profile = () => {
                 <Descriptions.Item
                   label="Тел. основной"
                   contentStyle={{ whiteSpace: 'nowrap' }}>
-                  0721044880
+                  {phone.main}
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="Тел. доп."
                   contentStyle={{ whiteSpace: 'nowrap' }}>
-                  0664841472
+                  {phone.secondary}
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="№ договра"
@@ -136,6 +204,75 @@ const Profile = () => {
         </Row>
       </PageHeader>
     </>
+  )
+}
+
+const CollectionCreateForm = ({ visible, onCreate, onCancel, phone, sms }) => {
+  const [form] = Form.useForm()
+  const [smsChecked, setSmsChecked] = useState(sms)
+  const onChange = () => {
+    setSmsChecked(!smsChecked)
+  }
+  useEffect(() => {
+    return () => {
+      console.log('phone from modal component', phone)
+    }
+  }, [phone])
+
+  const onSubmitForm = () => {
+    form
+      .validateFields()
+      .then(values => {
+        form.resetFields()
+        onCreate(values)
+      })
+      .catch(info => {
+        console.log('Validate Failed:', info)
+      })
+  }
+  return (
+    <Modal
+      visible={visible}
+      title="Изменить номер телефона"
+      okText="Принять"
+      cancelText="Отменить"
+      onCancel={onCancel}
+      onOk={onSubmitForm}>
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={{
+          mainPhone: phone.main,
+          secondaryPhone: phone.secondary,
+        }}>
+        <Form.Item
+          name="mainPhone"
+          label="Основной номер телефона"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуста, введите номер телефона',
+            },
+          ]}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="secondaryPhone"
+          label="Дополнительный номер телефона"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуста, введите номер телефона',
+            },
+          ]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="sms-информаривание" valuePropName="checked">
+          <Switch cheched={smsChecked} onChange={onChange} />
+        </Form.Item>
+      </Form>
+    </Modal>
   )
 }
 export default Profile
