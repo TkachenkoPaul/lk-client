@@ -1,24 +1,81 @@
-import React, { useState } from 'react'
-import './NavBar.module.scss'
-import logoImage from '../sider/smallLogo.png'
+import React, { useEffect, useState } from 'react'
 import { Col, Layout, Menu, Row } from 'antd'
 import {
   AppstoreAddOutlined,
   CommentOutlined,
   DashboardOutlined,
-  ExportOutlined,
   IdcardOutlined,
   WalletOutlined,
 } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import './NavBar.module.scss'
+import logoImage from '../sider/smallLogo.png'
 
 const NavBar = () => {
+  const [currentKey, setCurrentKey] = useState(null)
+  const location = useLocation()
+  useEffect(() => {
+    if (currentKey === null) {
+      setCurrentKey(location.pathname)
+    }
+  })
+
   const navigate = useNavigate()
-  const [currentKey, setCurrentKey] = useState('1')
+  const menus = [
+    {
+      key: 1,
+      title: 'Профиль',
+      path: '/',
+      icon: <IdcardOutlined />,
+    },
+    {
+      key: 2,
+      title: 'Финансы',
+      path: '/transactions',
+      icon: <WalletOutlined />,
+    },
+    {
+      key: 3,
+      title: 'Заявки',
+      path: '/support',
+      icon: <CommentOutlined />,
+    },
+    {
+      key: 4,
+      title: 'Услуги',
+      path: '/services',
+      icon: <AppstoreAddOutlined />,
+    },
+    {
+      key: 5,
+      title: 'Speedtest',
+      path: '/speedtest',
+      icon: <DashboardOutlined />,
+    },
+    {
+      key: 6,
+      title: 'Выход',
+      path: '/logout',
+      icon: <AppstoreAddOutlined />,
+    },
+  ]
+  const openInNewTab = url => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+  const menusElements = menus.map(menu => {
+    return (
+      <Menu.Item key={menu.path} icon={menu.icon}>
+        {menu.title}
+      </Menu.Item>
+    )
+  })
   const handleClick = e => {
     if (e.key !== '/speedtest') {
       navigate(e.key)
       setCurrentKey(e.key)
+    } else {
+      openInNewTab('https://www.speedtest.net/ru')
     }
   }
   return (
@@ -41,29 +98,7 @@ const NavBar = () => {
               onClick={handleClick}
               selectedKeys={[currentKey]}
               mode="horizontal">
-              <Menu.Item key="/" icon={<IdcardOutlined />}>
-                Профиль
-              </Menu.Item>
-              <Menu.Item key="/transactions" icon={<WalletOutlined />}>
-                Финансы
-              </Menu.Item>
-              <Menu.Item key="/support" icon={<CommentOutlined />}>
-                Заявки
-              </Menu.Item>
-              <Menu.Item key="/services" icon={<AppstoreAddOutlined />}>
-                Услуги
-              </Menu.Item>
-              <Menu.Item key="/speedtest" icon={<DashboardOutlined />}>
-                <a
-                  href="https://www.speedtest.net/ru"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  Speedtest
-                </a>
-              </Menu.Item>
-              <Menu.Item key="/logout" icon={<ExportOutlined />}>
-                Выход
-              </Menu.Item>
+              {menusElements}
             </Menu>
           </Col>
         </Row>

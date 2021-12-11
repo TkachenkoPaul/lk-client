@@ -8,7 +8,7 @@ const InfoBoxes = props => {
     <>
       <div className="row">
         <InfoBox
-          iconBg={`bg-gradient-success`}
+          iconBg={`bg-gradient-primary`}
           iconStyle={'fas fa-ruble-sign'}
           lg="3"
           md="6"
@@ -18,7 +18,7 @@ const InfoBoxes = props => {
           measurement="руб."
         />
         <InfoBox
-          iconBg={'bg-gradient-warning'}
+          iconBg={'bg-gradient-primary'}
           iconStyle={'fas fa-calendar-check'}
           sm="6"
           md="6"
@@ -29,7 +29,7 @@ const InfoBoxes = props => {
         />
         <div className="clearfix hidden-md-up"></div>
         <InfoBox
-          iconBg={'bg-gradient-info'}
+          iconBg={'bg-gradient-primary'}
           iconStyle={'fas fa-clock'}
           sm="6"
           md="6"
@@ -54,7 +54,7 @@ const InfoBoxes = props => {
       <div className={`row`}>
         <div className="col-md-6 col-sm-6 col-lg-3 col-12">
           <div
-            className={`info-box bg-gradient-success elevation-3 ${styles.scale}`}>
+            className={`info-box bg-gradient-primary elevation-3 ${styles.scale}`}>
             <span className="info-box-icon">
               <i className="fas fa-ruble-sign" />
             </span>
@@ -66,7 +66,7 @@ const InfoBoxes = props => {
         </div>
         <div className="col-md-6 col-sm-6 col-lg-3 col-12">
           <div
-            className={`info-box bg-gradient-warning elevation-3 ${styles.scale}`}>
+            className={`info-box bg-gradient-primary elevation-3 ${styles.scale}`}>
             <span className="info-box-icon">
               <i className="far fa-calendar-check" />
             </span>
@@ -78,7 +78,7 @@ const InfoBoxes = props => {
         </div>
         <div className="col-md-6 col-sm-6 col-lg-3 col-12">
           <div
-            className={`info-box bg-gradient-info elevation-3 ${styles.scale}`}>
+            className={`info-box bg-gradient-primary elevation-3 ${styles.scale}`}>
             <span className="info-box-icon">
               <i className="fas fa-clock" />
             </span>

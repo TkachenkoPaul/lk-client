@@ -1,5 +1,5 @@
 import React from 'react'
-import { BackTop, Button, Col, Layout, Result, Row } from 'antd'
+import { BackTop, Col, Layout, Row } from 'antd'
 import { Outlet, Route, Routes } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
@@ -8,6 +8,7 @@ import './App.css'
 import Transactions from './components/Transactions/Transactions'
 import Support from './components/Support/Support'
 import Services from './components/Services/Services'
+import Error from './components/Errors/Error'
 
 const { Content } = Layout
 
@@ -20,17 +21,7 @@ function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/support" element={<Support />} />
           <Route path="/services" element={<Services />} />
-          <Route
-            path="*"
-            element={
-              <Result
-                status="404"
-                title="404"
-                subTitle="Sorry, the page you visited does not exist."
-                extra={<Button type="primary">Главная</Button>}
-              />
-            }
-          />
+          <Route path="*" element={<Error />} />
         </Route>
         <Route path="/logout" element={<>logoutpage</>} />
         <Route
@@ -71,12 +62,8 @@ const PageContent = () => {
                 <Content
                   className="site-layout"
                   style={{ padding: '0 15px', marginTop: 80 }}>
-                  <Outlet />
                   {/*content block*/}
-                  {/*<Profile />*/}
-                  {/*<Transactions />*/}
-                  {/*<Support />*/}
-                  {/*<Services />*/}
+                  <Outlet />
                   {/*end of content block*/}
                 </Content>
               </Col>
