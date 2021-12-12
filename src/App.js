@@ -4,15 +4,15 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
 import Profile from './components/Profile/Profile'
-import './App.css'
 import Transactions from './components/Transactions/Transactions'
 import Support from './components/Support/Support'
 import Services from './components/Services/Services'
 import Error from './components/Errors/Error'
+import './App.css'
 
 const { Content } = Layout
 
-function App() {
+function App(store) {
   return (
     <div>
       <Routes>
