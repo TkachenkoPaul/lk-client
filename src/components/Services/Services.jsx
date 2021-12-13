@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Breadcrumb,
   Button,
   Col,
   Divider,
@@ -14,6 +15,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 import './Services.css'
+import { Link } from 'react-router-dom'
 
 const Services = () => {
   const { Text, Paragraph } = Typography
@@ -49,6 +51,14 @@ const Services = () => {
       breadcrumbName: 'Услуги',
     },
   ]
+  function itemRender(route, params, routes, paths) {
+    const last = routes.indexOf(route) === routes.length - 1;
+    return last ? (
+      <span>{route.breadcrumbName}</span>
+    ) : (
+      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+    );
+  }
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -129,7 +139,7 @@ const Services = () => {
           <Col span={24}>
             <PageHeader
               style={{ height: '100%' }}
-              breadcrumb={{ routes }}
+              breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
               ghost={false}
               onBack={() => window.history.back()}
               title="Заказать услугу"

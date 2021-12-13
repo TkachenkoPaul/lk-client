@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
 import {
+  Breadcrumb,
   Button,
   Col,
   Descriptions,
@@ -13,6 +14,7 @@ import {
   Switch,
   Typography,
 } from 'antd'
+import { Link } from 'react-router-dom'
 
 const Profile = () => {
   const [switchBoxes, setSwitchBoxes] = useState(false)
@@ -54,6 +56,15 @@ const Profile = () => {
       breadcrumbName: 'Профиль',
     },
   ]
+  function itemRender(route, params, routes, paths) {
+    const last = routes.indexOf(route) === routes.length - 1;
+    return last ? (
+      <span>{route.breadcrumbName}</span>
+    ) : (
+      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+    );
+  }
+
   return (
     <>
       <CollectionCreateForm
@@ -66,7 +77,7 @@ const Profile = () => {
       <InfoBoxes switch={switchBoxes} />
       <PageHeader
         style={{ height: '100%' }}
-        breadcrumb={{ routes }}
+        breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
         ghost={false}
         onBack={() => window.history.back()}
         title="Профиль"

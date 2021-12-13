@@ -1,8 +1,12 @@
 import React from 'react'
-import { Button, Col, Divider, PageHeader, Row, Space, Table } from 'antd'
+import { Breadcrumb, Button, Col, Divider, PageHeader, Row, Space, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
+import { Link, useNavigate } from 'react-router-dom'
+
+
 
 const Support = () => {
+  const navigate = useNavigate()
   const routes = [
     {
       path: '/',
@@ -13,6 +17,14 @@ const Support = () => {
       breadcrumbName: 'Заявки',
     },
   ]
+  function itemRender(route, params, routes, paths) {
+    const last = routes.indexOf(route) === routes.length - 1;
+    return last ? (
+      <span>{route.breadcrumbName}</span>
+    ) : (
+      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+    );
+  }
   const columns = [
     { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
     { title: 'Тема', dataIndex: 'subject', key: 'subject' },
@@ -29,7 +41,7 @@ const Support = () => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button onClick={() => alert(record.id)} type="primary">
+          <Button onClick={() => navigate('message/'+ record.id)} type="primary">
             Просмотр
           </Button>
         </Space>
@@ -114,7 +126,7 @@ const Support = () => {
     <>
       <PageHeader
         style={{ height: '100%' }}
-        breadcrumb={{ routes }}
+        breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
         ghost={false}
         onBack={() => window.history.back()}
         title="Заявки"
@@ -138,7 +150,6 @@ const Support = () => {
                 responsive: true,
                 showLessItems: true,
                 size: 'default',
-                // itemRender: itemRender,
                 position: ['topRight', 'bottomRight'],
                 total: data.length,
                 showTotal: (total, range) =>

@@ -9,6 +9,7 @@ import Support from './components/Support/Support'
 import Services from './components/Services/Services'
 import Error from './components/Errors/Error'
 import './App.css'
+import Message from './components/Support/Message'
 
 const { Content } = Layout
 
@@ -19,7 +20,8 @@ function App(store) {
         <Route path="/" element={<PageContent />}>
           <Route index element={<Profile />} />
           <Route path="/transactions" element={<Transactions />} />
-          <Route path="/support" element={<Support />} />
+          <Route  exact={true} path="/support" element={<Support />} />
+          <Route path="/support/message/:id" element={<Message/>}/>
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<Error />} />
         </Route>
