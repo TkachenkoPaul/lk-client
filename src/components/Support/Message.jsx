@@ -20,6 +20,7 @@ import moment from 'moment';
 import user from './user.png'
 import worker from './worker.png'
 import operator from './operator.png'
+import Chat from './Chat'
 
 const Message = () => {
   const [visible, setVisible] = useState(false);
@@ -157,42 +158,7 @@ const Message = () => {
           xs={{ span: 24 }}
           md={{ span: 24, offset: 0 }}
           lg={{ span: 16, offset: 0 }}>
-          <List
-            className="comment-list"
-            header={`Сообщения`}
-            itemLayout="horizontal"
-            dataSource={data}
-            renderItem={item => (
-              <li>
-                <Comment
-                  actions={item.actions}
-                  author={item.author}
-                  avatar={item.avatar}
-                  content={item.content}
-                  datetime={item.datetime}
-                />
-              </li>
-            )}
-          />
-          <Descriptions title="Сообщения"  layout="vertical"  column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}>
-            <List
-              className="comment-list"
-              header={`${data.length} replies`}
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={item => (
-                <li>
-                  <Comment
-                    actions={item.actions}
-                    author={item.author}
-                    avatar={item.avatar}
-                    content={item.content}
-                    datetime={item.datetime}
-                  />
-                </li>
-              )}
-            />
-          </Descriptions>
+          <Chat/>
         </Col>
       </Row>
     </PageHeader></>
