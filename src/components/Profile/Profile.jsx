@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
 import {
+  message,
   Alert,
   Breadcrumb,
   Button,
   Col,
   Descriptions,
-  Divider,
   Dropdown,
   Form,
   Input,
@@ -20,49 +20,43 @@ import {
 } from 'antd'
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
-import {
-  AppstoreAddOutlined,
-  BookOutlined,
-  CommentOutlined,
-  DashboardOutlined,
-  ExclamationCircleOutlined,
-  IdcardOutlined,
-  WalletOutlined,
-} from '@ant-design/icons'
 import styles from './Profile.module.scss'
 
 const Profile = () => {
-  const [switchBoxes, setSwitchBoxes] = useState(false)
-  const [deposite, setDeposite] = useState(120)
+  const [deposit, setDeposit] = useState(120)
   const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
-  const [confirmLoading, setConfirmLoading] = React.useState(false)
-  const [modalText, setModalText] = React.useState('Content of the modal')
-  const [divider, setDivider] = useState(1)
   const [phone, setPhone] = useState({
     main: '0721044880',
     secondary: '0664841472',
   })
 
+  const success = text => {
+    message.success(text).then(res => console.log(res))
+  }
+
+  const error = text => {
+    message.error(text).then(res => console.log(res))
+  }
   const showModalPhoneEdit = () => {
     setVisible(true)
   }
 
-  const handleOk = () => {
-    setModalText('The modal will be closed after two seconds')
-    setConfirmLoading(true)
-    setTimeout(() => {
-      setVisible(false)
-      setConfirmLoading(false)
-    }, 2000)
-  }
   const onCreate = values => {
     console.log('Received values of form: ', values)
     setPhone({ main: values.mainPhone, secondary: values.secondaryPhone })
     setVisible(false)
   }
-  const handleCancel = () => {
+  const handleSuccessPhone = () => {
     setVisible(false)
+    success('Изменения приняты')
+  }
+  const handleSuccessPassword = () => {
+    success('Пароль успешно уизменен')
+  }
+  const handleCancelPhone = () => {
+    setVisible(false)
+    error('Отменили')
   }
   const routes = [
     {
@@ -83,58 +77,22 @@ const Profile = () => {
     )
   }
 
-  const handleClick = e => {
-    console.log(e)
-  }
-  const menus = [
-    {
-      key: 1,
-      title: 'button1',
-      icon: <IdcardOutlined />,
-    },
-    {
-      key: 2,
-      title: 'button2',
-      icon: <WalletOutlined />,
-    },
-    {
-      key: 3,
-      title: 'button3',
-      icon: <CommentOutlined />,
-    },
-  ]
-  const menusElements = menus.map(menu => {
-    return (
-      <Menu.Item key={menu.key} icon={menu.icon}>
-        {menu.title}
-      </Menu.Item>
-    )
-  })
-  let selectDivider = text => {
-    if (divider === 1) {
-      return <Divider orientation="left">{text}</Divider>
-    } else if (divider === 2) {
-      return (
-        <h6
-          className={`${styles.divider} ${styles.line} ${styles.glow}`}
-          contentEditable>
-          {text}
-        </h6>
-      )
-    } else if (divider === 3) {
-      return (
-        <h6 className={`${styles.divider} ${styles.gradient}`} contentEditable>
-          {text}
-        </h6>
-      )
-    }
-  }
-
   const menu = (
     <Menu>
-      <Menu.Item>Кнопка 1</Menu.Item>
-      <Menu.Item>Кнопка 2</Menu.Item>
-      <Menu.Item>Кнопка 3</Menu.Item>
+      <Menu.Item onClick={showModalPhoneEdit}>Редактировать телефон</Menu.Item>
+      <Menu.Item onClick={handleSuccessPassword}>Изменить пароль</Menu.Item>
+      <Menu.Item
+        onClick={() => {
+          setIsDebtor(!isDebtor)
+          setDeposit(-deposit)
+          if (!isDebtor) {
+            success('Активирован долг по лицевому счету')
+          } else {
+            success('Деактивирован долг по лицевому счету')
+          }
+        }}>
+        Долг вкл/выкл
+      </Menu.Item>
     </Menu>
   )
   return (
@@ -142,11 +100,12 @@ const Profile = () => {
       <CollectionCreateForm
         visible={visible}
         onCreate={onCreate}
-        onCancel={handleCancel}
+        onOk={handleSuccessPhone}
+        onCancel={handleCancelPhone}
         phone={phone}
         sms={false}
       />
-      <InfoBoxes switch={switchBoxes} />
+      <InfoBoxes switch={true} />
       {isDebtor && (
         <Alert
           banner
@@ -169,50 +128,10 @@ const Profile = () => {
         subTitle="erem-7-001"
         extra={[
           <Dropdown overlay={menu} placement="bottomRight" arrow>
-            <Button type="primary">Дополнительно</Button>
+            <Button key="profileAddButton" type="primary">
+              Дополнительно
+            </Button>
           </Dropdown>,
-
-          // <Menu theme="light" onClick={handleClick} mode="inline">
-          //   {menusElements}
-          // </Menu>,
-
-          <Button key="11" type="primary" onClick={() => setDivider(1)}>
-            1
-          </Button>,
-          <Button key="12" type="primary" onClick={() => setDivider(2)}>
-            2
-          </Button>,
-          <Button key="13" type="primary" onClick={() => setDivider(3)}>
-            3
-          </Button>,
-          <Button key="1" type="primary" onClick={showModalPhoneEdit}>
-            Редактировать телефон
-          </Button>,
-          <Switch
-            style={{ marginLeft: '1em' }}
-            onChange={() => {
-              setIsDebtor(!isDebtor)
-              setDeposite(-deposite)
-            }}
-            checkedChildren={
-              <Typography.Paragraph>Есть долг</Typography.Paragraph>
-            }
-            unCheckedChildren={
-              <Typography.Paragraph>Нет долга </Typography.Paragraph>
-            }
-          />,
-          <Switch
-            style={{ marginLeft: '1em' }}
-            onChange={() => {
-              setSwitchBoxes(!switchBoxes)
-            }}
-            checkedChildren={
-              <Typography.Paragraph>Вариент 1</Typography.Paragraph>
-            }
-            unCheckedChildren={
-              <Typography.Paragraph>Вариант 2</Typography.Paragraph>
-            }
-          />,
         ]}>
         <Row gutter={[16, 16]}>
           <Col
@@ -220,20 +139,22 @@ const Profile = () => {
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
             <Descriptions
-              // layout="vertical"
-              // size="middle"
-              title={selectDivider('Финансы')}
+              title={
+                <h6 className={`${styles.divider} ${styles.gradient}`}>
+                  Финансы
+                </h6>
+              }
               bordered
               column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
               <Descriptions.Item label="Баланс руб.">
                 <div style={{ fontSize: '16px' }}>
-                  {deposite >= 0 ? (
-                    deposite
+                  {deposit >= 0 ? (
+                    deposit
                   ) : (
                     <Tag
                       color="error"
                       style={{ fontSize: '18px', padding: '10px' }}>
-                      {deposite}
+                      {deposit}
                     </Tag>
                   )}
                 </div>
@@ -271,7 +192,11 @@ const Profile = () => {
               <Descriptions
                 layout="vertical"
                 // size="middle"
-                title={selectDivider('Личная информация')}
+                title={
+                  <h6 className={`${styles.divider} ${styles.gradient}`}>
+                    Личная информация
+                  </h6>
+                }
                 bordered
                 column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}>
                 <Descriptions.Item label="ФИО" span={2}>
@@ -345,17 +270,19 @@ const Profile = () => {
   )
 }
 
-const CollectionCreateForm = ({ visible, onCreate, onCancel, phone, sms }) => {
+const CollectionCreateForm = ({
+  visible,
+  onCreate,
+  onCancel,
+  onOk,
+  phone,
+  sms,
+}) => {
   const [form] = Form.useForm()
   const [smsChecked, setSmsChecked] = useState(sms)
   const onChange = () => {
     setSmsChecked(!smsChecked)
   }
-  useEffect(() => {
-    return () => {
-      console.log('phone from modal component', phone)
-    }
-  }, [phone])
 
   const onSubmitForm = () => {
     form
@@ -363,6 +290,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, phone, sms }) => {
       .then(values => {
         form.resetFields()
         onCreate(values)
+        onOk()
       })
       .catch(info => {
         console.log('Validate Failed:', info)

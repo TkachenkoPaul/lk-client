@@ -1,0 +1,11 @@
+ <h6
+    className={`${styles.divider} ${styles.line} ${styles.glow}`}
+    contentEditable>
+    {text}2
+  </h6>
+
+  <h6 className={`${styles.divider} ${styles.gradient}`} contentEditable>
+    {text}
+  </h6>
+
+  <Divider orientation="left">{text}1</Divider>
