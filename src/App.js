@@ -1,5 +1,5 @@
 import React from 'react'
-import { BackTop, Col, Layout, Row } from 'antd'
+import { Alert, BackTop, Col, Layout, Row } from 'antd'
 import { Outlet, Route, Routes } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
@@ -10,6 +10,8 @@ import Services from './components/Services/Services'
 import Error from './components/Errors/Error'
 import './App.css'
 import Message from './components/Support/Message'
+import Reference from './components/Reference/Reference'
+import Marquee from 'react-fast-marquee'
 
 const { Content } = Layout
 
@@ -23,6 +25,7 @@ function App(store) {
           <Route  exact={true} path="/support" element={<Support />} />
           <Route path="/support/message/:id" element={<Message/>}/>
           <Route path="/services" element={<Services />} />
+          <Route path="/reference" element={<Reference />} />
           <Route path="*" element={<Error />} />
         </Route>
         <Route path="/logout" element={<>logoutpage</>} />

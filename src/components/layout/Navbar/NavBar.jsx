@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Layout, Menu, Row } from 'antd'
+import { Alert, Col, Layout, Menu, Row } from 'antd'
 import {
-  AppstoreAddOutlined,
+  AppstoreAddOutlined, BookOutlined,
   CommentOutlined,
   DashboardOutlined,
   IdcardOutlined,
@@ -10,6 +10,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom'
 import './NavBar.module.scss'
 import logoImage from '../sider/smallLogo.png'
+import Marquee from 'react-fast-marquee'
 
 const NavBar = () => {
   const [currentKey, setCurrentKey] = useState(null)
@@ -54,6 +55,12 @@ const NavBar = () => {
     },
     {
       key: 6,
+      title: 'Справка',
+      path: '/reference',
+      icon: <BookOutlined />,
+    },
+    {
+      key: 7,
       title: 'Выход',
       path: '/logout',
       icon: <AppstoreAddOutlined />,
@@ -87,6 +94,7 @@ const NavBar = () => {
           width: '100%',
           padding: '0 15px',
         }}>
+
         <Row>
           <Col
             xs={{ span: 24 }}
@@ -100,6 +108,7 @@ const NavBar = () => {
               mode="horizontal">
               {menusElements}
             </Menu>
+
           </Col>
         </Row>
       </Layout.Header>

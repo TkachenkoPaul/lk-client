@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
 import {
+  Alert,
   Breadcrumb,
   Button,
   Col,
   Descriptions,
   Divider,
+  Dropdown,
   Form,
   Input,
+  Menu,
   Modal,
   PageHeader,
   Row,
   Switch,
+  Tag,
   Typography,
 } from 'antd'
 import { Link } from 'react-router-dom'
+import Marquee from 'react-fast-marquee'
+import {
+  AppstoreAddOutlined,
+  BookOutlined,
+  CommentOutlined,
+  DashboardOutlined,
+  ExclamationCircleOutlined,
+  IdcardOutlined,
+  WalletOutlined,
+} from '@ant-design/icons'
+import styles from './Profile.module.scss'
 
 const Profile = () => {
   const [switchBoxes, setSwitchBoxes] = useState(false)
+  const [deposite, setDeposite] = useState(120)
+  const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
   const [confirmLoading, setConfirmLoading] = React.useState(false)
   const [modalText, setModalText] = React.useState('Content of the modal')
+  const [divider, setDivider] = useState(1)
   const [phone, setPhone] = useState({
     main: '0721044880',
     secondary: '0664841472',
@@ -57,14 +75,68 @@ const Profile = () => {
     },
   ]
   function itemRender(route, params, routes, paths) {
-    const last = routes.indexOf(route) === routes.length - 1;
+    const last = routes.indexOf(route) === routes.length - 1
     return last ? (
       <span>{route.breadcrumbName}</span>
     ) : (
       <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-    );
+    )
   }
 
+  const handleClick = e => {
+    console.log(e)
+  }
+  const menus = [
+    {
+      key: 1,
+      title: 'button1',
+      icon: <IdcardOutlined />,
+    },
+    {
+      key: 2,
+      title: 'button2',
+      icon: <WalletOutlined />,
+    },
+    {
+      key: 3,
+      title: 'button3',
+      icon: <CommentOutlined />,
+    },
+  ]
+  const menusElements = menus.map(menu => {
+    return (
+      <Menu.Item key={menu.key} icon={menu.icon}>
+        {menu.title}
+      </Menu.Item>
+    )
+  })
+  let selectDivider = text => {
+    if (divider === 1) {
+      return <Divider orientation="left">{text}</Divider>
+    } else if (divider === 2) {
+      return (
+        <h6
+          className={`${styles.divider} ${styles.line} ${styles.glow}`}
+          contentEditable>
+          {text}
+        </h6>
+      )
+    } else if (divider === 3) {
+      return (
+        <h6 className={`${styles.divider} ${styles.gradient}`} contentEditable>
+          {text}
+        </h6>
+      )
+    }
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item>Кнопка 1</Menu.Item>
+      <Menu.Item>Кнопка 2</Menu.Item>
+      <Menu.Item>Кнопка 3</Menu.Item>
+    </Menu>
+  )
   return (
     <>
       <CollectionCreateForm
@@ -75,6 +147,19 @@ const Profile = () => {
         sms={false}
       />
       <InfoBoxes switch={switchBoxes} />
+      {isDebtor && (
+        <Alert
+          banner
+          type="error"
+          message={
+            <Marquee gradient={false} pauseOnHover={true}>
+              У вас не достаточно средств на счету. Для возобновления
+              пользования услугой интернет нужно внести денежные средства на
+              лицевой счет, который указан в вашем договоре
+            </Marquee>
+          }
+        />
+      )}
       <PageHeader
         style={{ height: '100%' }}
         breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
@@ -83,9 +168,39 @@ const Profile = () => {
         title="Профиль"
         subTitle="erem-7-001"
         extra={[
+          <Dropdown overlay={menu} placement="bottomRight" arrow>
+            <Button type="primary">Дополнительно</Button>
+          </Dropdown>,
+
+          // <Menu theme="light" onClick={handleClick} mode="inline">
+          //   {menusElements}
+          // </Menu>,
+
+          <Button key="11" type="primary" onClick={() => setDivider(1)}>
+            1
+          </Button>,
+          <Button key="12" type="primary" onClick={() => setDivider(2)}>
+            2
+          </Button>,
+          <Button key="13" type="primary" onClick={() => setDivider(3)}>
+            3
+          </Button>,
           <Button key="1" type="primary" onClick={showModalPhoneEdit}>
             Редактировать телефон
           </Button>,
+          <Switch
+            style={{ marginLeft: '1em' }}
+            onChange={() => {
+              setIsDebtor(!isDebtor)
+              setDeposite(-deposite)
+            }}
+            checkedChildren={
+              <Typography.Paragraph>Есть долг</Typography.Paragraph>
+            }
+            unCheckedChildren={
+              <Typography.Paragraph>Нет долга </Typography.Paragraph>
+            }
+          />,
           <Switch
             style={{ marginLeft: '1em' }}
             onChange={() => {
@@ -104,20 +219,32 @@ const Profile = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
-            {' '}
             <Descriptions
               // layout="vertical"
               // size="middle"
-              title={<Divider orientation="left">Финансы</Divider>}
+              title={selectDivider('Финансы')}
               bordered
               column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
               <Descriptions.Item label="Баланс руб.">
-                <div style={{ fontSize: '16px' }}>120</div>
+                <div style={{ fontSize: '16px' }}>
+                  {deposite >= 0 ? (
+                    deposite
+                  ) : (
+                    <Tag
+                      color="error"
+                      style={{ fontSize: '18px', padding: '10px' }}>
+                      {deposite}
+                    </Tag>
+                  )}
+                </div>
               </Descriptions.Item>
               <Descriptions.Item label="Тарифный пакет" span={2}>
                 <div style={{ fontSize: '16px' }}>
                   Интернет 100 + IPTV + Кабельное ТВ
                 </div>
+              </Descriptions.Item>
+              <Descriptions.Item label="Статус тарифного плана">
+                Активно
               </Descriptions.Item>
               <Descriptions.Item label="Оплачено дней">31</Descriptions.Item>
               <Descriptions.Item label="Дата окончания тарифа">
@@ -144,7 +271,7 @@ const Profile = () => {
               <Descriptions
                 layout="vertical"
                 // size="middle"
-                title={<Divider orientation="left">Личная информация</Divider>}
+                title={selectDivider('Личная информация')}
                 bordered
                 column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}>
                 <Descriptions.Item label="ФИО" span={2}>

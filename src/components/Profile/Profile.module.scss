@@ -1,0 +1,73 @@
+.divider {
+  display: flex;
+
+  &:before,
+  &:after {
+    content: '';
+    flex: 1;
+  }
+}
+.glow {
+  &:before,
+  &:after {
+    height: 3px;
+    -webkit-filter: blur(1px);
+    border-radius: 3px;
+  }
+
+  &:before {
+    background: linear-gradient(to right, #268fff, #007bff);
+  }
+
+  &:after {
+    background: linear-gradient(to left, #268fff, #007bff);
+  }
+}
+
+// Gradients
+.gradient {
+  align-items: stretch;
+  margin: 1em 0;
+  height: 2em;
+  line-height: 2em;
+  color: white;
+  //background: black;
+  background: #007bff;
+
+  &:before {
+    background: linear-gradient(to right, #fff, #007bff);
+  }
+
+  &:after {
+    background: linear-gradient(to left, #fff, #007bff);
+  }
+}
+
+// Ribbon thing
+.donotcross {
+  overflow: hidden;
+  align-items: center;
+  background: hsl(50, 100%, 50%);
+  color: black;
+  height: 2em;
+  line-height: 2em;
+
+  &:before,
+  &:after {
+    background: white;
+    padding: 50px 0;
+    height: 0;
+    transform: rotate(45deg);
+  }
+}
+// Base line
+.line {
+  align-items: center;
+  margin: 1em -1em;
+
+  &:before,
+  &:after {
+    height: 1px;
+    margin: 0 1em;
+  }
+}
