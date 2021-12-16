@@ -1,11 +1,26 @@
 import React from 'react'
-import { Breadcrumb, Button, Col, Divider, PageHeader, Row, Space, Table } from 'antd'
+import {
+  Breadcrumb,
+  Button,
+  Col,
+  Divider,
+  PageHeader,
+  Row,
+  Space,
+  Table,
+} from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
-
-
+import { useSelector } from 'react-redux'
+import {
+  selectIsLoading,
+  selectMessages,
+} from '../../store/slices/supportSlice'
 
 const Support = () => {
+  const messages = useSelector(selectMessages)
+  debugger
+  const isLoading = useSelector(selectIsLoading)
   const navigate = useNavigate()
   const routes = [
     {
@@ -18,12 +33,12 @@ const Support = () => {
     },
   ]
   function itemRender(route, params, routes, paths) {
-    const last = routes.indexOf(route) === routes.length - 1;
+    const last = routes.indexOf(route) === routes.length - 1
     return last ? (
       <span>{route.breadcrumbName}</span>
     ) : (
       <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-    );
+    )
   }
   const columns = [
     { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
@@ -41,85 +56,13 @@ const Support = () => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button onClick={() => navigate('message/'+ record.id)} type="primary">
+          <Button
+            onClick={() => navigate('message/' + record.id)}
+            type="primary">
             Просмотр
           </Button>
         </Space>
       ),
-    },
-  ]
-  const data = [
-    {
-      key: 1,
-      id: 1,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 2,
-      id: 2,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 3,
-      id: 3,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 4,
-      id: 4,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 5,
-      id: 5,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 5,
-      id: 5,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 5,
-      id: 5,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 5,
-      id: 5,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
-    },
-    {
-      key: 5,
-      id: 5,
-      date: '2021-09-12 10:43:01',
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      state: 'Открыта',
     },
   ]
   return (
@@ -143,15 +86,15 @@ const Support = () => {
             lg={{ span: 24, offset: 0 }}>
             <Divider orientation="left">История заявок</Divider>
             <Table
-              loading={false}
+              loading={isLoading}
               columns={columns}
-              dataSource={data}
+              dataSource={messages}
               pagination={{
                 responsive: true,
                 showLessItems: true,
                 size: 'default',
                 position: ['topRight', 'bottomRight'],
-                total: data.length,
+                total: messages.length,
                 showTotal: (total, range) =>
                   `${range[0]}-${range[1]} из ${total} записей`,
                 defaultPageSize: 10,
