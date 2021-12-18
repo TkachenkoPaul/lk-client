@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Breadcrumb,
   Button,
@@ -9,19 +9,41 @@ import {
   Space,
   Table,
 } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { CloudDownloadOutlined, PlusOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import {
-  selectIsLoading,
-  selectMessages,
-} from '../../store/slices/supportSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setMessages } from '../../store/slices/supportSlice'
 
 const Support = () => {
-  const messages = useSelector(selectMessages)
-  debugger
-  const isLoading = useSelector(selectIsLoading)
+  const { messages } = useSelector(state => ({
+    messages: state.support.messages,
+  }))
+  const [messagesData, setMessagesData] = useState(messages)
+  const [isLoading, setIsLoading] = useState(true)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const dataLoad = () => {
+    let newMessages = [
+      {
+        id: Date.now(),
+        key: Date.now(),
+        subject: 'Не работает интернет',
+        chapter: 'Технические вопросы',
+        date: '2021-12-13 12:34:12',
+        status: 'Открыта',
+      },
+      {
+        id: Date.now(),
+        key: Date.now(),
+        subject: 'Не работает КТВ',
+        chapter: 'Технические вопросы',
+        date: '2021-12-15 11:34:12',
+        status: 'Выполнена и закрыта',
+      },
+    ]
+    setMessagesData(oldMessages => [...oldMessages, ...newMessages])
+  }
+  console.log(messagesData)
   const routes = [
     {
       path: '/',
@@ -47,8 +69,8 @@ const Support = () => {
     { title: 'Дата', dataIndex: 'date', key: 'date' },
     {
       title: 'Состояние',
-      dataIndex: 'state',
-      key: 'state',
+      dataIndex: 'status',
+      key: 'status',
       responsive: ['md'],
     },
     {
@@ -78,6 +100,22 @@ const Support = () => {
           <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
             Создать заявку
           </Button>,
+          <Button
+            key="1"
+            type="primary"
+            onClick={() => setIsLoading(!isLoading)}
+            icon={<CloudDownloadOutlined />}
+            size="large">
+            Загрузка вкл/выкл
+          </Button>,
+          <Button
+            key="1"
+            type="primary"
+            onClick={dataLoad}
+            icon={<CloudDownloadOutlined />}
+            size="large">
+            Загрузить
+          </Button>,
         ]}>
         <Row gutter={[16, 16]}>
           <Col
@@ -88,13 +126,13 @@ const Support = () => {
             <Table
               loading={isLoading}
               columns={columns}
-              dataSource={messages}
+              dataSource={messagesData}
               pagination={{
                 responsive: true,
                 showLessItems: true,
                 size: 'default',
                 position: ['topRight', 'bottomRight'],
-                total: messages.length,
+                total: messagesData?.length && 0,
                 showTotal: (total, range) =>
                   `${range[0]}-${range[1]} из ${total} записей`,
                 defaultPageSize: 10,
