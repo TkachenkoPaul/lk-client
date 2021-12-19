@@ -11,10 +11,13 @@ import Error from './components/Errors/Error'
 import './App.css'
 import Message from './components/Support/Message'
 import Reference from './components/Reference/Reference'
+import { useSelector } from 'react-redux'
 
 const { Content } = Layout
 
 function App() {
+  const store = useSelector(store => store)
+  console.log(store)
   return (
     <div>
       <Routes>

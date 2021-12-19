@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { supportInitialState } from '../initialState'
 const IS_LOADING = 'IS_LOADING'
 const initialState = {
   messages: [
@@ -21,25 +22,10 @@ const initialState = {
   ],
   isLoading: true,
 }
-// {
-//   id: 1,
-//     key: 1,
-//   subject: 'Не работает интернет',
-//   chapter: 'Технические вопросы',
-//   date: '2021-12-13 12:34:12',
-//   status: 'Открыта',
-// },
-// {
-//   id: 2,
-//     key: 2,
-//   subject: 'Не работает КТВ',
-//   chapter: 'Технические вопросы',
-//   date: '2021-12-15 11:34:12',
-//   status: 'Выполнена и закрыта',
-// },
+
 const supportSlice = createSlice({
   name: 'support ',
-  initialState,
+  initialState: supportInitialState,
   reducers: {
     setIsLoading: state => {
       return (state.isLoading = true)

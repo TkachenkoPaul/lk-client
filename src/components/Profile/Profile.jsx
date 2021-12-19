@@ -21,8 +21,11 @@ import {
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
 import styles from './Profile.module.scss'
+import logger from 'redux-logger'
+import { useDispatch } from 'react-redux'
 
 const Profile = () => {
+  const dispatch = useDispatch()
   const [deposit, setDeposit] = useState(120)
   const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
@@ -92,6 +95,9 @@ const Profile = () => {
           }
         }}>
         Долг вкл/выкл
+      </Menu.Item>
+      <Menu.Item onClick={() => dispatch({ type: 'CLICK' })}>
+        Загрузить данные
       </Menu.Item>
     </Menu>
   )
