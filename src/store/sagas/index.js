@@ -1,9 +1,15 @@
-import { take, takeEvery } from 'redux-saga/effects'
+import { takeEvery, put } from 'redux-saga/effects'
+import { setStarShips } from '../slices/profileSlice'
+async function takeStarShips() {
+  const response = await fetch('http://swapi.dev/api/starships')
+  return await response.json()
+}
+
 export function* workerSaga() {
-  console.log('click from saga')
+  const data = yield takeStarShips()
+  yield put(setStarShips(data.results))
 }
 export function* watchClickSaga() {
-  yield take('CLICK')
   yield takeEvery('CLICK', workerSaga)
 }
 export default function* rootSaga() {

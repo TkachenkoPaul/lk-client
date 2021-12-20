@@ -21,7 +21,6 @@ import {
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
 import styles from './Profile.module.scss'
-import logger from 'redux-logger'
 import { useDispatch } from 'react-redux'
 
 const Profile = () => {
@@ -76,14 +75,20 @@ const Profile = () => {
     return last ? (
       <span>{route.breadcrumbName}</span>
     ) : (
-      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+      <Link to={paths.join('/')} key={paths}>
+        {route.breadcrumbName}
+      </Link>
     )
   }
 
   const menu = (
-    <Menu>
-      <Menu.Item onClick={showModalPhoneEdit}>Редактировать телефон</Menu.Item>
-      <Menu.Item onClick={handleSuccessPassword}>Изменить пароль</Menu.Item>
+    <Menu key={'menu1'}>
+      <Menu.Item onClick={showModalPhoneEdit} key="1">
+        Редактировать телефон
+      </Menu.Item>
+      <Menu.Item onClick={handleSuccessPassword} key="2">
+        Изменить пароль
+      </Menu.Item>
       <Menu.Item
         onClick={() => {
           setIsDebtor(!isDebtor)
@@ -93,10 +98,11 @@ const Profile = () => {
           } else {
             success('Деактивирован долг по лицевому счету')
           }
-        }}>
+        }}
+        key="3">
         Долг вкл/выкл
       </Menu.Item>
-      <Menu.Item onClick={() => dispatch({ type: 'CLICK' })}>
+      <Menu.Item onClick={() => dispatch({ type: 'CLICK' })} key="4">
         Загрузить данные
       </Menu.Item>
     </Menu>
@@ -133,8 +139,12 @@ const Profile = () => {
         title="Профиль"
         subTitle="erem-7-001"
         extra={[
-          <Dropdown overlay={menu} placement="bottomRight" arrow>
-            <Button key="profileAddButton" type="primary">
+          <Dropdown
+            overlay={menu}
+            placement="bottomRight"
+            arrow
+            key={'pagekey1'}>
+            <Button type="primary" key={1}>
               Дополнительно
             </Button>
           </Dropdown>,
@@ -152,7 +162,7 @@ const Profile = () => {
               }
               bordered
               column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
-              <Descriptions.Item label="Баланс руб.">
+              <Descriptions.Item label="Баланс руб." key={1}>
                 <div style={{ fontSize: '16px' }}>
                   {deposit >= 0 ? (
                     deposit
@@ -165,27 +175,31 @@ const Profile = () => {
                   )}
                 </div>
               </Descriptions.Item>
-              <Descriptions.Item label="Тарифный пакет" span={2}>
+              <Descriptions.Item label="Тарифный пакет" key={2}>
                 <div style={{ fontSize: '16px' }}>
                   Интернет 100 + IPTV + Кабельное ТВ
                 </div>
               </Descriptions.Item>
-              <Descriptions.Item label="Статус тарифного плана">
+              <Descriptions.Item label="Статус тарифного плана" key={3}>
                 Активно
               </Descriptions.Item>
-              <Descriptions.Item label="Оплачено дней">31</Descriptions.Item>
-              <Descriptions.Item label="Дата окончания тарифа">
+              <Descriptions.Item label="Оплачено дней" key={4}>
+                31
+              </Descriptions.Item>
+              <Descriptions.Item label="Дата окончания тарифа" key={5}>
                 2021-12-19
               </Descriptions.Item>
 
-              <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки">
+              <Descriptions.Item
+                label="Оплата за тарифный пакет, руб./сутки"
+                key={6}>
                 Интернет 100 + IPTV: 11 руб./сутки
                 <br />
                 Кабельное ТВ: 2.5 руб./сутки
                 <br />
                 Реальный IP-адрес: 2.8 руб./сутки
               </Descriptions.Item>
-              <Descriptions.Item label="К оплате, руб./сутки">
+              <Descriptions.Item label="К оплате, руб./сутки" key={7}>
                 <div style={{ fontSize: '16px' }}>12.05</div>
               </Descriptions.Item>
             </Descriptions>
@@ -204,15 +218,18 @@ const Profile = () => {
                   </h6>
                 }
                 bordered
-                column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}>
-                <Descriptions.Item label="ФИО" span={2}>
+                column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}
+                key={1}>
+                <Descriptions.Item label="ФИО" key={2}>
                   Тестеров Тестер Тестерович
                 </Descriptions.Item>
-                <Descriptions.Item label="Логин">erem-7-001</Descriptions.Item>
+                <Descriptions.Item label="Логин" key={3}>
+                  erem-7-001
+                </Descriptions.Item>
                 <Descriptions.Item
                   label="Л/С"
                   contentStyle={{ whiteSpace: 'nowrap' }}
-                  span={1}>
+                  key={4}>
                   <Typography.Paragraph
                     copyable={{
                       tooltips: [
@@ -223,48 +240,58 @@ const Profile = () => {
                     902145
                   </Typography.Paragraph>
                 </Descriptions.Item>
-                <Descriptions.Item label="Улица" span={2}>
+                <Descriptions.Item label="Улица" key={5}>
                   Шевченко Т.Г улица
                 </Descriptions.Item>
-                <Descriptions.Item label="Дом">4</Descriptions.Item>
-                <Descriptions.Item label="Кваритра">124</Descriptions.Item>
-                <Descriptions.Item label="Паспорт выдан" span={2}>
+                <Descriptions.Item label="Дом" key={6}>
+                  4
+                </Descriptions.Item>
+                <Descriptions.Item label="Кваритра" key={7}>
+                  124
+                </Descriptions.Item>
+                <Descriptions.Item label="Паспорт выдан" key={8}>
                   Ленинским РО УМВД Украины в Луганской области
                 </Descriptions.Item>
-                <Descriptions.Item label="№ паспорта">
+                <Descriptions.Item label="№ паспорта" key={9}>
                   ЕК 141029
                 </Descriptions.Item>
-                <Descriptions.Item label="Дата выдачи">
+                <Descriptions.Item label="Дата выдачи" key={10}>
                   2021-11-21
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="Тел. основной"
-                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  contentStyle={{ whiteSpace: 'nowrap' }}
+                  key={11}>
                   {phone.main}
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="Тел. доп."
-                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  contentStyle={{ whiteSpace: 'nowrap' }}
+                  key={12}>
                   {phone.secondary}
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="№ договра"
-                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  contentStyle={{ whiteSpace: 'nowrap' }}
+                  key={13}>
                   045789
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="Договор от"
-                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  contentStyle={{ whiteSpace: 'nowrap' }}
+                  key={14}>
                   2021-11-21
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="Дата регистрации"
-                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  contentStyle={{ whiteSpace: 'nowrap' }}
+                  key={15}>
                   2021-11-19
                 </Descriptions.Item>
                 <Descriptions.Item
                   label="Дата активации"
-                  contentStyle={{ whiteSpace: 'nowrap' }}>
+                  contentStyle={{ whiteSpace: 'nowrap' }}
+                  key={16}>
                   2021-11-22
                 </Descriptions.Item>
               </Descriptions>
