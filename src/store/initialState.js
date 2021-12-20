@@ -50,7 +50,10 @@ export const profileInitialState = {
     },
     isLoading: false,
   },
+}
+export const testInitialState = {
   starships: {
+    total: 0,
     isLoading: false,
     data: [],
   },

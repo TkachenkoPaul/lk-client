@@ -13,10 +13,12 @@ import {
   PageHeader,
   Row,
   Switch,
+  Space,
+  Table,
 } from 'antd'
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Test = () => {
   const dispatch = useDispatch()
@@ -55,26 +57,6 @@ const Test = () => {
     setVisible(false)
     error('Отменили')
   }
-  const routes = [
-    {
-      path: 'index',
-      breadcrumbName: 'Домашняя',
-    },
-    {
-      path: '/profile',
-      breadcrumbName: 'Профиль',
-    },
-  ]
-  function itemRender(route, params, routes, paths) {
-    const last = routes.indexOf(route) === routes.length - 1
-    return last ? (
-      <span>{route.breadcrumbName}</span>
-    ) : (
-      <Link to={paths.join('/')} key={paths}>
-        {route.breadcrumbName}
-      </Link>
-    )
-  }
 
   const menu = (
     <Menu key={'menu1'}>
@@ -102,6 +84,44 @@ const Test = () => {
       </Menu.Item>
     </Menu>
   )
+
+  const starshipsData = useSelector(state => state.test.starships.data)
+  const isLoading = useSelector(state => state.test.starships.isLoading)
+  const total = useSelector(state => state.test.starships.total)
+  console.log('starshipsData: ', starshipsData)
+  console.log('isLoading: ', isLoading)
+
+  const addDataHandler = page => {
+    dispatch({ type: 'CLICK', page })
+  }
+
+  const columns = [
+    { title: 'Name', dataIndex: 'name', key: 'name', responsive: ['lg'] },
+    { title: 'Model', dataIndex: 'model', key: 'model' },
+    { title: 'Crew', dataIndex: 'crew', key: 'crew' },
+    { title: 'Class', dataIndex: 'starship_class', key: 'starship_class' },
+    {
+      title: 'Created',
+      dataIndex: 'created',
+      key: 'created',
+      responsive: ['md'],
+    },
+    { title: 'Edited', dataIndex: 'edited', key: 'edited' },
+  ]
+  let pagination = {
+    onChange: (page, pageSize) => {
+      addDataHandler(page)
+    },
+    responsive: true,
+    showLessItems: true,
+    size: 'default',
+    position: ['topRight', 'bottomRight'],
+    total: total,
+    showTotal: (total, range) => `${range[0]}-${range[1]} из ${total} записей`,
+    defaultPageSize: 10,
+    showSizeChanger: true,
+    pageSizeOptions: ['10', '15', '20', '25', '30'],
+  }
   return (
     <>
       <CollectionCreateForm
@@ -127,7 +147,6 @@ const Test = () => {
       )}
       <PageHeader
         style={{ height: '100%' }}
-        breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
         ghost={false}
         onBack={() => window.history.back()}
         title="Тест"
@@ -148,7 +167,17 @@ const Test = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
-            <>test component</>
+            <Space>
+              <Button type="primary" onClick={addDataHandler}>
+                add data
+              </Button>
+            </Space>
+            <Table
+              loading={isLoading}
+              columns={columns}
+              dataSource={starshipsData}
+              pagination={pagination}
+            />
           </Col>
         </Row>
       </PageHeader>
