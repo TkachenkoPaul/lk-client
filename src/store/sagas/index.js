@@ -1,4 +1,4 @@
-import { takeEvery, put, call, fork } from 'redux-saga/effects'
+import { takeEvery, put, call, spawn, all } from 'redux-saga/effects'
 import {
   setStarShips,
   setStarShipsIsLoading,
@@ -26,6 +26,22 @@ export function* watchClickSaga(action) {
   console.log('watcher payload', action)
   yield takeEvery('CLICK', workerSaga)
 }
+export function* loadStarshipsData(action) {
+  yield takeEvery('LOAD_STARSHIPS_DATA', workerSaga)
+}
 export default function* rootSaga() {
-  yield fork(watchClickSaga)
+  const sagas = [watchClickSaga, loadStarshipsData]
+  const retrySagas = sagas.map(saga => {
+    return spawn(function* () {
+      while (true) {
+        try {
+          yield call(saga)
+          break
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    })
+  })
+  yield all(retrySagas)
 }

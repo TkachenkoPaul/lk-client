@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   message,
   Alert,
@@ -94,7 +94,9 @@ const Test = () => {
   const addDataHandler = page => {
     dispatch({ type: 'CLICK', page })
   }
-
+  useEffect(() => {
+    dispatch({ type: 'LOAD_STARSHIPS_DATA' })
+  }, [])
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name', responsive: ['lg'] },
     { title: 'Model', dataIndex: 'model', key: 'model' },
