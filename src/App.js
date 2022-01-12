@@ -12,6 +12,7 @@ import './App.css'
 import Message from './components/Support/Message'
 import Reference from './components/Reference/Reference'
 import Test from './components/Test'
+import Login from './components/Login/Login'
 
 const { Content } = Layout
 
@@ -30,14 +31,8 @@ function App() {
           <Route path="*" element={<Error />} />
         </Route>
         <Route path="/logout" element={<>logout page</>} />
-        <Route
-          path="/login"
-          element={
-            <>
-              login page 1234 <Outlet />
-            </>
-          }>
-          <Route index element={<>login page</>} />
+        <Route path="/login" element={<Outlet />}>
+          <Route index element={<Login />} />
         </Route>
       </Routes>
     </div>
