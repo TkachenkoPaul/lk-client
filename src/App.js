@@ -13,10 +13,15 @@ import Message from './components/Support/Message'
 import Reference from './components/Reference/Reference'
 import Test from './components/Test'
 import Login from './components/Login/Login'
+import { useCookies } from 'react-cookie'
+import { useSelector } from 'react-redux'
 
 const { Content } = Layout
 
 function App() {
+  const [cookies, setCookies] = useCookies(['token'])
+  const auth = useSelector(state => state.auth)
+  console.log('auth state:', auth)
   return (
     <div>
       <Routes>

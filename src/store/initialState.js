@@ -51,6 +51,10 @@ export const profileInitialState = {
     isLoading: false,
   },
 }
+export const authInitialState = {
+  token: null,
+  isLoading: false,
+}
 export const testInitialState = {
   starships: {
     total: 0,
