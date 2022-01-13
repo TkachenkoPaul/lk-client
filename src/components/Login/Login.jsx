@@ -43,36 +43,7 @@ const Login = () => {
 const LoginForm = () => {
   const dispatch = useDispatch()
   const onFinish = values => {
-    // dispatch(doGetAuthToken(values))
-    // const response = fetch('http://192.168.8.165:33335/api/v1/auth/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //     'Access-Control-Allow-Origin': '*',
-    //     Connection: 'keep-alive',
-    //     'User-Agent':
-    //       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36',
-    //     'Upgrade-Insecure-Requests': '1',
-    //   },
-    //   body: JSON.stringify({ username: '1111111', password: '111111111' }),
-    // }).then(function (response) {
-    //   return response.json()
-    // })
-    // console.log(response)
-    axios
-      .get('http://192.168.8.165:33335/api/v1/users/me')
-      .then(function (response) {
-        // handle success
-        console.log(response)
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      })
-      .then(function () {
-        // always executed
-      })
+    dispatch(doGetAuthToken(values))
   }
   return (
     <Form
@@ -83,7 +54,7 @@ const LoginForm = () => {
       }}
       onFinish={onFinish}>
       <Form.Item
-        autocomplete="off"
+        autoComplete="off"
         name="username"
         rules={[
           {
