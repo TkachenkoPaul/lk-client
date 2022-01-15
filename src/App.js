@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BackTop, Col, Layout, Row } from 'antd'
-import { Outlet, Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
 import Profile from './components/Profile/Profile'
@@ -15,13 +15,34 @@ import Test from './components/Test'
 import Login from './components/Login/Login'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
+import { getUserRequest } from './api'
 
 const { Content } = Layout
 
 function App() {
+  const navigate = useNavigate()
   const [cookies, setCookies] = useCookies(['token'])
   const auth = useSelector(state => state.auth)
-  console.log('auth state:', auth)
+
+  useEffect(() => {
+    getUserRequest()
+      .then(function (response) {
+        // handle success
+        console.log('userApi response: ', response)
+        console.log('cookies: ', cookies)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log('userApi error: ', error.response)
+      })
+  }, [])
+
+  useEffect(() => {
+    if (!auth.isAuth) {
+      navigate('/login')
+    }
+  }, [auth.isAuth])
+  console.log('auth state: ', auth)
   return (
     <div>
       <Routes>

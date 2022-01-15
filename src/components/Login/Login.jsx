@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout, Spin } from 'antd'
 import { Form, Input, Button } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
@@ -6,17 +6,57 @@ import Footer from '../layout/Footer/Footer'
 import logo from './logo.png'
 import style from './Login.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  doAuthUser,
-  doGetAuthToken,
-} from '../../store/actionCreators/AuthCationCreator'
-import { GET_AUTH_TOKEN } from '../../store/actions/AuthActions'
-import axios from 'axios'
+import { doGetAuthToken } from '../../store/actionCreators/AuthCationCreator'
+import { useCookies } from 'react-cookie'
+import { useNavigate } from 'react-router-dom'
 
 const { Content } = Layout
 const Login = () => {
+  const [cookies, setCookie, removeCookie] = useCookies()
+  const navigate = useNavigate()
   const auth = useSelector(state => state.auth)
-  if (auth.loading) {
+  useEffect(() => {
+    if (!!auth.error) {
+      console.log('we have error message', auth.error)
+    }
+  }, [auth.error.code, auth.error.message])
+
+  useEffect(() => {
+    if (auth.isAuth) {
+      navigate('/')
+    }
+  }, [auth.isAuth])
+  useEffect(() => {
+    // const response = authRequest('vov-10-44', 'qwerty777', {
+    //   withCredentials: true,
+    // })
+    // console.log(response)
+    // authRequest('vov-10-44', 'qwerty777', {
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //   },
+    // })
+    //   .then(function (response) {
+    //     // handle success
+    //     console.log('authApi success: ', response)
+    //     console.log('cookies: ', cookies)
+    //   })
+    //   .catch(function (error) {
+    //     // handle error
+    //     console.log('authApi error: ', error.response)
+    //   })
+    // getUserRequest()
+    //   .then(function (response) {
+    //     // handle success
+    //     console.log('userApi response: ', response)
+    //     console.log('cookies: ', cookies)
+    //   })
+    //   .catch(function (error) {
+    //     // handle error
+    //     console.log('userApi error: ', error.response)
+    //   })
+  }, [])
+  if (auth.isLoading) {
     return <Spin size="large" />
   }
   return (
@@ -41,8 +81,11 @@ const Login = () => {
 }
 
 const LoginForm = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const onFinish = values => {
+    console.log('values from form: ', values)
     dispatch(doGetAuthToken(values))
   }
   return (
@@ -67,6 +110,7 @@ const LoginForm = () => {
           },
         ]}>
         <Input
+          value={username}
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Логин"
           allowClear
@@ -85,6 +129,7 @@ const LoginForm = () => {
           },
         ]}>
         <Input.Password
+          value={password}
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Пароль"
