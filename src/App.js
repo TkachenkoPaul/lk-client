@@ -32,16 +32,16 @@ function App() {
     if (isAuth === 'true') {
       dispatch(setAuth())
     }
-    getUserRequest()
-      .then(function (response) {
-        // handle success
-        console.log('userApi response: ', response)
-        console.log('cookies: ', cookies)
-      })
-      .catch(function (error) {
-        // handle error
-        console.log('userApi error: ', error.response)
-      })
+    // getUserRequest()
+    //   .then(function (response) {
+    //     // handle success
+    //     console.log('userApi response: ', response)
+    //     console.log('cookies: ', cookies)
+    //   })
+    //   .catch(function (error) {
+    //     // handle error
+    //     console.log('userApi error: ', error.response)
+    //   })
   }, [])
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import {
 } from '../slices/testSlice'
 
 import { authUser } from './authUser'
+import { getUser } from './getProfile'
 //auth saga
 // export function* authUserSagaWorker(action) {
 //   console.log('we are in authUserSagaWorker')
@@ -52,7 +53,6 @@ export function* workerSaga(action) {
   yield put(setStarShipsLoaded())
 }
 export function* watchClickSaga(action) {
-  console.log('watcher payload', action)
   yield takeEvery('CLICK', workerSaga)
 }
 export function* loadStarshipsData(action) {
@@ -60,7 +60,7 @@ export function* loadStarshipsData(action) {
 }
 
 export default function* rootSaga() {
-  const sagas = [watchClickSaga, loadStarshipsData, authUser]
+  const sagas = [watchClickSaga, loadStarshipsData, authUser, getUser]
   const retrySagas = sagas.map(saga => {
     return spawn(function* () {
       while (true) {

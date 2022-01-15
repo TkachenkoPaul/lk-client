@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
 import {
   message,
@@ -21,7 +21,8 @@ import {
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
 import styles from './Profile.module.scss'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -32,6 +33,11 @@ const Profile = () => {
     main: '0721044880',
     secondary: '0664841472',
   })
+  const profile = useSelector(state => state.profile)
+  console.log('profile information on profile page: ', profile)
+  useEffect(() => {
+    dispatch(getProfile())
+  }, [])
 
   const success = text => {
     message.success(text).then(res => console.log(res))

@@ -1,28 +1,21 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { authRequest } from '../../api'
-import { GET_AUTH_TOKEN } from '../actions/AuthActions'
+import { getUserRequest } from '../../api'
+import { setLoading, setLoaded, setProfile } from '../slices/profileSlice'
+import { GET_PROFILE } from '../actions/ProfileActions'
 
 export function* getProfileSagaWorker(action) {
-  console.log('we are in getProfileSagaWorker')
-  console.log('saga action: ', action)
   yield put(setLoading())
   try {
-    const response = yield call(
-      authRequest,
-      action.payload.username,
-      action.payload.password
-    )
-    yield put(setAuth())
-    yield put(setAuthToken(response))
+    const response = yield call(getUserRequest)
+    yield put(setProfile(response))
     yield put(setLoaded())
   } catch (error) {
-    yield put(setNotAuth())
-    yield put(setError(error.response))
+    console.log('profile error: ', error.response)
     yield put(setLoaded())
   }
 }
 
 export function* getUser() {
-  yield takeLatest(GET_AUTH_TOKEN, getProfileSagaWorker)
+  yield takeLatest(GET_PROFILE, getProfileSagaWorker)
 }

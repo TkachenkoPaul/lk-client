@@ -50,6 +50,9 @@ export const profileInitialState = {
     },
     isLoading: false,
   },
+  data: {},
+  isLoading: false,
+  isDebtor: false,
 }
 export const authInitialState = {
   token: null,
