@@ -4,7 +4,13 @@ import { profileInitialState } from '../initialState'
 const profileSlice = createSlice({
   name: 'profile',
   initialState: profileInitialState,
-  reducers: {},
+  reducers: {
+    setProfile: (state, action) => {
+      state.profile.push(...action.payload)
+    },
+    setLoading: state => (state.isLoading = true),
+    setLoaded: state => (state.isLoading = false),
+  },
 })
-export const {} = profileSlice.actions
+export const { setProfile } = profileSlice.actions
 export default profileSlice.reducer

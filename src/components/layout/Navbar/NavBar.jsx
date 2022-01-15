@@ -23,12 +23,12 @@ const NavBar = () => {
 
   const navigate = useNavigate()
   const menus = [
-    {
-      key: 11,
-      title: 'Тест',
-      path: '/test',
-      icon: <IdcardOutlined />,
-    },
+    // {
+    //   key: 11,
+    //   title: 'Тест',
+    //   path: '/test',
+    //   icon: <IdcardOutlined />,
+    // },
     {
       key: 1,
       title: 'Профиль',

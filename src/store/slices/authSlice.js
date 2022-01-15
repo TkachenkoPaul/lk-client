@@ -7,12 +7,15 @@ const authSlice = createSlice({
   reducers: {
     setAuth: state => {
       state.isAuth = true
+      localStorage.setItem('isAuth', 'true')
     },
     setNotAuth: state => {
       state.isAuth = false
+      localStorage.setItem('isAuth', 'false')
     },
     setAuthToken: (state, action) => {
       state.token = action.payload.data.access_token
+      localStorage.setItem('isAuth', 'true')
     },
     setLoading: state => {
       state.isLoading = true
@@ -21,8 +24,14 @@ const authSlice = createSlice({
       state.isLoading = false
     },
     setError: (state, action) => {
-      state.error.message = action.payload.data.message
-      state.error.code = action.payload.status
+      const status = action.payload.status
+      if (status === 404) {
+        state.error.message = 'Сервер не отвечает'
+        state.error.code = status
+      } else {
+        state.error.message = action.payload.data.message
+        state.error.code = action.payload.status
+      }
     },
   },
 })

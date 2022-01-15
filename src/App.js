@@ -14,17 +14,24 @@ import Reference from './components/Reference/Reference'
 import Test from './components/Test'
 import Login from './components/Login/Login'
 import { useCookies } from 'react-cookie'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getUserRequest } from './api'
+import { setAuth } from './store/slices/authSlice'
+import Logout from './components/Logout/Logout'
 
 const { Content } = Layout
 
 function App() {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [cookies, setCookies] = useCookies(['token'])
   const auth = useSelector(state => state.auth)
 
   useEffect(() => {
+    const isAuth = localStorage.getItem('isAuth')
+    if (isAuth === 'true') {
+      dispatch(setAuth())
+    }
     getUserRequest()
       .then(function (response) {
         // handle success
@@ -56,7 +63,7 @@ function App() {
           <Route path="/reference" element={<Reference />} />
           <Route path="*" element={<Error />} />
         </Route>
-        <Route path="/logout" element={<>logout page</>} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Outlet />}>
           <Route index element={<Login />} />
         </Route>

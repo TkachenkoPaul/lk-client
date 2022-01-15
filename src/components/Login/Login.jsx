@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Layout, Spin } from 'antd'
+import { Alert, Layout, Spin } from 'antd'
 import { Form, Input, Button } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import Footer from '../layout/Footer/Footer'
@@ -9,15 +9,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { doGetAuthToken } from '../../store/actionCreators/AuthCationCreator'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
+import { safePreventDefault } from 'react-slick/lib/utils/innerSliderUtils'
 
 const { Content } = Layout
 const Login = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate()
   const auth = useSelector(state => state.auth)
+  const [alert, setAlert] = useState('')
   useEffect(() => {
     if (!!auth.error) {
-      console.log('we have error message', auth.error)
+      setAlert(auth.error.message)
     }
   }, [auth.error.code, auth.error.message])
 
@@ -71,7 +73,7 @@ const Login = () => {
             alt="Responsive image"
           />
           <div className={style.siteLayoutContent}>
-            <LoginForm />
+            <LoginForm alert={alert} />
           </div>
         </div>
       </Content>
@@ -80,12 +82,11 @@ const Login = () => {
   )
 }
 
-const LoginForm = () => {
+const LoginForm = props => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const onFinish = values => {
-    console.log('values from form: ', values)
     dispatch(doGetAuthToken(values))
   }
   return (
@@ -110,6 +111,7 @@ const LoginForm = () => {
           },
         ]}>
         <Input
+          onChange={e => setUsername(e.target.value)}
           value={username}
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Логин"
@@ -130,6 +132,7 @@ const LoginForm = () => {
         ]}>
         <Input.Password
           value={password}
+          onChange={e => setPassword(e.target.value)}
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Пароль"
@@ -144,6 +147,15 @@ const LoginForm = () => {
           Войти
         </Button>
       </Form.Item>
+      {props.alert && (
+        <Alert
+          message="Ошибка"
+          description={props.alert}
+          type="error"
+          showIcon
+          closable
+        />
+      )}
     </Form>
   )
 }
