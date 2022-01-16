@@ -52,6 +52,7 @@ export const profileInitialState = {
   },
   data: {},
   isLoading: false,
+  isLoaded: false,
   isDebtor: false,
 }
 export const authInitialState = {

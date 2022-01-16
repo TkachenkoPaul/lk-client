@@ -17,6 +17,7 @@ import {
   Switch,
   Tag,
   Typography,
+  Skeleton,
 } from 'antd'
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
@@ -26,7 +27,12 @@ import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const [deposit, setDeposit] = useState(120)
+  useEffect(() => {
+    dispatch(getProfile())
+  }, [])
+  const [deposit, setDeposit] = useState(0)
+  const [days, setDays] = useState(0)
+  const [fee, setFee] = useState(0)
   const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
   const [phone, setPhone] = useState({
@@ -36,8 +42,14 @@ const Profile = () => {
   const profile = useSelector(state => state.profile)
   console.log('profile information on profile page: ', profile)
   useEffect(() => {
-    dispatch(getProfile())
-  }, [])
+    profile.data?.bill?.deposit && setDeposit(profile.data.bill.deposit)
+  }, [profile.data.bill])
+  useEffect(() => {
+    profile.data?.dvmain?.tariff && setFee(profile.data.dvmain.tariff.day_fee)
+    if (profile.data.dvmain.tariff) {
+      setDays(Math.floor(deposit / fee))
+    }
+  }, [profile.data.bill, profile.data.dvmain])
 
   const success = text => {
     message.success(text).then(res => console.log(res))
@@ -123,7 +135,7 @@ const Profile = () => {
         phone={phone}
         sms={false}
       />
-      <InfoBoxes switch={true} />
+      <InfoBoxes switch={true} deposit={deposit} days={days} fee={fee} />
       {isDebtor && (
         <Alert
           banner
@@ -143,7 +155,7 @@ const Profile = () => {
         ghost={false}
         onBack={() => window.history.back()}
         title="Профиль"
-        subTitle="erem-7-001"
+        subTitle={profile.data.id}
         extra={[
           <Dropdown
             overlay={menu}
@@ -160,147 +172,22 @@ const Profile = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
-            <Descriptions
-              title={
-                <h6 className={`${styles.divider} ${styles.gradient}`}>
-                  Финансы
-                </h6>
-              }
-              bordered
-              column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
-              <Descriptions.Item label="Баланс руб." key={1}>
-                <div style={{ fontSize: '16px' }}>
-                  {deposit >= 0 ? (
-                    deposit
-                  ) : (
-                    <Tag
-                      color="error"
-                      style={{ fontSize: '18px', padding: '10px' }}>
-                      {deposit}
-                    </Tag>
-                  )}
-                </div>
-              </Descriptions.Item>
-              <Descriptions.Item label="Тарифный пакет" key={2}>
-                <div style={{ fontSize: '16px' }}>
-                  Интернет 100 + IPTV + Кабельное ТВ
-                </div>
-              </Descriptions.Item>
-              <Descriptions.Item label="Статус тарифного плана" key={3}>
-                Активно
-              </Descriptions.Item>
-              <Descriptions.Item label="Оплачено дней" key={4}>
-                31
-              </Descriptions.Item>
-              <Descriptions.Item label="Дата окончания тарифа" key={5}>
-                2021-12-19
-              </Descriptions.Item>
-
-              <Descriptions.Item
-                label="Оплата за тарифный пакет, руб./сутки"
-                key={6}>
-                Интернет 100 + IPTV: 11 руб./сутки
-                <br />
-                Кабельное ТВ: 2.5 руб./сутки
-                <br />
-                Реальный IP-адрес: 2.8 руб./сутки
-              </Descriptions.Item>
-              <Descriptions.Item label="К оплате, руб./сутки" key={7}>
-                <div style={{ fontSize: '16px' }}>12.05</div>
-              </Descriptions.Item>
-            </Descriptions>
+            {profile.isLoading ? (
+              <Skeleton active />
+            ) : (
+              <Finance deposit={deposit} />
+            )}
           </Col>
           <Col
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
             <div className="mb-4">
-              <Descriptions
-                layout="vertical"
-                // size="middle"
-                title={
-                  <h6 className={`${styles.divider} ${styles.gradient}`}>
-                    Личная информация
-                  </h6>
-                }
-                bordered
-                column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}
-                key={1}>
-                <Descriptions.Item label="ФИО" key={2}>
-                  Тестеров Тестер Тестерович
-                </Descriptions.Item>
-                <Descriptions.Item label="Логин" key={3}>
-                  erem-7-001
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label="Л/С"
-                  contentStyle={{ whiteSpace: 'nowrap' }}
-                  key={4}>
-                  <Typography.Paragraph
-                    copyable={{
-                      tooltips: [
-                        'Нажмите, чтобы скопировать текст в буфер обмена',
-                        'Успешно скопировано',
-                      ],
-                    }}>
-                    902145
-                  </Typography.Paragraph>
-                </Descriptions.Item>
-                <Descriptions.Item label="Улица" key={5}>
-                  Шевченко Т.Г улица
-                </Descriptions.Item>
-                <Descriptions.Item label="Дом" key={6}>
-                  4
-                </Descriptions.Item>
-                <Descriptions.Item label="Кваритра" key={7}>
-                  124
-                </Descriptions.Item>
-                <Descriptions.Item label="Паспорт выдан" key={8}>
-                  Ленинским РО УМВД Украины в Луганской области
-                </Descriptions.Item>
-                <Descriptions.Item label="№ паспорта" key={9}>
-                  ЕК 141029
-                </Descriptions.Item>
-                <Descriptions.Item label="Дата выдачи" key={10}>
-                  2021-11-21
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label="Тел. основной"
-                  contentStyle={{ whiteSpace: 'nowrap' }}
-                  key={11}>
-                  {phone.main}
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label="Тел. доп."
-                  contentStyle={{ whiteSpace: 'nowrap' }}
-                  key={12}>
-                  {phone.secondary}
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label="№ договра"
-                  contentStyle={{ whiteSpace: 'nowrap' }}
-                  key={13}>
-                  045789
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label="Договор от"
-                  contentStyle={{ whiteSpace: 'nowrap' }}
-                  key={14}>
-                  2021-11-21
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label="Дата регистрации"
-                  contentStyle={{ whiteSpace: 'nowrap' }}
-                  key={15}>
-                  2021-11-19
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label="Дата активации"
-                  contentStyle={{ whiteSpace: 'nowrap' }}
-                  key={16}>
-                  2021-11-22
-                </Descriptions.Item>
-              </Descriptions>
+              {profile.isLoading ? (
+                <Skeleton active />
+              ) : (
+                <PersonalInformation phone={phone} />
+              )}
             </div>
           </Col>
         </Row>
@@ -308,7 +195,143 @@ const Profile = () => {
     </>
   )
 }
+const Finance = props => {
+  return (
+    <Descriptions
+      title={
+        <h6 className={`${styles.divider} ${styles.gradient}`}>Финансы</h6>
+      }
+      bordered
+      column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
+      <Descriptions.Item label="Баланс руб." key={1}>
+        <div style={{ fontSize: '16px' }}>
+          {props.deposit >= 0 ? (
+            props.deposit
+          ) : (
+            <Tag color="error" style={{ fontSize: '18px', padding: '10px' }}>
+              {props.deposit}
+            </Tag>
+          )}
+        </div>
+      </Descriptions.Item>
+      <Descriptions.Item label="Тарифный пакет" key={2}>
+        <div style={{ fontSize: '16px' }}>
+          Интернет 100 + IPTV + Кабельное ТВ
+        </div>
+      </Descriptions.Item>
+      <Descriptions.Item label="Статус тарифного плана" key={3}>
+        Активно
+      </Descriptions.Item>
+      <Descriptions.Item label="Оплачено дней" key={4}>
+        31
+      </Descriptions.Item>
+      <Descriptions.Item label="Дата окончания тарифа" key={5}>
+        2021-12-19
+      </Descriptions.Item>
 
+      <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки" key={6}>
+        Интернет 100 + IPTV: 11 руб./сутки
+        <br />
+        Кабельное ТВ: 2.5 руб./сутки
+        <br />
+        Реальный IP-адрес: 2.8 руб./сутки
+      </Descriptions.Item>
+      <Descriptions.Item label="К оплате, руб./сутки" key={7}>
+        <div style={{ fontSize: '16px' }}>12.05</div>
+      </Descriptions.Item>
+    </Descriptions>
+  )
+}
+const PersonalInformation = props => {
+  return (
+    <Descriptions
+      layout="vertical"
+      // size="middle"
+      title={
+        <h6 className={`${styles.divider} ${styles.gradient}`}>
+          Личная информация
+        </h6>
+      }
+      bordered
+      column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}
+      key={1}>
+      <Descriptions.Item label="ФИО" key={2}>
+        Тестеров Тестер Тестерович
+      </Descriptions.Item>
+      <Descriptions.Item label="Логин" key={3}>
+        erem-7-001
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="Л/С"
+        contentStyle={{ whiteSpace: 'nowrap' }}
+        key={4}>
+        <Typography.Paragraph
+          copyable={{
+            tooltips: [
+              'Нажмите, чтобы скопировать текст в буфер обмена',
+              'Успешно скопировано',
+            ],
+          }}>
+          902145
+        </Typography.Paragraph>
+      </Descriptions.Item>
+      <Descriptions.Item label="Улица" key={5}>
+        Шевченко Т.Г улица
+      </Descriptions.Item>
+      <Descriptions.Item label="Дом" key={6}>
+        4
+      </Descriptions.Item>
+      <Descriptions.Item label="Кваритра" key={7}>
+        124
+      </Descriptions.Item>
+      <Descriptions.Item label="Паспорт выдан" key={8}>
+        Ленинским РО УМВД Украины в Луганской области
+      </Descriptions.Item>
+      <Descriptions.Item label="№ паспорта" key={9}>
+        ЕК 141029
+      </Descriptions.Item>
+      <Descriptions.Item label="Дата выдачи" key={10}>
+        2021-11-21
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="Тел. основной"
+        contentStyle={{ whiteSpace: 'nowrap' }}
+        key={11}>
+        {props.phone.main}
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="Тел. доп."
+        contentStyle={{ whiteSpace: 'nowrap' }}
+        key={12}>
+        {props.phone.secondary}
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="№ договра"
+        contentStyle={{ whiteSpace: 'nowrap' }}
+        key={13}>
+        045789
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="Договор от"
+        contentStyle={{ whiteSpace: 'nowrap' }}
+        key={14}>
+        2021-11-21
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="Дата регистрации"
+        contentStyle={{ whiteSpace: 'nowrap' }}
+        key={15}>
+        2021-11-19
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="Дата активации"
+        contentStyle={{ whiteSpace: 'nowrap' }}
+        key={16}>
+        2021-11-22
+      </Descriptions.Item>
+    </Descriptions>
+  )
+}
 const CollectionCreateForm = ({
   visible,
   onCreate,

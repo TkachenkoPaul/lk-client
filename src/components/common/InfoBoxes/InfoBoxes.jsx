@@ -14,7 +14,7 @@ const InfoBoxes = props => {
             md="6"
             xs="12"
             name="Баланс"
-            value="1200"
+            value={props.deposit}
             measurement="руб."
           />
           <InfoBox
@@ -24,7 +24,7 @@ const InfoBoxes = props => {
             md="6"
             xs="12"
             name="Оплачено"
-            value="35"
+            value={props.days}
             measurement=" дней"
           />
           <div className="clearfix hidden-md-up">{''}</div>
@@ -35,7 +35,7 @@ const InfoBoxes = props => {
             md="6"
             xs="12"
             name="Снятие"
-            value="112.5"
+            value={props.fee}
             measurement="руб."
           />
           <InfoBox
