@@ -24,6 +24,7 @@ import Marquee from 'react-fast-marquee'
 import styles from './Profile.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
+import * as dayjs from 'dayjs'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -31,8 +32,13 @@ const Profile = () => {
     dispatch(getProfile())
   }, [])
   const [deposit, setDeposit] = useState(0)
-  const [days, setDays] = useState(0)
+
   const [fee, setFee] = useState(0)
+  const [paidDays, setDays] = useState(0)
+  const [paidTo, setPaidTo] = useState('0000-00-00')
+  const [tariffName, setTariffName] = useState('')
+  const [tariffState, setTariffState] = useState('')
+  const [tariffInfo, setTariffInfo] = useState(``)
   const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
   const [phone, setPhone] = useState({
@@ -40,16 +46,53 @@ const Profile = () => {
     secondary: '0664841472',
   })
   const profile = useSelector(state => state.profile)
-  console.log('profile information on profile page: ', profile)
   useEffect(() => {
-    profile.data?.bill?.deposit && setDeposit(profile.data.bill.deposit)
+    // устанивливаю баланс
+    profile.data?.bill?.deposit && setDeposit(+profile.data.bill.deposit)
   }, [profile.data.bill])
   useEffect(() => {
+    // устанавлюваю дневную абоненплату  и назваение тарифа
     profile.data?.dvmain?.tariff && setFee(profile.data.dvmain.tariff.day_fee)
-    if (profile.data.dvmain.tariff) {
-      setDays(Math.floor(deposit / fee))
-    }
+    profile.data?.dvmain?.tariff &&
+      setTariffName(profile.data.dvmain.tariff.name)
   }, [profile.data.bill, profile.data.dvmain])
+  useEffect(() => {
+    //устанавливаю статус тарифного плана
+    if (profile?.data?.dvmain?.disable) {
+      switch (profile.data.dvmain.disable) {
+        case 0:
+          setTariffState('Активно')
+          break
+        case 1:
+          setTariffState('Отключено')
+          break
+        case 2:
+          setTariffState('Не активизирован')
+          break
+        case 3:
+          setTariffState('Приостановление')
+          break
+        case 4:
+          setTariffState('Отключено: Неуплата')
+          break
+        case 5:
+          setTariffState('Слишком маленький депозит')
+          break
+        default:
+          setTariffState('Недоступно')
+      }
+    }
+  }, [profile.data.dvmain])
+  useEffect(() => {
+    // устанавливаю количество оплаченных дней
+    setDays(Math.floor(deposit / fee))
+  }, [deposit, fee])
+  useEffect(() => {
+    setPaidTo(dayjs().add(paidDays, 'day').format('YYYY-MM-DD'))
+  }, [paidDays])
+  useEffect(() => {
+    setTariffInfo(`${tariffName} : ${fee} руб.`)
+  }, [tariffName, fee])
 
   const success = text => {
     message.success(text).then(res => console.log(res))
@@ -120,8 +163,8 @@ const Profile = () => {
         key="3">
         Долг вкл/выкл
       </Menu.Item>
-      <Menu.Item onClick={() => dispatch({ type: 'CLICK' })} key="4">
-        Загрузить данные
+      <Menu.Item onClick={() => setDeposit(deposit + 20)} key="4">
+        Добавить денег абоненту
       </Menu.Item>
     </Menu>
   )
@@ -135,7 +178,12 @@ const Profile = () => {
         phone={phone}
         sms={false}
       />
-      <InfoBoxes switch={true} deposit={deposit} days={days} fee={fee} />
+      <InfoBoxes
+        switch={true}
+        deposit={deposit}
+        paidDays={paidDays}
+        fee={fee}
+      />
       {isDebtor && (
         <Alert
           banner
@@ -175,7 +223,15 @@ const Profile = () => {
             {profile.isLoading ? (
               <Skeleton active />
             ) : (
-              <Finance deposit={deposit} />
+              <Finance
+                deposit={deposit}
+                paidTo={paidTo}
+                paidDays={paidDays}
+                taariffName={tariffName}
+                tariffState={tariffState}
+                tariffInfo={tariffInfo}
+                fee={fee}
+              />
             )}
           </Col>
           <Col
@@ -208,36 +264,30 @@ const Finance = props => {
           {props.deposit >= 0 ? (
             props.deposit
           ) : (
-            <Tag color="error" style={{ fontSize: '18px', padding: '10px' }}>
+            <Tag color="error" style={{ fontSize: '16px', padding: '10px' }}>
               {props.deposit}
             </Tag>
           )}
         </div>
       </Descriptions.Item>
       <Descriptions.Item label="Тарифный пакет" key={2}>
-        <div style={{ fontSize: '16px' }}>
-          Интернет 100 + IPTV + Кабельное ТВ
-        </div>
+        <div style={{ fontSize: '15px' }}>{props.taariffName}</div>
       </Descriptions.Item>
       <Descriptions.Item label="Статус тарифного плана" key={3}>
-        Активно
+        {props.tariffState}
       </Descriptions.Item>
       <Descriptions.Item label="Оплачено дней" key={4}>
-        31
+        {props.paidDays}
       </Descriptions.Item>
       <Descriptions.Item label="Дата окончания тарифа" key={5}>
-        2021-12-19
+        {props.paidTo}
       </Descriptions.Item>
 
       <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки" key={6}>
-        Интернет 100 + IPTV: 11 руб./сутки
-        <br />
-        Кабельное ТВ: 2.5 руб./сутки
-        <br />
-        Реальный IP-адрес: 2.8 руб./сутки
+        {props.tariffInfo}
       </Descriptions.Item>
       <Descriptions.Item label="К оплате, руб./сутки" key={7}>
-        <div style={{ fontSize: '16px' }}>12.05</div>
+        <div style={{ fontSize: '15px' }}>{props.fee}</div>
       </Descriptions.Item>
     </Descriptions>
   )
