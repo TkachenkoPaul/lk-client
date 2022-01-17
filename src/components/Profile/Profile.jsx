@@ -31,8 +31,8 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getProfile())
   }, [])
+  // finance
   const [deposit, setDeposit] = useState(0)
-
   const [fee, setFee] = useState(0)
   const [paidDays, setDays] = useState(0)
   const [paidTo, setPaidTo] = useState('0000-00-00')
@@ -41,11 +41,22 @@ const Profile = () => {
   const [tariffInfo, setTariffInfo] = useState(``)
   const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
+  // personal information
+  const [login, setLogin] = useState('')
+  const [fio, setFio] = useState('')
+  const [uid, setUid] = useState('')
+  const [address, setAddress] = useState({})
+  const [passport, setPassport] = useState({})
+  const [personalPhone, setPersonalPhone] = useState('')
+  const [contract, setContract] = useState('')
+  const [registration, setRegistration] = useState('')
+  const [activation, setActivation] = useState('')
   const [phone, setPhone] = useState({
     main: '0721044880',
     secondary: '0664841472',
   })
   const profile = useSelector(state => state.profile)
+  // finance effects
   useEffect(() => {
     // устанивливаю баланс
     profile.data?.bill?.deposit && setDeposit(+profile.data.bill.deposit)
@@ -93,6 +104,41 @@ const Profile = () => {
   useEffect(() => {
     setTariffInfo(`${tariffName} : ${fee} руб.`)
   }, [tariffName, fee])
+  //personal info effects
+  useEffect(() => {
+    profile.data?.id && setLogin(profile.data.id)
+  }, [profile.data.id])
+  useEffect(() => {
+    profile.data?.users_pi && setFio(profile.data.users_pi.fio)
+  }, [profile.data.users_pi])
+  useEffect(() => {
+    const ls = String(profile.data.uid)
+    let newLs = ''
+    for (let i = 0; i < 6 - ls.length; i++) {
+      newLs += 0
+    }
+    profile.data?.uid && setUid(`${newLs}${ls}`)
+  }, [profile.data.uid])
+  useEffect(() => {
+    profile.data?.users_pi &&
+      setAddress({
+        street: profile.data.users_pi.address_street,
+        flat: profile.data.users_pi.address_flat,
+        build: profile.data.users_pi.address_build,
+      })
+  }, [profile.data.users_pi])
+  useEffect(() => {
+    profile.data?.users_pi && setPersonalPhone(profile.data.users_pi.phone)
+  }, [profile.data.users_pi])
+  useEffect(() => {
+    profile.data?.users_pi && setContract(profile.data.users_pi.contract_id)
+  }, [profile.data.users_pi])
+  useEffect(() => {
+    profile.data && setRegistration(profile.data.registration)
+  }, [profile.data.registration])
+  useEffect(() => {
+    profile.data && setActivation(profile.data.activate)
+  }, [profile.data.activate])
 
   const success = text => {
     message.success(text).then(res => console.log(res))
@@ -203,7 +249,7 @@ const Profile = () => {
         ghost={false}
         onBack={() => window.history.back()}
         title="Профиль"
-        subTitle={profile.data.id}
+        subTitle={login}
         extra={[
           <Dropdown
             overlay={menu}
@@ -242,7 +288,17 @@ const Profile = () => {
               {profile.isLoading ? (
                 <Skeleton active />
               ) : (
-                <PersonalInformation phone={phone} />
+                <PersonalInformation
+                  activation={activation}
+                  registration={registration}
+                  address={address}
+                  phone={phone}
+                  personalPhone={personalPhone}
+                  contract={contract}
+                  login={login}
+                  fio={fio}
+                  uid={uid}
+                />
               )}
             </div>
           </Col>
@@ -287,7 +343,7 @@ const Finance = props => {
         {props.tariffInfo}
       </Descriptions.Item>
       <Descriptions.Item label="К оплате, руб./сутки" key={7}>
-        <div style={{ fontSize: '15px' }}>{props.fee}</div>
+        <div style={{ fontSize: '15px' }}>{props.fee} руб.</div>
       </Descriptions.Item>
     </Descriptions>
   )
@@ -295,7 +351,7 @@ const Finance = props => {
 const PersonalInformation = props => {
   return (
     <Descriptions
-      layout="vertical"
+      layout=""
       // size="middle"
       title={
         <h6 className={`${styles.divider} ${styles.gradient}`}>
@@ -303,13 +359,13 @@ const PersonalInformation = props => {
         </h6>
       }
       bordered
-      column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}
+      column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}
       key={1}>
       <Descriptions.Item label="ФИО" key={2}>
-        Тестеров Тестер Тестерович
+        {props.fio}
       </Descriptions.Item>
       <Descriptions.Item label="Логин" key={3}>
-        erem-7-001
+        {props.login}
       </Descriptions.Item>
       <Descriptions.Item
         label="Л/С"
@@ -322,62 +378,41 @@ const PersonalInformation = props => {
               'Успешно скопировано',
             ],
           }}>
-          902145
+          {props.uid}
         </Typography.Paragraph>
       </Descriptions.Item>
       <Descriptions.Item label="Улица" key={5}>
-        Шевченко Т.Г улица
+        {props.address.street}
       </Descriptions.Item>
       <Descriptions.Item label="Дом" key={6}>
-        4
+        {props.address.build}
       </Descriptions.Item>
       <Descriptions.Item label="Кваритра" key={7}>
-        124
-      </Descriptions.Item>
-      <Descriptions.Item label="Паспорт выдан" key={8}>
-        Ленинским РО УМВД Украины в Луганской области
-      </Descriptions.Item>
-      <Descriptions.Item label="№ паспорта" key={9}>
-        ЕК 141029
-      </Descriptions.Item>
-      <Descriptions.Item label="Дата выдачи" key={10}>
-        2021-11-21
+        {props.address.flat}
       </Descriptions.Item>
       <Descriptions.Item
-        label="Тел. основной"
+        label="Телефон"
         contentStyle={{ whiteSpace: 'nowrap' }}
         key={11}>
-        {props.phone.main}
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="Тел. доп."
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={12}>
-        {props.phone.secondary}
+        {props.personalPhone === '0' ? '' : props.personalPhone}
       </Descriptions.Item>
       <Descriptions.Item
         label="№ договра"
         contentStyle={{ whiteSpace: 'nowrap' }}
         key={13}>
-        045789
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="Договор от"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={14}>
-        2021-11-21
+        {props.contract === '0' ? '' : props.contract}
       </Descriptions.Item>
       <Descriptions.Item
         label="Дата регистрации"
         contentStyle={{ whiteSpace: 'nowrap' }}
         key={15}>
-        2021-11-19
+        {props.registration === '0' ? '' : props.registration}
       </Descriptions.Item>
       <Descriptions.Item
         label="Дата активации"
         contentStyle={{ whiteSpace: 'nowrap' }}
         key={16}>
-        2021-11-22
+        {props.activation === '0' ? '' : props.activation}
       </Descriptions.Item>
     </Descriptions>
   )
