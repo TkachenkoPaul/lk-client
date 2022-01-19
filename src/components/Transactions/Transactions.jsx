@@ -21,19 +21,7 @@ const Transactions = () => {
       <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
     );
   }
-  const columns = [
-    { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
-    { title: 'Дата', dataIndex: 'date', key: 'date' },
-    { title: 'Сумма', dataIndex: 'sum', key: 'sum' },
-    { title: 'Депозит', dataIndex: 'dep', key: 'dep' },
-    {
-      title: 'Описание',
-      dataIndex: 'actionDescription',
-      key: 'actionDescription',
-      responsive: ['md'],
-    },
-    { title: 'Вид оплаты', dataIndex: 'type', key: 'type' },
-  ]
+
   const data = [
     {
       key: 1,
@@ -256,23 +244,7 @@ const Transactions = () => {
         'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
     },
   ]
-  const columnsFees = [
-    { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
-    { title: 'Дата', dataIndex: 'date', key: 'date' },
-    { title: 'Сумма', dataIndex: 'sum', key: 'sum' },
-    { title: 'Депозит', dataIndex: 'dep', key: 'dep', responsive: ['md'] },
-    {
-      title: 'Описание',
-      dataIndex: 'actionDescription',
-      key: 'actionDescription',
-    },
-    {
-      title: 'Вид операции',
-      dataIndex: 'type',
-      key: 'type',
-      responsive: ['md'],
-    },
-  ]
+
   const dataFees = [
     {
       key: 1,
@@ -372,45 +344,15 @@ const Transactions = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
-            <Divider orientation="left">Оплаты</Divider>
-            <Table
-              loading={false}
-              columns={columns}
-              dataSource={data}
-              pagination={pagination}
-            />
+            <Payments/>
+
           </Col>
           <Col
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
             <div className="mb-4">
-              <Divider orientation="left">Снятия</Divider>
-              <Table
-                loading={loading}
-                hasData={hasData}
-                columns={columnsFees}
-                dataSource={!hasData ? dataFees : null}
-                // dataSource={dataFees}
-                pagination={paginationFees}
-              />
-              <div className="m-4 p-4">
-                <div className="mb-2 ">
-                  <Button type="primary" onClick={() => setLoading(!loading)}>
-                    Загрузка вкл/выкл
-                  </Button>
-                  <p>
-                    демонстрация загрузки данных с сервера. стандартно нет
-                    данных
-                  </p>
-                </div>
-                <div className="mb-2">
-                  <Button type="primary" onClick={() => setHasData(!hasData)}>
-                    Удалить/Добавить данные
-                  </Button>
-                  <p>демонстрация наличия/ отсутствия даныых для отображения</p>
-                </div>
-              </div>
+              <Fees/>
             </div>
           </Col>
         </Row>
@@ -418,4 +360,59 @@ const Transactions = () => {
     </>
   )
 }
+
+const Payments = (props) => {
+  const columns = [
+    { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
+    { title: 'Дата', dataIndex: 'date', key: 'date' },
+    { title: 'Сумма', dataIndex: 'sum', key: 'sum' },
+    { title: 'Депозит', dataIndex: 'dep', key: 'dep' },
+    {
+      title: 'Описание',
+      dataIndex: 'actionDescription',
+      key: 'actionDescription',
+      responsive: ['md'],
+    },
+    { title: 'Вид оплаты', dataIndex: 'type', key: 'type' },
+  ]
+  return <>
+    <Divider orientation="left">Оплаты</Divider>
+    <Table
+      loading={props.isLoading}
+      columns={columns}
+      dataSource={props.data ? props.data : null}
+
+    />
+  </>
+}
+
+const Fees = (props) => {
+  const columns = [
+    { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
+    { title: 'Дата', dataIndex: 'date', key: 'date' },
+    { title: 'Сумма', dataIndex: 'sum', key: 'sum' },
+    { title: 'Депозит', dataIndex: 'dep', key: 'dep', responsive: ['md'] },
+    {
+      title: 'Описание',
+      dataIndex: 'actionDescription',
+      key: 'actionDescription',
+    },
+    {
+      title: 'Вид операции',
+      dataIndex: 'type',
+      key: 'type',
+      responsive: ['md'],
+    },
+  ]
+  return <>
+    <Divider orientation="left">Снятия</Divider>
+    <Table
+      loading={props.isLoading}
+      hasData={!!props.data}
+      columns={columns}
+      dataSource={props.data ? props.data : null}
+    />
+  </>
+}
+
 export default Transactions
