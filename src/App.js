@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BackTop, Col, Layout, Row } from 'antd'
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
@@ -13,10 +13,8 @@ import Message from './components/Support/Message'
 import Reference from './components/Reference/Reference'
 import Test from './components/Test'
 import Login from './components/Login/Login'
-import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserRequest } from './api'
-import { setAuth } from './store/slices/authSlice'
+import { setAuth, setNotAuth } from './store/slices/authSlice'
 import Logout from './components/Logout/Logout'
 
 const { Content } = Layout
@@ -24,32 +22,29 @@ const { Content } = Layout
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [cookies, setCookies] = useCookies(['token'])
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'))
+  const [counter, setCounter] = useState(1)
   const auth = useSelector(state => state.auth)
+  const auth2 = useSelector(state => state.auth)
 
+  console.log('isAuth',isAuth)
   useEffect(() => {
-    const isAuth = localStorage.getItem('isAuth')
     if (isAuth === 'true') {
       dispatch(setAuth())
+    } else {
+      dispatch(setNotAuth())
     }
-    // getUserRequest()
-    //   .then(function (response) {
-    //     // handle success
-    //     console.log('userApi response: ', response)
-    //     console.log('cookies: ', cookies)
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log('userApi error: ', error.response)
-    //   })
   }, [])
 
   useEffect(() => {
-    if (!auth.isAuth) {
+    if (!isAuth) {
       navigate('/login')
     }
-  }, [auth.isAuth])
+  }, [isAuth])
+
   console.log('auth state: ', auth)
+  console.log('auth state2: ', auth)
+  console.log('counter : ', counter)
   return (
     <div>
       <Routes>

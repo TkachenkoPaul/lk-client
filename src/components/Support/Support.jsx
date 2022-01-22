@@ -122,7 +122,16 @@ const Support = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
+            <Divider orientation="left">SpeedTest</Divider>
+            <iframe
+              width="100%"
+              height="650px"
+              frameBorder={0}
+              src="https://rck.speedtestcustom.com"
+            />
+
             <Divider orientation="left">История заявок</Divider>
+
             <Table
               loading={isLoading}
               columns={columns}

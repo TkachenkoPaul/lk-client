@@ -11,7 +11,7 @@ const authSlice = createSlice({
     },
     setNotAuth: state => {
       state.isAuth = false
-      localStorage.setItem('isAuth', 'false')
+      localStorage.removeItem('isAuth')
     },
     setAuthToken: (state, action) => {
       state.token = action.payload.data.access_token

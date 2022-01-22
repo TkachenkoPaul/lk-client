@@ -28,36 +28,6 @@ const Login = () => {
       navigate('/')
     }
   }, [auth.isAuth])
-  useEffect(() => {
-    // const response = authRequest('vov-10-44', 'qwerty777', {
-    //   withCredentials: true,
-    // })
-    // console.log(response)
-    // authRequest('vov-10-44', 'qwerty777', {
-    //   headers: {
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //   },
-    // })
-    //   .then(function (response) {
-    //     // handle success
-    //     console.log('authApi success: ', response)
-    //     console.log('cookies: ', cookies)
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log('authApi error: ', error.response)
-    //   })
-    // getUserRequest()
-    //   .then(function (response) {
-    //     // handle success
-    //     console.log('userApi response: ', response)
-    //     console.log('cookies: ', cookies)
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log('userApi error: ', error.response)
-    //   })
-  }, [])
   if (auth.isLoading) {
     return <Spin size="large" />
   }
