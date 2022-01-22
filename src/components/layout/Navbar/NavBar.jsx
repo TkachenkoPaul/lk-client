@@ -11,8 +11,11 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom'
 import './NavBar.module.scss'
 import logoImage from '../sider/smallLogo.png'
+import { deleteToken, setNotAuth } from '../../../store/slices/authSlice'
+import { useDispatch } from 'react-redux'
 
 const NavBar = () => {
+  const dispatch = useDispatch()
   const [currentKey, setCurrentKey] = useState(null)
   const location = useLocation()
   useEffect(() => {
@@ -84,11 +87,14 @@ const NavBar = () => {
     )
   })
   const handleClick = e => {
-    if (e.key !== '/speedtest') {
+    if (e.key === '/speedtest') {
+      openInNewTab('https://www.speedtest.net/ru')
+    } else if (e.key === '/logout') {
+      dispatch(setNotAuth())
+      dispatch(deleteToken())
+    } else {
       navigate(e.key)
       setCurrentKey(e.key)
-    } else {
-      openInNewTab('https://www.speedtest.net/ru')
     }
   }
   return (

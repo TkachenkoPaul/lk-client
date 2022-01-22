@@ -13,9 +13,19 @@ const authSlice = createSlice({
       state.isAuth = false
       localStorage.removeItem('isAuth')
     },
+    setToken: (state, action) => {
+      state.token = action.payload.token
+      localStorage.setItem('token', action.payload.token)
+    },
+    deleteToken: state => {
+      state.token = null
+      localStorage.removeItem('token')
+    },
     setAuthToken: (state, action) => {
+      state.isAuth = true
       state.token = action.payload.data.access_token
       localStorage.setItem('isAuth', 'true')
+      localStorage.setItem('token', action.payload.data.access_token)
     },
     setLoading: state => {
       state.isLoading = true
@@ -37,6 +47,8 @@ const authSlice = createSlice({
 })
 export const {
   setAuthToken,
+  setToken,
+  deleteToken,
   setLoaded,
   setLoading,
   setError,

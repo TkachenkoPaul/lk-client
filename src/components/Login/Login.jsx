@@ -7,16 +7,14 @@ import logo from './logo.png'
 import style from './Login.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { doGetAuthToken } from '../../store/actionCreators/AuthCationCreator'
-import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
-import { safePreventDefault } from 'react-slick/lib/utils/innerSliderUtils'
 
 const { Content } = Layout
 const Login = () => {
-  const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate()
   const auth = useSelector(state => state.auth)
   const [alert, setAlert] = useState('')
+
   useEffect(() => {
     if (!!auth.error) {
       setAlert(auth.error.message)
@@ -25,7 +23,7 @@ const Login = () => {
 
   useEffect(() => {
     if (auth.isAuth) {
-      navigate('/')
+      navigate(-1)
     }
   }, [auth.isAuth])
   if (auth.isLoading) {

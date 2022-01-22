@@ -1,0 +1,1 @@
+export const GET_PAYMENTS = 'GET_PAYMENTS'

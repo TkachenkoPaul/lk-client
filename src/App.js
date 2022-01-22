@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { BackTop, Col, Layout, Row } from 'antd'
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
@@ -13,38 +13,27 @@ import Message from './components/Support/Message'
 import Reference from './components/Reference/Reference'
 import Test from './components/Test'
 import Login from './components/Login/Login'
-import { useDispatch, useSelector } from 'react-redux'
-import { setAuth, setNotAuth } from './store/slices/authSlice'
+import { useDispatch } from 'react-redux'
 import Logout from './components/Logout/Logout'
+import { useAuth } from './hooks/useAuth'
+import { getProfile } from './store/actionCreators/ProfileActionCreator'
 
 const { Content } = Layout
 
 function App() {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'))
-  const [counter, setCounter] = useState(1)
-  const auth = useSelector(state => state.auth)
-  const auth2 = useSelector(state => state.auth)
-
-  console.log('isAuth',isAuth)
+  const authUser = useAuth()
+  const dispatch = useDispatch()
   useEffect(() => {
-    if (isAuth === 'true') {
-      dispatch(setAuth())
-    } else {
-      dispatch(setNotAuth())
-    }
+    dispatch(getProfile())
   }, [])
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!authUser.isAuth) {
       navigate('/login')
     }
-  }, [isAuth])
+  }, [authUser.isAuth])
 
-  console.log('auth state: ', auth)
-  console.log('auth state2: ', auth)
-  console.log('counter : ', counter)
   return (
     <div>
       <Routes>

@@ -46,7 +46,6 @@ const Profile = () => {
   const [fio, setFio] = useState('')
   const [uid, setUid] = useState('')
   const [address, setAddress] = useState({})
-  const [passport, setPassport] = useState({})
   const [personalPhone, setPersonalPhone] = useState('')
   const [contract, setContract] = useState('')
   const [registration, setRegistration] = useState('')
@@ -99,6 +98,7 @@ const Profile = () => {
     setDays(Math.floor(deposit / fee))
   }, [deposit, fee])
   useEffect(() => {
+    // устанавливаю дату окончани тарифа
     setPaidTo(dayjs().add(paidDays, 'day').format('YYYY-MM-DD'))
   }, [paidDays])
   useEffect(() => {
@@ -106,6 +106,7 @@ const Profile = () => {
   }, [tariffName, fee])
   //personal info effects
   useEffect(() => {
+    // устанавливаю згачение логина
     profile.data?.id && setLogin(profile.data.id)
   }, [profile.data.id])
   useEffect(() => {
