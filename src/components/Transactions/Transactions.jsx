@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Breadcrumb, Col, Divider, PageHeader, Row, Table } from 'antd'
+import {
+  Breadcrumb,
+  Col,
+  DatePicker,
+  Divider,
+  PageHeader,
+  Row,
+  Space,
+  Table,
+} from 'antd'
 import { Link } from 'react-router-dom'
 import { useID } from '../../hooks/useID'
 import { useDispatch, useSelector } from 'react-redux'
@@ -94,6 +103,11 @@ const Payments = () => {
 }
 
 const Fees = props => {
+  function onChange(dates, dateStrings) {
+    //TODO закончить обработку выбора даты
+    console.log('From: ', dates[0], ', to: ', dates[1])
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
+  }
   const columns = [
     { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
     { title: 'Дата', dataIndex: 'date', key: 'date' },
@@ -113,13 +127,16 @@ const Fees = props => {
   ]
   return (
     <>
-      <Divider orientation="left">Снятия</Divider>
-      <Table
-        loading={props.isLoading}
-        hasData={!!props.data}
-        columns={columns}
-        dataSource={props.data ? props.data : null}
-      />
+      <Space direction="vertical" size={24}>
+        <Divider orientation="left">Снятия</Divider>
+        <DatePicker.RangePicker onChange={onChange} />
+        <Table
+          loading={props.isLoading}
+          hasData={!!props.data}
+          columns={columns}
+          dataSource={props.data ? props.data : null}
+        />
+      </Space>
     </>
   )
 }

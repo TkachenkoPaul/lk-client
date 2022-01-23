@@ -1,19 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { ConfigProvider } from 'antd'
+import locale from 'antd/lib/locale/ru_RU'
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { CookiesProvider } from 'react-cookie'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { ConfigProvider } from 'antd'
-import ruRu from 'antd/lib/locale/ru_RU'
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
 import store from './store/store'
-import { CookiesProvider } from 'react-cookie'
+import moment from 'moment'
+import 'moment/locale/ru'
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ConfigProvider locale={ruRu}>
+      <ConfigProvider locale={locale}>
         <CookiesProvider>
           <BrowserRouter>
             <App />
