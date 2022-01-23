@@ -11,7 +11,7 @@ export function* getPaymentsSagaWorker() {
     yield put(setPayments(response))
     yield put(setLoaded())
   } catch (error) {
-    console.log('profile error: ', error.response)
+    console.log('profile error: ', error)
     yield put(setLoaded())
   }
 }

@@ -75,13 +75,14 @@ const Payments = () => {
   const columns = [
     { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
     { title: 'Дата', dataIndex: 'date', key: 'date' },
-    { title: 'Сумма', dataIndex: 'amount', key: 'amount' },
-    { title: 'Депозит', dataIndex: 'last_deposit', key: 'dep' },
+    { title: 'Сумма, руб.', dataIndex: 'amount', key: 'amount' },
+    { title: 'Депозит, руб.', dataIndex: 'last_deposit', key: 'dep' },
     { title: 'Вид оплаты', dataIndex: 'method', key: 'method' },
   ]
   return (
     <>
       <Divider orientation="left">Последняя оплата</Divider>
+
       <Table
         loading={isLoading}
         columns={columns}

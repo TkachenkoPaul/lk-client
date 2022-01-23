@@ -225,6 +225,7 @@ const Profile = () => {
         phone={phone}
         sms={false}
       />
+      {/* TODO add loading for info boxes*/}
       <InfoBoxes
         switch={true}
         deposit={deposit}

@@ -4,14 +4,15 @@ import { getUserRequest } from '../../api'
 import { setLoading, setLoaded, setProfile } from '../slices/profileSlice'
 import { GET_PROFILE } from '../actions/ProfileActions'
 
-export function* getProfileSagaWorker(action) {
+export function* getProfileSagaWorker() {
   yield put(setLoading())
   try {
     const response = yield call(getUserRequest)
     yield put(setProfile(response))
     yield put(setLoaded())
   } catch (error) {
-    console.log('profile error: ', error.response)
+    //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404
+    console.log('profile error: ', error)
     yield put(setLoaded())
   }
 }
