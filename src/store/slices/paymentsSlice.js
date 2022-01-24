@@ -8,6 +8,7 @@ const setPaymentsInformation = payments => {
       payment.key = payment.id
       payment.amount = +payment.amount
       payment.last_deposit = +payment.last_deposit
+      // payment.last_deposit = parseFloat(payment.last_deposit)
       payment.date = dayjs(payment.date).format('YYYY-MM-DD HH:mm:ss')
       switch (payment.method) {
         case 0:
@@ -80,7 +81,6 @@ const paymentsSlice = createSlice({
   initialState: paymentsInitialState,
   reducers: {
     setPayments: (state, action) => {
-      // state.data.push(action.payload.data)
       state.data = setPaymentsInformation([action.payload.data])
     },
     setLoading: state => {

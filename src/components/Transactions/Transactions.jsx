@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Breadcrumb,
   Col,
-  DatePicker,
-  Divider,
   PageHeader,
   Row,
-  Space,
-  Table,
 } from 'antd'
 import { Link } from 'react-router-dom'
 import { useID } from '../../hooks/useID'
-import { useDispatch, useSelector } from 'react-redux'
-import { getPayments } from '../../store/actionCreators/PaymentsActionCreator'
+import Payments from './Payments'
+import Fees from './Fees'
 
+//TODO need to replace moment.js
 const Transactions = () => {
   const userID = useID()
   const routes = [
@@ -66,79 +63,5 @@ const Transactions = () => {
   )
 }
 
-const Payments = () => {
-  const dispatch = useDispatch()
-  const paymentsPage = useSelector(state => state.payments)
-  const [payments, setPayments] = useState(paymentsPage.data)
-  const [isLoading, setIsLoading] = useState(paymentsPage.isLoading)
-  useEffect(() => {
-    dispatch(getPayments())
-  }, [])
-  useEffect(() => {
-    setPayments(paymentsPage.data)
-  }, [paymentsPage.data])
-  useEffect(() => {
-    setIsLoading(paymentsPage.isLoading)
-  }, [paymentsPage.isLoading])
-
-  const columns = [
-    { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
-    { title: 'Дата', dataIndex: 'date', key: 'date' },
-    { title: 'Сумма, руб.', dataIndex: 'amount', key: 'amount' },
-    { title: 'Депозит, руб.', dataIndex: 'last_deposit', key: 'dep' },
-    { title: 'Вид оплаты', dataIndex: 'method', key: 'method' },
-  ]
-  return (
-    <>
-      <Divider orientation="left">Последняя оплата</Divider>
-
-      <Table
-        loading={isLoading}
-        columns={columns}
-        dataSource={payments ? payments : null}
-        pagination={false}
-      />
-    </>
-  )
-}
-
-const Fees = props => {
-  function onChange(dates, dateStrings) {
-    //TODO закончить обработку выбора даты
-    console.log('From: ', dates[0], ', to: ', dates[1])
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
-  }
-  const columns = [
-    { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
-    { title: 'Дата', dataIndex: 'date', key: 'date' },
-    { title: 'Сумма', dataIndex: 'sum', key: 'sum' },
-    { title: 'Депозит', dataIndex: 'dep', key: 'dep', responsive: ['md'] },
-    {
-      title: 'Описание',
-      dataIndex: 'actionDescription',
-      key: 'actionDescription',
-    },
-    {
-      title: 'Вид операции',
-      dataIndex: 'type',
-      key: 'type',
-      responsive: ['md'],
-    },
-  ]
-  return (
-    <>
-      <Space direction="vertical" size={24}>
-        <Divider orientation="left">Снятия</Divider>
-        <DatePicker.RangePicker onChange={onChange} />
-        <Table
-          loading={props.isLoading}
-          hasData={!!props.data}
-          columns={columns}
-          dataSource={props.data ? props.data : null}
-        />
-      </Space>
-    </>
-  )
-}
 
 export default Transactions

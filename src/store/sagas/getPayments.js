@@ -16,6 +16,6 @@ export function* getPaymentsSagaWorker() {
   }
 }
 
-export function* getPayments() {
+export function* getPaymentsSagaWatcher() {
   yield takeLatest(GET_PAYMENTS, getPaymentsSagaWorker)
 }

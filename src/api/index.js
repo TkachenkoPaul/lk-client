@@ -27,4 +27,8 @@ export async function getUserPaymentsRequest(config = {}) {
   return api.get('payments/me', config)
 }
 
+export async function getUserFeesRequest(config = {params:{start:'2016-01-01',end:'2022-01-01'}}){
+  return api.get('fees',config)
+}
+
 export default api

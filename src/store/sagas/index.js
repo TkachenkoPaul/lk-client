@@ -1,14 +1,8 @@
 import { call, spawn, all } from 'redux-saga/effects'
-// import {
-//   setStarShips,
-//   setStarShipsIsLoading,
-//   setStarShipsLoaded,
-//   setTotalCount,
-// } from '../slices/testSlice'
-
 import { authUser } from './authUser'
 import { getUser } from './getProfile'
-import { getPayments } from './getPayments'
+import { getPayments, getPaymentsSagaWatcher } from './getPayments'
+import { getFeesSagaWatcher } from './getFees'
 //auth saga
 // export function* authUserSagaWorker(action) {
 //   console.log('we are in authUserSagaWorker')
@@ -66,7 +60,8 @@ export default function* rootSaga() {
     loadStarshipsData,*/
     authUser,
     getUser,
-    getPayments,
+    getPaymentsSagaWatcher,
+    getFeesSagaWatcher
   ]
   const retrySagas = sagas.map(saga => {
     return spawn(function* () {
