@@ -5,8 +5,38 @@ import dayjs from 'dayjs'
 const setFeesWithInfo = (fees) => {
   return fees.map(fee => {
     fee.key = fee.id
-    fee.date = dayjs(fee.date).format('YYYY-MM-DD HH:mm:ss')
+    fee.date = dayjs(fee.date).format('YYYY-MM-DD')
+    fee.last_deposit = parseFloat(fee.last_deposit)
+    fee.sum = parseFloat(fee.sum)
+    switch (fee.method) {
+      case 0:
+        fee.method = 'Одноразово'
+        break
+      case 1:
+        fee.method = 'Периодические платежи'
+        break
+      case 2:
+        fee.method = 'Пеня'
+        break
+      case 3:
+        fee.method = 'Активация'
+        break
+      case 4:
+        fee.method = 'Перевод личных средств'
+        break
+
+    }
     return fee
+  })
+}
+const setCreditsWithInfo = (credits) => {
+  return credits.map(credit => {
+    credit.key = credit.id
+    credit.date = dayjs(credit.datetime).format('YYYY-MM-DD HH:mm:ss')
+    credit.method = 'Кредит'
+    credit.last_deposit = 'Кредит'
+    credit.sum = 'Кредит'
+    return credit
   })
 }
 const feesSlice = createSlice({
@@ -14,13 +44,11 @@ const feesSlice = createSlice({
   initialState: feesInitialState,
   reducers: {
     setFees: (state, action) => {
-      const test = setFeesWithInfo(action.payload)
-      console.log('test',test)
-      // state.data = action.payload
-      state.data = test
+      state.data = setFeesWithInfo(action.payload)
     },
     setCredits: (state, action) => {
-      state.data = action.payload
+      console.log('credits payload :',action)
+      state.credits = setCreditsWithInfo(action.payload)
     },
     setLoading: state => {
       state.isLoading = true

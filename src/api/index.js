@@ -5,7 +5,8 @@ const baseURL = 'https://test.rck-api.rck.su/api/v1/'
 const api = axios.create({
   baseURL,
   withCredentials: true,
-  timeout: 2000,
+  // TODO добавить обработку ошибок по таймауту соединения
+  timeout: 5000,
 })
 
 export async function authRequest(username, password) {

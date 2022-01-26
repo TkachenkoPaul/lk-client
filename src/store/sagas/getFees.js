@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { getUserFeesRequest } from '../../api'
-import { setLoaded, setLoading, setFees } from '../slices/feesSlice'
+import { setLoaded, setLoading, setFees, setCredits } from '../slices/feesSlice'
 import { GET_FEES } from '../actions/FeesAction'
 
 export function* getFeesSagaWorker(action) {
@@ -10,6 +10,7 @@ export function* getFeesSagaWorker(action) {
     console.log('fees saga action:',action)
     console.log('fees saga response:', response)
     yield put(setFees(response.data.fees))
+    yield put(setCredits(response.data.credits))
     yield put(setLoaded())
   } catch (error) {
     console.log('profile error: ', error)

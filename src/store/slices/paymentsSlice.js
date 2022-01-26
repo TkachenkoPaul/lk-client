@@ -6,9 +6,8 @@ const setPaymentsInformation = payments => {
   return payments.map(payment => {
     try {
       payment.key = payment.id
-      payment.amount = +payment.amount
-      payment.last_deposit = +payment.last_deposit
-      // payment.last_deposit = parseFloat(payment.last_deposit)
+      payment.amount = parseFloat(payment.amount)
+      payment.last_deposit = parseFloat(payment.last_deposit)
       payment.date = dayjs(payment.date).format('YYYY-MM-DD HH:mm:ss')
       switch (payment.method) {
         case 0:
