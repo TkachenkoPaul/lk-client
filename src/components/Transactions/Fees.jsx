@@ -49,6 +49,7 @@ function Fees() {
       responsive: ['md'],
     },
   ]
+  //TODO изменить интервалы для выбора даты
   const ranges = {
     'Сегодня': [moment(), moment()],
     '30 дней': [moment().subtract(1, 'month'), moment()],
@@ -60,11 +61,11 @@ function Fees() {
     <>
       <Divider orientation="left">Снятия</Divider>
       <DatePicker.RangePicker ranges={ranges} onChange={onChange} style={{marginBottom:'12px'}}/>
+      {/* TODO добавить пагинацию с заявок*/}
       <Table
           loading={isLoading}
           hasData={!!fees}
           columns={columns}
-          // dataSource={fees ? fees : null}
           dataSource={getFeesFromStore(credits,fees)}
         />
     </>

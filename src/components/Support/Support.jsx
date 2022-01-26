@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import {
   Breadcrumb,
   Button,
@@ -100,38 +100,13 @@ const Support = () => {
           <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
             Создать заявку
           </Button>,
-          <Button
-            key="1"
-            type="primary"
-            onClick={() => setIsLoading(!isLoading)}
-            icon={<CloudDownloadOutlined />}
-            size="large">
-            Загрузка вкл/выкл
-          </Button>,
-          <Button
-            key="1"
-            type="primary"
-            onClick={dataLoad}
-            icon={<CloudDownloadOutlined />}
-            size="large">
-            Загрузить
-          </Button>,
         ]}>
         <Row gutter={[16, 16]}>
           <Col
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
-            <Divider orientation="left">SpeedTest</Divider>
-            <iframe
-              width="100%"
-              height="650px"
-              frameBorder={0}
-              src="https://rck.speedtestcustom.com"
-            />
-
             <Divider orientation="left">История заявок</Divider>
-
             <Table
               loading={isLoading}
               columns={columns}
