@@ -2,24 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { supportInitialState } from '../initialState'
 const IS_LOADING = 'IS_LOADING'
 const initialState = {
-  messages: [
-    {
-      id: Date.now(),
-      key: Date.now(),
-      subject: 'Не работает интернет',
-      chapter: 'Технические вопросы',
-      date: '2021-12-13 12:34:12',
-      status: 'Открыта',
-    },
-    {
-      id: Date.now(),
-      key: Date.now(),
-      subject: 'Не работает КТВ',
-      chapter: 'Технические вопросы',
-      date: '2021-12-15 11:34:12',
-      status: 'Выполнена и закрыта',
-    },
-  ],
+  messages: [],
   isLoading: true,
 }
 
@@ -27,18 +10,21 @@ const supportSlice = createSlice({
   name: 'support ',
   initialState: supportInitialState,
   reducers: {
-    setIsLoading: state => {
-      return (state.isLoading = true)
+    setLoading: state => {
+      state.isLoading = true
     },
-    setIsNotLoading: state => {
-      return (state.isLoading = false)
+    setLoaded: state => {
+      state.isLoading = false
     },
     setMessages: (state, action) => {
-      state.messages.concat(action.payload)
+      state.messages= action.payload.data.map(message =>{
+        message.key = message.id
+        return message
+      })
     },
   },
 })
-export const { setIsLoading, setIsNotLoading, setMessages } =
+export const { setLoading, setLoaded, setMessages } =
   supportSlice.actions
 export const selectIsLoading = state => state.isLoading
 export const selectMessages = state => state.messages

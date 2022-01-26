@@ -12,9 +12,13 @@ import {
 } from 'antd'
 import { Link } from 'react-router-dom'
 import Chat from './Chat'
+import { useID } from '../../hooks/useID'
 
 const Message = () => {
+  const userID = useID()
   const [visible, setVisible] = useState(false)
+  const [subject, setSubject] = useState('message subject')
+  const [msgId, setMsgId] = useState('12345')
   const routes = [
     {
       path: '/',
@@ -25,8 +29,8 @@ const Message = () => {
       breadcrumbName: 'Заявки',
     },
     {
-      path: '/messages/123',
-      breadcrumbName: 'Нет интернета [№567334]',
+      path: `/messages/${msgId}`,
+      breadcrumbName: `Нет интернета [№${msgId}]`,
     },
   ]
 
@@ -45,6 +49,7 @@ const Message = () => {
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="2">Не выполнена и закрата</Menu.Item>
       <Menu.Item key="3">Приостановлено</Menu.Item>
+      <Menu.Item key="3">Открыта</Menu.Item>
     </Menu>
   )
   return (
@@ -54,15 +59,15 @@ const Message = () => {
         breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
         ghost={false}
         onBack={() => window.history.back()}
-        title="Нет интернета"
-        subTitle="erem-7-001"
+        title={subject}
+        subTitle={userID}
         extra={[
-          <Button key="1" type="primary">
-            Выполнена и закрыта
-          </Button>,
-          <Button key="2" type="primary">
-            Невыполнена и закрыта
-          </Button>,
+          // <Button key="1" type="primary">
+          //   Выполнена и закрыта
+          // </Button>,
+          // <Button key="2" type="primary">
+          //   Невыполнена и закрыта
+          // </Button>,
           <Dropdown.Button overlay={menu} onClick={handleMenuClick} key="1">
             Выполнена и закрыта
           </Dropdown.Button>,

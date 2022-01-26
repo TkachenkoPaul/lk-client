@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Breadcrumb,
   Button,
@@ -13,37 +13,25 @@ import { CloudDownloadOutlined, PlusOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMessages } from '../../store/slices/supportSlice'
+import { useID } from '../../hooks/useID'
+import { getMessages } from '../../store/actionCreators/SupportActionCreator'
 
 const Support = () => {
-  const { messages } = useSelector(state => ({
-    messages: state.support.messages,
-  }))
-  const [messagesData, setMessagesData] = useState(messages)
-  const [isLoading, setIsLoading] = useState(true)
+  const userID = useID()
+  const  support  = useSelector(state => state.support)
+  const [isLoading, setIsLoading] = useState(support.isLoading)
+  const [messages, setMessages] = useState(support.messages)
+  useEffect(() => {
+    dispatch(getMessages())
+  }, [])
+  useEffect(() => {
+    setIsLoading(support.isLoading)
+  }, [support.isLoading])
+  useEffect(() => {
+    setMessages(support.messages)
+  }, [support.messages])
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const dataLoad = () => {
-    let newMessages = [
-      {
-        id: Date.now(),
-        key: Date.now(),
-        subject: 'Не работает интернет',
-        chapter: 'Технические вопросы',
-        date: '2021-12-13 12:34:12',
-        status: 'Открыта',
-      },
-      {
-        id: Date.now(),
-        key: Date.now(),
-        subject: 'Не работает КТВ',
-        chapter: 'Технические вопросы',
-        date: '2021-12-15 11:34:12',
-        status: 'Выполнена и закрыта',
-      },
-    ]
-    setMessagesData(oldMessages => [...oldMessages, ...newMessages])
-  }
-  console.log(messagesData)
   const routes = [
     {
       path: '/',
@@ -65,12 +53,11 @@ const Support = () => {
   const columns = [
     { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
     { title: 'Тема', dataIndex: 'subject', key: 'subject' },
-    { title: 'Раздел', dataIndex: 'chapter', key: 'chapter' },
     { title: 'Дата', dataIndex: 'date', key: 'date' },
     {
       title: 'Состояние',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'state',
+      key: 'state',
       responsive: ['md'],
     },
     {
@@ -87,6 +74,8 @@ const Support = () => {
       ),
     },
   ]
+
+
   return (
     <>
       <PageHeader
@@ -95,7 +84,7 @@ const Support = () => {
         ghost={false}
         onBack={() => window.history.back()}
         title="Заявки"
-        subTitle="erem-7-001"
+        subTitle={userID}
         extra={[
           <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
             Создать заявку
@@ -110,19 +99,19 @@ const Support = () => {
             <Table
               loading={isLoading}
               columns={columns}
-              dataSource={messagesData}
-              pagination={{
-                responsive: true,
-                showLessItems: true,
-                size: 'default',
-                position: ['topRight', 'bottomRight'],
-                total: messagesData?.length && 0,
-                showTotal: (total, range) =>
-                  `${range[0]}-${range[1]} из ${total} записей`,
-                defaultPageSize: 10,
-                showSizeChanger: true,
-                pageSizeOptions: ['5', '10', '15', '20', '25'],
-              }}
+              dataSource={messages}
+              // pagination={{
+              //   responsive: true,
+              //   showLessItems: true,
+              //   size: 'default',
+              //   position: ['topRight', 'bottomRight'],
+              //   total: messagesData?.length && 0,
+              //   showTotal: (total, range) =>
+              //     `${range[0]}-${range[1]} из ${total} записей`,
+              //   defaultPageSize: 10,
+              //   showSizeChanger: true,
+              //   pageSizeOptions: ['5', '10', '15', '20', '25'],
+              // }}
             />
           </Col>
         </Row>
