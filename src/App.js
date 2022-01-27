@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BackTop, Col, Layout, Row } from 'antd'
+import { BackTop, Button, Col, Layout, Result, Row } from 'antd'
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
 import NavBar from './components/layout/Navbar/NavBar'
@@ -17,6 +17,9 @@ import { useDispatch } from 'react-redux'
 import Logout from './components/Logout/Logout'
 import { useAuth } from './hooks/useAuth'
 import { getProfile } from './store/actionCreators/ProfileActionCreator'
+import Posts from './components/Test/Posts'
+import Post from './components/Test/Post'
+import { clearError } from './store/slices/authSlice'
 
 const { Content } = Layout
 
@@ -34,6 +37,16 @@ function App() {
     }
   }, [authUser.isAuth])
 
+  if (!!authUser.error.code){
+
+    return <Result
+      status='404'
+      title={authUser.error.code}
+      subTitle={authUser.error.message}
+      extra={<Button onClick={()=>{navigate('/')}} type="primary">Главная</Button>}
+    />
+  }
+
   return (
     <div>
       <Routes>
@@ -42,7 +55,7 @@ function App() {
           <Route path="/test" element={<Test />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route exact={true} path="/support" element={<Support />} />
-          <Route path="/support/message/:id" element={<Message />} />
+          <Route path="/support/message/:messageId" element={<Message />} />
           <Route path="/services" element={<Services />} />
           <Route path="/reference" element={<Reference />} />
           <Route path="*" element={<Error />} />

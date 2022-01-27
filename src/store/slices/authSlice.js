@@ -39,9 +39,12 @@ const authSlice = createSlice({
         state.error.message = 'Сервер не отвечает'
         state.error.code = status
       } else {
-        state.error.message = action.payload.data.message
+        state.error.message = action.payload.data.msg
         state.error.code = action.payload.status
       }
+    },
+    clearError: (state) => {
+      state.error = {}
     },
   },
 })
@@ -52,6 +55,7 @@ export const {
   setLoaded,
   setLoading,
   setError,
+  clearError,
   setAuth,
   setNotAuth,
 } = authSlice.actions

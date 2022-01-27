@@ -35,5 +35,8 @@ export async function getUserFeesRequest(config = {params:{start:'2016-01-01',en
 export async function getMessages(config = {}) {
   return api.get('msgs', config)
 }
+export async function getMessage(config = {params:{}},id= null) {
+  return api.get(`msgs/${id}`, config)
+}
 
 export default api

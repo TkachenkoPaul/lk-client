@@ -11,6 +11,7 @@ import { GET_AUTH_TOKEN } from '../actions/AuthActions'
 import { setProfile } from '../slices/profileSlice'
 
 export function* authUserSagaWorker(action) {
+  //TODO почистить
   console.log('we are in authUserSagaWorker')
   console.log('saga action: ', action)
   yield put(setLoading())
@@ -21,15 +22,16 @@ export function* authUserSagaWorker(action) {
       action.payload.password
     )
     try {
+      //получение информации о пользователе
       const user = yield call(getUserRequest)
       yield put(setProfile(user))
     } catch (error) {
-      console.log('profile error: ', error.response)
+      console.log('profile after auth error: ', error.response)
     }
     yield put(setAuthToken(response))
     yield put(setLoaded())
   } catch (error) {
-    console.log(error.response)
+    console.log('auth saga error:',error.response)
     yield put(setNotAuth())
     yield put(setError(error.response))
     yield put(setLoaded())
