@@ -3,7 +3,11 @@ import { authUser } from './authUser'
 import { getUser } from './getProfile'
 import { getPaymentsSagaWatcher } from './getPayments'
 import { getFeesSagaWatcher } from './getFees'
-import { getMessageSagaWatcher, getMessagesSagaWatcher, getMessagesSagaWorker } from './getSupport'
+import {
+  getMessageSagaWatcher,
+  getMessagesSagaWatcher,
+  setMessageReplySagaWatcher,
+} from './getSupport'
 
 export default function* rootSaga() {
   const sagas = [
@@ -12,7 +16,8 @@ export default function* rootSaga() {
     getPaymentsSagaWatcher,
     getFeesSagaWatcher,
     getMessagesSagaWatcher,
-    getMessageSagaWatcher
+    getMessageSagaWatcher,
+    setMessageReplySagaWatcher
   ]
   const retrySagas = sagas.map(saga => {
     return spawn(function* () {

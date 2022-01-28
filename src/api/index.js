@@ -35,8 +35,16 @@ export async function getUserFeesRequest(config = {params:{start:'2016-01-01',en
 export async function getMessages(config = {}) {
   return api.get('msgs', config)
 }
-export async function getMessage(config = {params:{}},id= null) {
+export async function getMessage(config = {params:{text:''}},id= null) {
   return api.get(`msgs/${id}`, config)
 }
-
+export async function setMessageReply(text = '', msgID='') {
+  // эти заголовки нужны из-за корсов, потом нужно разобраться
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  }
+  return api.post(`msgs/${msgID}/create_reply`, {text: text.text},config)
+}
 export default api

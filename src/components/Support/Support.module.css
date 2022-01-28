@@ -9,3 +9,6 @@
     text-overflow: ellipsis;
     padding: 0 0 20px 0;
 }
+.scrollerBox {
+    height: 450px;
+}

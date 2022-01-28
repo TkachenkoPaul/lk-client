@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {
   Breadcrumb,
-  Button,
   Col,
-  Descriptions,
   Dropdown,
-  Image,
   Menu,
   PageHeader,
   Row,
@@ -13,17 +10,15 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import Chat from './Chat'
 import { useID } from '../../hooks/useID'
-import { logger } from 'redux-logger/src'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMessage } from '../../store/actionCreators/SupportActionCreator'
 import MessageInformation from './MessageInformation'
 
 const Message = () => {
   const dispatch  = useDispatch()
-  const message = useSelector(state => state.support.message.data)
+  const message = useSelector(state => state.support.message)
   const { messageId } = useParams()
   const userID = useID()
-  const [visible, setVisible] = useState(false)
   const [msg, setMsg] = useState(message)
   const [msgId, setMsgId] = useState(messageId)
   const routes = [
@@ -47,13 +42,12 @@ const Message = () => {
     dispatch(getMessage(msgId))
   }, [])
   useEffect(() => {
-    setMsg(message)
+    setMsg(message.data)
   }, [message])
 
-
+  console.log('message ------ ',msg)
 
   function itemRender(route, params, routes, paths) {
-    console.log('paths:',paths)
     const last = routes.indexOf(route) === routes.length - 1
     return last ? (
       <span>{route.breadcrumbName}</span>
@@ -71,6 +65,7 @@ const Message = () => {
       <Menu.Item key="4">Открыта</Menu.Item>
     </Menu>
   )
+  console.log('message files:',)
   return (
     <>
       <PageHeader
@@ -90,7 +85,7 @@ const Message = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 8, offset: 0 }}>
-            <MessageInformation {...msg}/>
+            <MessageInformation message={msg}/>
           </Col>
           <Col
             xs={{ span: 24 }}

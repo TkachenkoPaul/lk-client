@@ -17,9 +17,6 @@ import { useDispatch } from 'react-redux'
 import Logout from './components/Logout/Logout'
 import { useAuth } from './hooks/useAuth'
 import { getProfile } from './store/actionCreators/ProfileActionCreator'
-import Posts from './components/Test/Posts'
-import Post from './components/Test/Post'
-import { clearError } from './store/slices/authSlice'
 
 const { Content } = Layout
 

@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { supportInitialState } from '../initialState'
 
-const configMessage = (message,chapters,status) => {
-  let newMessage = {... message, chapter: chapters[message.chapter], state: status[message.state]}
-  for (const property  in message) {
-    console.log(`${property}: ${message[property]}`);
-  }
-  console.log('chapters: ', chapters)
-  console.log('status: ', status)
-  console.log('newMessage: ', newMessage)
-  return message
-}
+// const configMessage = (message,chapters,status) => {
+//   let newMessage = {... message, chapter: chapters[message.chapter], state: status[message.state]}
+//   for (const property  in message) {
+//     console.log(`${property}: ${message[property]}`);
+//   }
+//   console.log('chapters: ', chapters)
+//   console.log('status: ', status)
+//   console.log('newMessage: ', newMessage)
+//   return message
+// }
 
 const supportSlice = createSlice({
   name: 'support ',
@@ -29,8 +29,7 @@ const supportSlice = createSlice({
       })
     },
     setMessage: (state, action )=> {
-      console.log('set message action', action)
-      configMessage(action.payload.data,state.chapters,state.messageStatus)
+      // configMessage(action.payload.data,state.chapters,state.messageStatus)
       // state.message.data = action.payload.data
       state.message.data = {... action.payload.data, chapter: state.chapters[action.payload.data.chapter], state: state.messageStatus[action.payload.data.state]}
     },
