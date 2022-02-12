@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getPayments } from '../../store/actionCreators/PaymentsActionCreator'
 import { Divider, Table } from 'antd'
 
-const Payments = () => {
+const Payments = ({}) => {
   const dispatch = useDispatch()
   const paymentsPage = useSelector(state => state.payments)
   const [payments, setPayments] = useState(paymentsPage.data)

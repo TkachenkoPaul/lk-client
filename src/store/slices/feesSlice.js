@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { feesInitialState} from '../initialState'
+import { feesInitialState } from '../initialState'
 import dayjs from 'dayjs'
 
-const setFeesWithInfo = (fees) => {
+const setFeesWithInfo = fees => {
   return fees.map(fee => {
     fee.key = fee.id
     fee.date = dayjs(fee.date).format('YYYY-MM-DD')
@@ -24,12 +24,11 @@ const setFeesWithInfo = (fees) => {
       case 4:
         fee.method = 'Перевод личных средств'
         break
-
     }
     return fee
   })
 }
-const setCreditsWithInfo = (credits) => {
+const setCreditsWithInfo = credits => {
   return credits.map(credit => {
     credit.key = credit.id
     credit.date = dayjs(credit.datetime).format('YYYY-MM-DD HH:mm:ss')
@@ -47,7 +46,6 @@ const feesSlice = createSlice({
       state.data = setFeesWithInfo(action.payload)
     },
     setCredits: (state, action) => {
-      console.log('credits payload :',action)
       state.credits = setCreditsWithInfo(action.payload)
     },
     setLoading: state => {
@@ -58,5 +56,5 @@ const feesSlice = createSlice({
     },
   },
 })
-export const { setFees,setCredits, setLoading, setLoaded } = feesSlice.actions
+export const { setFees, setCredits, setLoading, setLoaded } = feesSlice.actions
 export default feesSlice.reducer

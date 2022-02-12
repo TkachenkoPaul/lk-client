@@ -21,27 +21,41 @@ function Fees() {
     setIsLoading(reduxFees.isLoading)
   }, [reduxFees.isLoading])
   useEffect(() => {
-    dispatch(getFees(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD')))
+    dispatch(
+      getFees(
+        moment().startOf('month').format('YYYY-MM-DD'),
+        moment().endOf('month').format('YYYY-MM-DD')
+      )
+    )
   }, [])
 
-  const getFeesFromStore = (credits,fees) => {
-    if (!!credits || !!fees){
-      return [...credits,...fees]
+  const getFeesFromStore = (credits, fees) => {
+    if (!!credits || !!fees) {
+      return [...credits, ...fees]
     }
-    return  null
+    return null
   }
   function onChange(dates, dateStrings) {
-    //TODO закончить обработку выбора даты
     if (dateStrings[0] && dateStrings[1]) {
-      dispatch(getFees(dateStrings[0],dateStrings[1]))
+      dispatch(getFees(dateStrings[0], dateStrings[1]))
     }
   }
   const columns = [
     { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
-    { title: 'Дата', dataIndex: 'date', key: 'date',defaultSortOrder: 'descend',
-      sorter: (a, b) => moment(a.date).unix() - moment(b.date).unix(),},
+    {
+      title: 'Дата',
+      dataIndex: 'date',
+      key: 'date',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => moment(a.date).unix() - moment(b.date).unix(),
+    },
     { title: 'Сумма, руб.', dataIndex: 'sum', key: 'sum' },
-    { title: 'Депозит, руб.', dataIndex: 'last_deposit', key: 'last_deposit', responsive: ['md'] },
+    {
+      title: 'Депозит, руб.',
+      dataIndex: 'last_deposit',
+      key: 'last_deposit',
+      responsive: ['md'],
+    },
     {
       title: 'Вид операции',
       dataIndex: 'method',
@@ -49,25 +63,26 @@ function Fees() {
       responsive: ['md'],
     },
   ]
-  //TODO изменить интервалы для выбора даты
   const ranges = {
-    'Сегодня': [moment(), moment()],
+    Сегодня: [moment(), moment()],
     '30 дней': [moment().subtract(1, 'month'), moment()],
-    'Год': [moment().subtract(12, 'month'), moment()],
-    'Custom': [moment('2016-01-01'), moment('2017-01-01')],
-    'Custom2': [moment('2016-01-01'), moment()],
+    Год: [moment().subtract(12, 'month'), moment()],
+    Все: [moment('2016-01-01'), moment()],
   }
   return (
     <>
       <Divider orientation="left">Снятия</Divider>
-      <DatePicker.RangePicker ranges={ranges} onChange={onChange} style={{marginBottom:'12px'}}/>
-      {/* TODO добавить пагинацию с заявок*/}
+      <DatePicker.RangePicker
+        ranges={ranges}
+        onChange={onChange}
+        style={{ marginBottom: '12px' }}
+      />
       <Table
-          loading={isLoading}
-          hasData={!!fees}
-          columns={columns}
-          dataSource={getFeesFromStore(credits,fees)}
-        />
+        loading={isLoading}
+        hasData={!!fees}
+        columns={columns}
+        dataSource={getFeesFromStore(credits, fees)}
+      />
     </>
   )
 }

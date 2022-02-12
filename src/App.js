@@ -23,7 +23,8 @@ const { Content } = Layout
 
 function App() {
   // TODO добавить  индикатор загрузки
-  //TODO разобраться с хлебными крошками
+  // TODO разобраться с хлебными крошками
+  // TODO добавить кастомный скролбар
 
   const navigate = useNavigate()
   const login = useID()

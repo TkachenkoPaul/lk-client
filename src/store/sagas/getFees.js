@@ -6,14 +6,14 @@ import { GET_FEES } from '../actions/FeesAction'
 export function* getFeesSagaWorker(action) {
   yield put(setLoading())
   try {
-    const response = yield call(getUserFeesRequest,{params:{start:action.payload.start,end:action.payload.end}})
-    console.log('fees saga action:',action)
-    console.log('fees saga response:', response)
+    const response = yield call(getUserFeesRequest, {
+      params: { start: action.payload.start, end: action.payload.end },
+    })
     yield put(setFees(response.data.fees))
     yield put(setCredits(response.data.credits))
     yield put(setLoaded())
   } catch (error) {
-    console.log('profile error: ', error)
+    console.log('get fees error: ', error)
     yield put(setLoaded())
   }
 }

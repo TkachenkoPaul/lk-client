@@ -1,18 +1,10 @@
 import React from 'react'
-import {
-  Breadcrumb,
-  Col,
-  PageHeader,
-  Row,
-} from 'antd'
+import { Breadcrumb, Col, PageHeader, Row } from 'antd'
 import { Link } from 'react-router-dom'
-import { useID } from '../../hooks/useID'
 import Payments from './Payments'
 import Fees from './Fees'
 
-//TODO need to replace moment.js
-const Transactions = () => {
-  const userID = useID()
+const Transactions = ({ login }) => {
   const routes = [
     {
       path: '',
@@ -40,7 +32,7 @@ const Transactions = () => {
         ghost={false}
         onBack={() => window.history.back()}
         title="Финансы"
-        subTitle={userID}
+        subTitle={login}
         extra={[]}>
         <Row gutter={[16, 16]}>
           <Col
@@ -62,6 +54,5 @@ const Transactions = () => {
     </>
   )
 }
-
 
 export default Transactions

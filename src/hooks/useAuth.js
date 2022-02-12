@@ -12,13 +12,9 @@ const useAuth = () => {
   const token = localStorage.getItem('token')
   const auth = useSelector(state => state.auth)
   if (isAuth && token) {
-    console.log('is auth and have token in localStorage')
     if (!auth.token && !auth.isAuth) {
-      console.log('set token and isAuth in redux ')
       dispatch(setToken({ token: token }))
       dispatch(setAuth())
-    } else {
-      console.log('token and isAuth in redux ')
     }
     return {
       isAuth: isAuth,
