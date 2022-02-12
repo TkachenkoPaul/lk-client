@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
 import {
   message,
   Alert,
@@ -15,16 +14,22 @@ import {
   Row,
   Switch,
   Skeleton,
+  Space,
 } from 'antd'
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 import * as dayjs from 'dayjs'
-import { Finance } from './Finance'
+
+import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 import { PersonalInformation } from './PersonalInformation'
+import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
+import { Finance } from './Finance'
 
 const Profile = ({ login }) => {
+  //TODO add popovers
+
+  const [type, setType] = useState(2)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getProfile())
@@ -184,47 +189,56 @@ const Profile = ({ login }) => {
 
   const menu = (
     <Menu key={'menu1'}>
-      <Menu.Item onClick={showModalPhoneEdit} key="1">
-        Редактировать телефон
-      </Menu.Item>
-      <Menu.Item onClick={handleSuccessPassword} key="2">
-        Изменить пароль
-      </Menu.Item>
-      <Menu.Item
-        onClick={() => {
-          setIsDebtor(!isDebtor)
-          setDeposit(-deposit)
-          if (!isDebtor) {
-            success('Активирован долг по лицевому счету')
-          } else {
-            success('Деактивирован долг по лицевому счету')
-          }
-        }}
-        key="3">
-        Долг вкл/выкл
-      </Menu.Item>
-      <Menu.Item onClick={() => setDeposit(deposit + 20)} key="4">
-        Добавить денег абоненту
-      </Menu.Item>
+      <Menu.ItemGroup>
+        <Menu.Item onClick={showModalPhoneEdit} key="1">
+          Редактировать телефон
+        </Menu.Item>
+        <Menu.Item onClick={handleSuccessPassword} key="2">
+          Изменить пароль
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsDebtor(!isDebtor)
+            setDeposit(-deposit)
+            if (!isDebtor) {
+              success('Активирован долг по лицевому счету')
+            } else {
+              success('Деактивирован долг по лицевому счету')
+            }
+          }}
+          key="3">
+          Долг вкл/выкл
+        </Menu.Item>
+        <Menu.Item onClick={() => setDeposit(deposit + 20)} key="4">
+          Добавить денег абоненту
+        </Menu.Item>
+      </Menu.ItemGroup>
+      <Menu.SubMenu title="Инфо панели">
+        <Menu.Item onClick={() => setType(0)}> Вариант 1</Menu.Item>
+        <Menu.Item onClick={() => setType(1)}>Вариант 2</Menu.Item>
+        <Menu.Item onClick={() => setType(2)}>Вариант 3</Menu.Item>
+      </Menu.SubMenu>
     </Menu>
   )
   return (
     <>
-      <React.StrictMode>
-        <CollectionCreateForm
-          visible={visible}
-          onCreate={onCreate}
-          onOk={handleSuccessPhone}
-          onCancel={handleCancelPhone}
-          phone={phone}
-          sms={false}
-        />
-        {/* TODO add loading for info boxes*/}
+      <CollectionCreateForm
+        visible={visible}
+        onCreate={onCreate}
+        onOk={handleSuccessPhone}
+        onCancel={handleCancelPhone}
+        phone={phone}
+        sms={false}
+      />
+      {/* TODO add loading for info boxes*/}
+      <Space direction="vertical" size={'middle'}>
         <InfoBoxes
-          switch={true}
+          paidTo={paidTo}
+          type={type}
           deposit={deposit}
           paidDays={paidDays}
           fee={fee}
+          loading={profile.isLoading}
         />
         {isDebtor && (
           <Alert
@@ -300,7 +314,7 @@ const Profile = ({ login }) => {
             </Col>
           </Row>
         </PageHeader>
-      </React.StrictMode>
+      </Space>
     </>
   )
 }
