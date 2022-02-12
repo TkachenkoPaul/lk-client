@@ -23,6 +23,8 @@ const { Content } = Layout
 
 function App() {
   // TODO добавить  индикатор загрузки
+  //TODO разобраться с хлебными крошками
+
   const navigate = useNavigate()
   const login = useID()
   const authUser = useAuth()

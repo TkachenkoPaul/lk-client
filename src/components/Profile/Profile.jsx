@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 import * as dayjs from 'dayjs'
 import Finance from './Finance'
+import PersonalInformation from './PersonalInformation'
 
 const Profile = ({ login }) => {
   const dispatch = useDispatch()
@@ -42,7 +43,6 @@ const Profile = ({ login }) => {
   const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
   // personal information
-  // const [login, setLogin] = useState('')
   const [fio, setFio] = useState('')
   const [uid, setUid] = useState('')
   const [address, setAddress] = useState({})
@@ -105,11 +105,6 @@ const Profile = ({ login }) => {
   useEffect(() => {
     setTariffInfo(`${tariffName} : ${fee} руб.`)
   }, [tariffName, fee])
-  //personal info effects
-  // useEffect(() => {
-  //   // устанавливаю згачение логина
-  //   profile.data?.id && setLogin(profile.data.id)
-  // }, [profile.data.id])
   useEffect(() => {
     profile.data?.users_pi && setFio(profile.data.users_pi.fio)
   }, [profile.data.users_pi])
@@ -312,116 +307,7 @@ const Profile = ({ login }) => {
     </>
   )
 }
-// const Finance = props => {
-//   return (
-//     <Descriptions
-//       title={
-//         <h6 className={`${styles.divider} ${styles.gradient}`}>Финансы</h6>
-//       }
-//       bordered
-//       column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
-//       <Descriptions.Item label="Баланс руб." key={1}>
-//         <div style={{ fontSize: '16px' }}>
-//           {props.deposit >= 0 ? (
-//             props.deposit
-//           ) : (
-//             <Tag color="error" style={{ fontSize: '16px', padding: '10px' }}>
-//               {props.deposit}
-//             </Tag>
-//           )}
-//         </div>
-//       </Descriptions.Item>
-//       <Descriptions.Item label="Тарифный пакет" key={2}>
-//         <div style={{ fontSize: '15px' }}>{props.taariffName}</div>
-//       </Descriptions.Item>
-//       <Descriptions.Item label="Статус тарифного плана" key={3}>
-//         {props.tariffState}
-//       </Descriptions.Item>
-//       <Descriptions.Item label="Оплачено дней" key={4}>
-//         {props.paidDays}
-//       </Descriptions.Item>
-//       <Descriptions.Item label="Дата окончания тарифа" key={5}>
-//         {props.paidTo}
-//       </Descriptions.Item>
-//
-//       <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки" key={6}>
-//         {props.tariffInfo}
-//       </Descriptions.Item>
-//       <Descriptions.Item label="К оплате, руб./сутки" key={7}>
-//         <div style={{ fontSize: '15px' }}>{props.fee} руб.</div>
-//       </Descriptions.Item>
-//     </Descriptions>
-//   )
-// }
-const PersonalInformation = props => {
-  return (
-    <Descriptions
-      layout=""
-      // size="middle"
-      title={
-        <h6 className={`${styles.divider} ${styles.gradient}`}>
-          Личная информация
-        </h6>
-      }
-      bordered
-      column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}
-      key={1}>
-      <Descriptions.Item label="ФИО" key={2}>
-        {props.fio}
-      </Descriptions.Item>
-      <Descriptions.Item label="Логин" key={3}>
-        {props.login}
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="Л/С"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={4}>
-        <Typography.Paragraph
-          copyable={{
-            tooltips: [
-              'Нажмите, чтобы скопировать текст в буфер обмена',
-              'Успешно скопировано',
-            ],
-          }}>
-          {props.uid}
-        </Typography.Paragraph>
-      </Descriptions.Item>
-      <Descriptions.Item label="Улица" key={5}>
-        {props.address.street}
-      </Descriptions.Item>
-      <Descriptions.Item label="Дом" key={6}>
-        {props.address.build}
-      </Descriptions.Item>
-      <Descriptions.Item label="Кваритра" key={7}>
-        {props.address.flat}
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="Телефон"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={11}>
-        {props.personalPhone === '0' ? '' : props.personalPhone}
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="№ договра"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={13}>
-        {props.contract === '0' ? '' : props.contract}
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="Дата регистрации"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={15}>
-        {props.registration === '0' ? '' : props.registration}
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="Дата активации"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={16}>
-        {props.activation === '0' ? '' : props.activation}
-      </Descriptions.Item>
-    </Descriptions>
-  )
-}
+
 const CollectionCreateForm = ({
   visible,
   onCreate,
