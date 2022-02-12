@@ -17,11 +17,14 @@ import { useDispatch } from 'react-redux'
 import Logout from './components/Logout/Logout'
 import { useAuth } from './hooks/useAuth'
 import { getProfile } from './store/actionCreators/ProfileActionCreator'
+import { useID } from './hooks/useID'
 
 const { Content } = Layout
 
 function App() {
+  // TODO добавить  индикатор загрузки
   const navigate = useNavigate()
+  const login = useID()
   const authUser = useAuth()
   const dispatch = useDispatch()
   useEffect(() => {
@@ -34,27 +37,42 @@ function App() {
     }
   }, [authUser.isAuth])
 
-  if (!!authUser.error.code){
-
-    return <Result
-      status='404'
-      title={authUser.error.code}
-      subTitle={authUser.error.message}
-      extra={<Button onClick={()=>{navigate('/')}} type="primary">Главная</Button>}
-    />
+  if (!!authUser.error.code) {
+    return (
+      <Result
+        status="404"
+        title={authUser.error.code}
+        subTitle={authUser.error.message}
+        extra={
+          <Button
+            onClick={() => {
+              navigate('/')
+            }}
+            type="primary">
+            Главная
+          </Button>
+        }
+      />
+    )
   }
 
   return (
     <div>
       <Routes>
         <Route path="/" element={<PageContent />}>
-          <Route index element={<Profile />} />
+          <Route index element={<Profile login={login} />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route exact={true} path="/support" element={<Support />} />
-          <Route path="/support/message/:messageId" element={<Message />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/reference" element={<Reference />} />
+          <Route
+            path="/transactions"
+            element={<Transactions login={login} />}
+          />
+          <Route path="/support" element={<Support login={login} />} />
+          <Route
+            path="/support/message/:messageId"
+            element={<Message login={login} />}
+          />
+          <Route path="/services" element={<Services login={login} />} />
+          <Route path="/reference" element={<Reference login={login} />} />
           <Route path="*" element={<Error />} />
         </Route>
         <Route path="/logout" element={<Logout />} />

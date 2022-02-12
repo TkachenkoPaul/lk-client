@@ -15,7 +15,6 @@ import {
   PageHeader,
   Row,
   Switch,
-  Tag,
   Typography,
   Skeleton,
 } from 'antd'
@@ -25,8 +24,9 @@ import styles from './Profile.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 import * as dayjs from 'dayjs'
+import Finance from './Finance'
 
-const Profile = () => {
+const Profile = ({ login }) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getProfile())
@@ -42,7 +42,7 @@ const Profile = () => {
   const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
   // personal information
-  const [login, setLogin] = useState('')
+  // const [login, setLogin] = useState('')
   const [fio, setFio] = useState('')
   const [uid, setUid] = useState('')
   const [address, setAddress] = useState({})
@@ -68,6 +68,7 @@ const Profile = () => {
   }, [profile.data.bill, profile.data.dvmain])
   useEffect(() => {
     //устанавливаю статус тарифного плана
+    //TODO переписать на нормальный вид
     if (profile?.data?.dvmain?.disable) {
       switch (profile.data.dvmain.disable) {
         case 0:
@@ -105,10 +106,10 @@ const Profile = () => {
     setTariffInfo(`${tariffName} : ${fee} руб.`)
   }, [tariffName, fee])
   //personal info effects
-  useEffect(() => {
-    // устанавливаю згачение логина
-    profile.data?.id && setLogin(profile.data.id)
-  }, [profile.data.id])
+  // useEffect(() => {
+  //   // устанавливаю згачение логина
+  //   profile.data?.id && setLogin(profile.data.id)
+  // }, [profile.data.id])
   useEffect(() => {
     profile.data?.users_pi && setFio(profile.data.users_pi.fio)
   }, [profile.data.users_pi])
@@ -217,139 +218,141 @@ const Profile = () => {
   )
   return (
     <>
-      <CollectionCreateForm
-        visible={visible}
-        onCreate={onCreate}
-        onOk={handleSuccessPhone}
-        onCancel={handleCancelPhone}
-        phone={phone}
-        sms={false}
-      />
-      {/* TODO add loading for info boxes*/}
-      <InfoBoxes
-        switch={true}
-        deposit={deposit}
-        paidDays={paidDays}
-        fee={fee}
-      />
-      {isDebtor && (
-        <Alert
-          banner
-          type="error"
-          message={
-            <Marquee gradient={false} pauseOnHover={true}>
-              У вас не достаточно средств на счету. Для возобновления
-              пользования услугой интернет нужно внести денежные средства на
-              лицевой счет, который указан в вашем договоре
-            </Marquee>
-          }
+      <React.StrictMode>
+        <CollectionCreateForm
+          visible={visible}
+          onCreate={onCreate}
+          onOk={handleSuccessPhone}
+          onCancel={handleCancelPhone}
+          phone={phone}
+          sms={false}
         />
-      )}
-      <PageHeader
-        style={{ height: '100%' }}
-        breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
-        ghost={false}
-        onBack={() => window.history.back()}
-        title="Профиль"
-        subTitle={login}
-        extra={[
-          <Dropdown
-            overlay={menu}
-            placement="bottomRight"
-            arrow
-            key={'pagekey1'}>
-            <Button type="primary" key={1}>
-              Дополнительно
-            </Button>
-          </Dropdown>,
-        ]}>
-        <Row gutter={[16, 16]}>
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 24, offset: 0 }}
-            lg={{ span: 24, offset: 0 }}>
-            {profile.isLoading ? (
-              <Skeleton active />
-            ) : (
-              <Finance
-                deposit={deposit}
-                paidTo={paidTo}
-                paidDays={paidDays}
-                taariffName={tariffName}
-                tariffState={tariffState}
-                tariffInfo={tariffInfo}
-                fee={fee}
-              />
-            )}
-          </Col>
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 24, offset: 0 }}
-            lg={{ span: 24, offset: 0 }}>
-            <div className="mb-4">
+        {/* TODO add loading for info boxes*/}
+        <InfoBoxes
+          switch={true}
+          deposit={deposit}
+          paidDays={paidDays}
+          fee={fee}
+        />
+        {isDebtor && (
+          <Alert
+            banner
+            type="error"
+            message={
+              <Marquee gradient={false} pauseOnHover={true}>
+                У вас не достаточно средств на счету. Для возобновления
+                пользования услугой интернет нужно внести денежные средства на
+                лицевой счет, который указан в вашем договоре
+              </Marquee>
+            }
+          />
+        )}
+        <PageHeader
+          style={{ height: '100%' }}
+          breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
+          ghost={false}
+          onBack={() => window.history.back()}
+          title="Профиль"
+          subTitle={login}
+          extra={[
+            <Dropdown
+              overlay={menu}
+              placement="bottomRight"
+              arrow
+              key={'pagekey1'}>
+              <Button type="primary" key={1}>
+                Дополнительно
+              </Button>
+            </Dropdown>,
+          ]}>
+          <Row gutter={[16, 16]}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 24, offset: 0 }}
+              lg={{ span: 24, offset: 0 }}>
               {profile.isLoading ? (
                 <Skeleton active />
               ) : (
-                <PersonalInformation
-                  activation={activation}
-                  registration={registration}
-                  address={address}
-                  phone={phone}
-                  personalPhone={personalPhone}
-                  contract={contract}
-                  login={login}
-                  fio={fio}
-                  uid={uid}
+                <Finance
+                  deposit={deposit}
+                  paidTo={paidTo}
+                  paidDays={paidDays}
+                  taariffName={tariffName}
+                  tariffState={tariffState}
+                  tariffInfo={tariffInfo}
+                  fee={fee}
                 />
               )}
-            </div>
-          </Col>
-        </Row>
-      </PageHeader>
+            </Col>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 24, offset: 0 }}
+              lg={{ span: 24, offset: 0 }}>
+              <div className="mb-4">
+                {profile.isLoading ? (
+                  <Skeleton active />
+                ) : (
+                  <PersonalInformation
+                    activation={activation}
+                    registration={registration}
+                    address={address}
+                    phone={phone}
+                    personalPhone={personalPhone}
+                    contract={contract}
+                    login={login}
+                    fio={fio}
+                    uid={uid}
+                  />
+                )}
+              </div>
+            </Col>
+          </Row>
+        </PageHeader>
+      </React.StrictMode>
     </>
   )
 }
-const Finance = props => {
-  return (
-    <Descriptions
-      title={
-        <h6 className={`${styles.divider} ${styles.gradient}`}>Финансы</h6>
-      }
-      bordered
-      column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
-      <Descriptions.Item label="Баланс руб." key={1}>
-        <div style={{ fontSize: '16px' }}>
-          {props.deposit >= 0 ? (
-            props.deposit
-          ) : (
-            <Tag color="error" style={{ fontSize: '16px', padding: '10px' }}>
-              {props.deposit}
-            </Tag>
-          )}
-        </div>
-      </Descriptions.Item>
-      <Descriptions.Item label="Тарифный пакет" key={2}>
-        <div style={{ fontSize: '15px' }}>{props.taariffName}</div>
-      </Descriptions.Item>
-      <Descriptions.Item label="Статус тарифного плана" key={3}>
-        {props.tariffState}
-      </Descriptions.Item>
-      <Descriptions.Item label="Оплачено дней" key={4}>
-        {props.paidDays}
-      </Descriptions.Item>
-      <Descriptions.Item label="Дата окончания тарифа" key={5}>
-        {props.paidTo}
-      </Descriptions.Item>
-
-      <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки" key={6}>
-        {props.tariffInfo}
-      </Descriptions.Item>
-      <Descriptions.Item label="К оплате, руб./сутки" key={7}>
-        <div style={{ fontSize: '15px' }}>{props.fee} руб.</div>
-      </Descriptions.Item>
-    </Descriptions>
-  )
-}
+// const Finance = props => {
+//   return (
+//     <Descriptions
+//       title={
+//         <h6 className={`${styles.divider} ${styles.gradient}`}>Финансы</h6>
+//       }
+//       bordered
+//       column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
+//       <Descriptions.Item label="Баланс руб." key={1}>
+//         <div style={{ fontSize: '16px' }}>
+//           {props.deposit >= 0 ? (
+//             props.deposit
+//           ) : (
+//             <Tag color="error" style={{ fontSize: '16px', padding: '10px' }}>
+//               {props.deposit}
+//             </Tag>
+//           )}
+//         </div>
+//       </Descriptions.Item>
+//       <Descriptions.Item label="Тарифный пакет" key={2}>
+//         <div style={{ fontSize: '15px' }}>{props.taariffName}</div>
+//       </Descriptions.Item>
+//       <Descriptions.Item label="Статус тарифного плана" key={3}>
+//         {props.tariffState}
+//       </Descriptions.Item>
+//       <Descriptions.Item label="Оплачено дней" key={4}>
+//         {props.paidDays}
+//       </Descriptions.Item>
+//       <Descriptions.Item label="Дата окончания тарифа" key={5}>
+//         {props.paidTo}
+//       </Descriptions.Item>
+//
+//       <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки" key={6}>
+//         {props.tariffInfo}
+//       </Descriptions.Item>
+//       <Descriptions.Item label="К оплате, руб./сутки" key={7}>
+//         <div style={{ fontSize: '15px' }}>{props.fee} руб.</div>
+//       </Descriptions.Item>
+//     </Descriptions>
+//   )
+// }
 const PersonalInformation = props => {
   return (
     <Descriptions

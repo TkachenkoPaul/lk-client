@@ -21,6 +21,8 @@ import moment from 'moment'
 import { AddMessageFormCollection } from './AddMessageFromCollection'
 
 const Support = () => {
+  //TODO индикация загрузки данных в таблице
+  //TODO индикация загрузки заявки со скелетоном
   const userID = useID()
   const support = useSelector(state => state.support)
   const [visible, setVisible] = React.useState(false)
