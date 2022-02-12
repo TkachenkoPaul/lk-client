@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 
 const baseURL = 'https://test.rck-api.rck.su/api/v1/'
 
@@ -28,23 +29,38 @@ export async function getUserPaymentsRequest(config = {}) {
   return api.get('payments/me', config)
 }
 
-export async function getUserFeesRequest(config = {params:{start:'2016-01-01',end:'2022-01-01'}}){
-  return api.get('fees',config)
+export async function getUserFeesRequest(
+  config = { params: { start: '2016-01-01', end: '2022-01-01' } }
+) {
+  return api.get('fees', config)
 }
 
 export async function getMessages(config = {}) {
   return api.get('msgs', config)
 }
-export async function getMessage(config = {params:{text:''}},id= null) {
+export async function getMessage(config = { params: { text: '' } }, id = null) {
   return api.get(`msgs/${id}`, config)
 }
-export async function setMessageReply(text = '', msgID='') {
+export async function setMessageReply(text = '', msgID = '') {
   // эти заголовки нужны из-за корсов, потом нужно разобраться
   const config = {
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     },
   }
-  return api.post(`msgs/${msgID}/create_reply`, {text: text.text},config)
+  return api.post(`msgs/${msgID}/create_reply`, { text: text.text }, config)
+}
+export async function addMessage(subject, message) {
+  const body = {
+    chapter: 0,
+    message: message,
+    subject: subject,
+  }
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  return api.post(`msgs/create`, body, config)
 }
 export default api

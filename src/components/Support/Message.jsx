@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Breadcrumb,
-  Col,
-  Dropdown,
-  Menu,
-  PageHeader,
-  Row,
-} from 'antd'
+import { Breadcrumb, Col, Dropdown, Menu, PageHeader, Row } from 'antd'
 import { Link, useParams } from 'react-router-dom'
 import Chat from './Chat'
 import { useID } from '../../hooks/useID'
@@ -15,7 +8,7 @@ import { getMessage } from '../../store/actionCreators/SupportActionCreator'
 import MessageInformation from './MessageInformation'
 
 const Message = () => {
-  const dispatch  = useDispatch()
+  const dispatch = useDispatch()
   const message = useSelector(state => state.support.message)
   const { messageId } = useParams()
   const userID = useID()
@@ -36,16 +29,12 @@ const Message = () => {
       breadcrumbName: `${msg.subject} [№${msgId}]`,
     },
   ]
-  console.log('message from redux', message)
-  console.log('message from useState', msg)
   useEffect(() => {
     dispatch(getMessage(msgId))
   }, [])
   useEffect(() => {
     setMsg(message.data)
   }, [message])
-
-  console.log('message ------ ',msg)
 
   function itemRender(route, params, routes, paths) {
     const last = routes.indexOf(route) === routes.length - 1
@@ -65,7 +54,7 @@ const Message = () => {
       <Menu.Item key="4">Открыта</Menu.Item>
     </Menu>
   )
-  console.log('message files:',)
+  console.log('message files:')
   return (
     <>
       <PageHeader
@@ -85,13 +74,18 @@ const Message = () => {
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 8, offset: 0 }}>
-            <MessageInformation message={msg}/>
+            <MessageInformation message={msg} />
           </Col>
           <Col
             xs={{ span: 24 }}
             md={{ span: 24, offset: 0 }}
             lg={{ span: 16, offset: 0 }}>
-            <Chat msg={msg} userId={userID} message={msg.message} replies={msg.msgs_reply} />
+            <Chat
+              msg={msg}
+              userId={userID}
+              message={msg.message}
+              replies={msg.msgs_reply}
+            />
           </Col>
         </Row>
       </PageHeader>

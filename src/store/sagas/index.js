@@ -7,6 +7,7 @@ import {
   getMessageSagaWatcher,
   getMessagesSagaWatcher,
   setMessageReplySagaWatcher,
+  setMessageSagaWatcher,
 } from './getSupport'
 
 export default function* rootSaga() {
@@ -17,7 +18,8 @@ export default function* rootSaga() {
     getFeesSagaWatcher,
     getMessagesSagaWatcher,
     getMessageSagaWatcher,
-    setMessageReplySagaWatcher
+    setMessageReplySagaWatcher,
+    setMessageSagaWatcher,
   ]
   const retrySagas = sagas.map(saga => {
     return spawn(function* () {

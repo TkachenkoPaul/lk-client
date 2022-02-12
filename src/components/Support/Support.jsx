@@ -9,16 +9,23 @@ import {
   Space,
   Table,
 } from 'antd'
-import { CloudDownloadOutlined, PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setMessages } from '../../store/slices/supportSlice'
 import { useID } from '../../hooks/useID'
-import { getMessages } from '../../store/actionCreators/SupportActionCreator'
+import {
+  getMessages,
+  setMessage,
+} from '../../store/actionCreators/SupportActionCreator'
+import moment from 'moment'
+import { AddMessageFormCollection } from './AddMessageFromCollection'
 
 const Support = () => {
   const userID = useID()
-  const  support  = useSelector(state => state.support)
+  const support = useSelector(state => state.support)
+  const [visible, setVisible] = React.useState(false)
+  const [confirmLoading, setConfirmLoading] = React.useState(false)
+  const [modalText, setModalText] = React.useState('Content of the modal')
   const [isLoading, setIsLoading] = useState(support.isLoading)
   const [messages, setMessages] = useState(support.messages)
   useEffect(() => {
@@ -53,7 +60,13 @@ const Support = () => {
   const columns = [
     { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
     { title: 'Тема', dataIndex: 'subject', key: 'subject' },
-    { title: 'Дата', dataIndex: 'date', key: 'date' },
+    {
+      title: 'Дата',
+      dataIndex: 'date',
+      key: 'date',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => moment(a.date).unix() - moment(b.date).unix(),
+    },
     {
       title: 'Состояние',
       dataIndex: 'state',
@@ -75,6 +88,30 @@ const Support = () => {
     },
   ]
 
+  const handleCancel = () => {
+    console.log('Clicked cancel button')
+    setVisible(false)
+  }
+  const showModal = () => {
+    setVisible(true)
+  }
+  const hideModal = () => {
+    setVisible(false)
+  }
+  const onCreate = values => {
+    console.log('Received values of form: ', values)
+    dispatch(setMessage(values))
+    setVisible(false)
+  }
+
+  const handleOk = () => {
+    setModalText('The modal will be closed after two seconds')
+    setConfirmLoading(true)
+    setTimeout(() => {
+      setVisible(false)
+      setConfirmLoading(false)
+    }, 2000)
+  }
 
   return (
     <>
@@ -86,7 +123,12 @@ const Support = () => {
         title="Заявки"
         subTitle={userID}
         extra={[
-          <Button key="1" type="primary" icon={<PlusOutlined />} size="large">
+          <Button
+            key="1"
+            type="primary"
+            icon={<PlusOutlined />}
+            size="large"
+            onClick={showModal}>
             Создать заявку
           </Button>,
         ]}>
@@ -96,6 +138,11 @@ const Support = () => {
             md={{ span: 24, offset: 0 }}
             lg={{ span: 24, offset: 0 }}>
             <Divider orientation="left">История заявок</Divider>
+            <AddMessageFormCollection
+              visible={visible}
+              onCancel={hideModal}
+              onCreate={onCreate}
+            />
             <Table
               loading={isLoading}
               columns={columns}

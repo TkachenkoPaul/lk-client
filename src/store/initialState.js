@@ -4,16 +4,18 @@ export const initialState = {
   isLoading: null,
 }
 export const supportInitialState = {
-  messages: [
-  ],
+  messages: [],
   message: {
     isLoading: false,
-    data: {}
+    data: {},
   },
-  isLoading: true,
+  newMessage: {
+    isLoading: false,
+  },
+  isLoading: false,
   error: {
     code: '',
-    message: ''
+    message: '',
   },
   chapters: {
     4: 'Технические вопросы',
@@ -24,16 +26,16 @@ export const supportInitialState = {
     9: 'Повторная активация',
   },
   messageStatus: {
-    0:'Открыта',
-    1:'Не выполнена и закрыта',
-    2:'Выполнена и закрыта',
-    3:'В обработке',
-    4:'Новое сообщение',
-    5:'Приостановление',
-    6:'Ждем ответа от пользователя',
-    7:'Делигировано',
-    8:'Ответственный',
-  }
+    0: 'Открыта',
+    1: 'Не выполнена и закрыта',
+    2: 'Выполнена и закрыта',
+    3: 'В обработке',
+    4: 'Новое сообщение',
+    5: 'Приостановление',
+    6: 'Ждем ответа от пользователя',
+    7: 'Делигировано',
+    8: 'Ответственный',
+  },
 }
 export const profileInitialState = {
   data: {},

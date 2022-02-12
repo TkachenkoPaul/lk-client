@@ -12,17 +12,15 @@ import store from './store/store'
 import 'moment/locale/ru'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider locale={locale}>
-        <CookiesProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </CookiesProvider>
-      </ConfigProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ConfigProvider locale={locale}>
+      <CookiesProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </CookiesProvider>
+    </ConfigProvider>
+  </Provider>,
   document.getElementById('root')
 )
 
