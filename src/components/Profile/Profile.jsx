@@ -15,6 +15,7 @@ import {
   Switch,
   Skeleton,
   Space,
+  Typography,
 } from 'antd'
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
@@ -98,7 +99,7 @@ const Profile = ({ login }) => {
   }, [profile.data.dvmain])
   useEffect(() => {
     // устанавливаю количество оплаченных дней
-    setDays(Math.floor(deposit / fee))
+    deposit > 0 ? setDays(Math.floor(deposit / fee)) : setDays(0)
   }, [deposit, fee])
   useEffect(() => {
     // устанавливаю дату окончани тарифа
@@ -240,15 +241,22 @@ const Profile = ({ login }) => {
           fee={fee}
           loading={profile.isLoading}
         />
-        {isDebtor && (
+        {deposit < fee && (
           <Alert
             banner
             type="error"
             message={
-              <Marquee gradient={false} pauseOnHover={true}>
-                У вас не достаточно средств на счету. Для возобновления
-                пользования услугой интернет нужно внести денежные средства на
-                лицевой счет, который указан в вашем договоре
+              <Marquee
+                gradient={false}
+                pauseOnHover={true}
+                speed={'25'}
+                gradientColor={[229, 57, 53]}
+                direction={'left'}>
+                <Typography.Title level={5} type={'danger'}>
+                  У вас не достаточно средств на счету. Для возобновления
+                  пользования услугой интернет нужно внести денежные средства на
+                  лицевой счет, который указан в вашем договоре.
+                </Typography.Title>
               </Marquee>
             }
           />
