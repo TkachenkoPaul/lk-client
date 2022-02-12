@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
   message,
-  Alert,
   Breadcrumb,
   Button,
   Col,
@@ -15,10 +14,8 @@ import {
   Switch,
   Skeleton,
   Space,
-  Typography,
 } from 'antd'
 import { Link } from 'react-router-dom'
-import Marquee from 'react-fast-marquee'
 import { useDispatch, useSelector } from 'react-redux'
 import * as dayjs from 'dayjs'
 
@@ -43,7 +40,6 @@ const Profile = ({ login }) => {
   const [tariffName, setTariffName] = useState('')
   const [tariffState, setTariffState] = useState('')
   const [tariffInfo, setTariffInfo] = useState(``)
-  const [isDebtor, setIsDebtor] = useState(false)
   const [visible, setVisible] = React.useState(false)
   // personal information
   const [fio, setFio] = useState('')
@@ -190,30 +186,15 @@ const Profile = ({ login }) => {
 
   const menu = (
     <Menu key={'menu1'}>
-      <Menu.ItemGroup>
-        <Menu.Item onClick={showModalPhoneEdit} key="1">
-          Редактировать телефон
-        </Menu.Item>
-        <Menu.Item onClick={handleSuccessPassword} key="2">
-          Изменить пароль
-        </Menu.Item>
-        <Menu.Item
-          onClick={() => {
-            setIsDebtor(!isDebtor)
-            setDeposit(-deposit)
-            if (!isDebtor) {
-              success('Активирован долг по лицевому счету')
-            } else {
-              success('Деактивирован долг по лицевому счету')
-            }
-          }}
-          key="3">
-          Долг вкл/выкл
-        </Menu.Item>
-        <Menu.Item onClick={() => setDeposit(deposit + 20)} key="4">
-          Добавить денег абоненту
-        </Menu.Item>
-      </Menu.ItemGroup>
+      <Menu.Item onClick={showModalPhoneEdit} key="1">
+        Редактировать телефон
+      </Menu.Item>
+      <Menu.Item onClick={handleSuccessPassword} key="2">
+        Изменить пароль
+      </Menu.Item>
+      <Menu.Item onClick={() => setDeposit(deposit + 20)} key="4">
+        Добавить денег абоненту
+      </Menu.Item>
       <Menu.SubMenu title="Инфо панели">
         <Menu.Item onClick={() => setType(0)}> Вариант 1</Menu.Item>
         <Menu.Item onClick={() => setType(1)}>Вариант 2</Menu.Item>
@@ -241,26 +222,7 @@ const Profile = ({ login }) => {
           fee={fee}
           loading={profile.isLoading}
         />
-        {deposit < fee && (
-          <Alert
-            banner
-            type="error"
-            message={
-              <Marquee
-                gradient={false}
-                pauseOnHover={true}
-                speed={'25'}
-                gradientColor={[229, 57, 53]}
-                direction={'left'}>
-                <Typography.Title level={5} type={'danger'}>
-                  У вас не достаточно средств на счету. Для возобновления
-                  пользования услугой интернет нужно внести денежные средства на
-                  лицевой счет, который указан в вашем договоре.
-                </Typography.Title>
-              </Marquee>
-            }
-          />
-        )}
+
         <PageHeader
           style={{ height: '100%' }}
           breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
