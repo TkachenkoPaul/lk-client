@@ -1,8 +1,16 @@
 import React from 'react'
-import styles from './Profile.module.scss'
 import { Descriptions, Tag } from 'antd'
+import styles from './Profile.module.scss'
 
-const Finance = props => {
+export const Finance = ({
+  deposit,
+  tariffName,
+  tariffState,
+  tariffInfo,
+  paidDays,
+  paidTo,
+  fee,
+}) => {
   return (
     <Descriptions
       title={
@@ -12,36 +20,34 @@ const Finance = props => {
       column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
       <Descriptions.Item label="Баланс руб." key={1}>
         <div style={{ fontSize: '16px' }}>
-          {props.deposit >= 0 ? (
-            props.deposit
+          {deposit >= 0 ? (
+            deposit
           ) : (
             <Tag color="error" style={{ fontSize: '16px', padding: '10px' }}>
-              {props.deposit}
+              {deposit}
             </Tag>
           )}
         </div>
       </Descriptions.Item>
       <Descriptions.Item label="Тарифный пакет" key={2}>
-        <div style={{ fontSize: '15px' }}>{props.taariffName}</div>
+        <div style={{ fontSize: '15px' }}>{tariffName}</div>
       </Descriptions.Item>
       <Descriptions.Item label="Статус тарифного плана" key={3}>
-        {props.tariffState}
+        {tariffState}
       </Descriptions.Item>
       <Descriptions.Item label="Оплачено дней" key={4}>
-        {props.paidDays}
+        {paidDays}
       </Descriptions.Item>
       <Descriptions.Item label="Дата окончания тарифа" key={5}>
-        {props.paidTo}
+        {paidTo}
       </Descriptions.Item>
 
       <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки" key={6}>
-        {props.tariffInfo}
+        {tariffInfo}
       </Descriptions.Item>
       <Descriptions.Item label="К оплате, руб./сутки" key={7}>
-        <div style={{ fontSize: '15px' }}>{props.fee} руб.</div>
+        <div style={{ fontSize: '15px' }}>{fee} руб.</div>
       </Descriptions.Item>
     </Descriptions>
   )
 }
-
-export default Finance

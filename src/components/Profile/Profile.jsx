@@ -6,7 +6,6 @@ import {
   Breadcrumb,
   Button,
   Col,
-  Descriptions,
   Dropdown,
   Form,
   Input,
@@ -15,17 +14,15 @@ import {
   PageHeader,
   Row,
   Switch,
-  Typography,
   Skeleton,
 } from 'antd'
 import { Link } from 'react-router-dom'
 import Marquee from 'react-fast-marquee'
-import styles from './Profile.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 import * as dayjs from 'dayjs'
-import Finance from './Finance'
-import PersonalInformation from './PersonalInformation'
+import { Finance } from './Finance'
+import { PersonalInformation } from './PersonalInformation'
 
 const Profile = ({ login }) => {
   const dispatch = useDispatch()
@@ -272,7 +269,7 @@ const Profile = ({ login }) => {
                   deposit={deposit}
                   paidTo={paidTo}
                   paidDays={paidDays}
-                  taariffName={tariffName}
+                  tariffName={tariffName}
                   tariffState={tariffState}
                   tariffInfo={tariffInfo}
                   fee={fee}
