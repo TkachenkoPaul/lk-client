@@ -18,6 +18,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 import './Services.css'
 import { Link } from 'react-router-dom'
+import ServiceCard from './Card/ServiceCard'
 
 const Services = ({ login }) => {
   const { Text, Paragraph } = Typography
@@ -148,19 +149,19 @@ const Services = ({ login }) => {
               title="Заказать услугу"
               subTitle={login}
               extra={[]}>
-              <Tabs defaultActiveKey="2">
+              <Tabs defaultActiveKey="3">
                 <Tabs.TabPane tab="Вариант услуг 1" key="1">
-                  <Row gutter={[16, 16]} justify="space-around">
+                  <Row gutter={[32, 16]} justify="space-between">
                     <Col span={24}>
                       <div>
                         <Divider orientation="left">Интернет + IPTV</Divider>
                         <Row
-                          gutter={{ xs: 16, sm: 16, md: 24, lg: 32 }}
-                          justify="space-around">
+                          gutter={[32, { xs: 16, sm: 16, md: 24, lg: 32 }]}
+                          justify={'space-around'}>
                           <Col
                             xs={{ span: 24, order: 1 }}
-                            md={{ span: 8, order: 1 }}
-                            lg={{ span: 8, order: 1 }}>
+                            md={{ span: 7, order: 1 }}
+                            lg={{ span: 7, order: 1 }}>
                             <div>
                               <div className="princing-item blue">
                                 <div className="pricing-divider ">
@@ -262,8 +263,8 @@ const Services = ({ login }) => {
 
                           <Col
                             xs={{ span: 24, order: 2 }}
-                            md={{ span: 8, order: 2 }}
-                            lg={{ span: 8, order: 2 }}>
+                            md={{ span: 7, order: 2 }}
+                            lg={{ span: 7, order: 2 }}>
                             <div>
                               <div className="princing-item blue">
                                 <div className="pricing-divider ">
@@ -362,10 +363,11 @@ const Services = ({ login }) => {
                               </div>
                             </div>
                           </Col>
+
                           <Col
                             xs={{ span: 24, order: 3 }}
-                            md={{ span: 8, order: 3 }}
-                            lg={{ span: 8, order: 3 }}>
+                            md={{ span: 7, order: 3 }}
+                            lg={{ span: 7, order: 3 }}>
                             <div>
                               <div className="princing-item blue">
                                 <div className="pricing-divider ">
@@ -464,6 +466,7 @@ const Services = ({ login }) => {
                               </div>
                             </div>
                           </Col>
+
                           <Col
                             xs={{ span: 24, order: 4 }}
                             md={{ span: 24, order: 4 }}
@@ -484,12 +487,12 @@ const Services = ({ login }) => {
                       <div>
                         <Divider orientation="left">Технические услуги</Divider>
                         <Row
-                          gutter={{ xs: 16, sm: 32, md: 48, lg: 64 }}
+                          gutter={[32, { xs: 16, sm: 32, md: 48, lg: 64 }]}
                           justify="space-around">
                           <Col
                             xs={{ span: 24, order: 1 }}
-                            md={{ span: 8, order: 1 }}
-                            lg={{ span: 8, order: 1 }}>
+                            md={{ span: 7, order: 1 }}
+                            lg={{ span: 7, order: 1 }}>
                             <div>
                               <div className="princing-item blue">
                                 <div className="pricing-divider ">
@@ -588,8 +591,8 @@ const Services = ({ login }) => {
 
                           <Col
                             xs={{ span: 24, order: 2 }}
-                            md={{ span: 8, order: 2 }}
-                            lg={{ span: 8, order: 2 }}>
+                            md={{ span: 7, order: 2 }}
+                            lg={{ span: 7, order: 2 }}>
                             <div>
                               <div className="princing-item blue">
                                 <div className="pricing-divider ">
@@ -687,8 +690,8 @@ const Services = ({ login }) => {
                           </Col>
                           <Col
                             xs={{ span: 24, order: 3 }}
-                            md={{ span: 8, order: 3 }}
-                            lg={{ span: 8, order: 3 }}>
+                            md={{ span: 7, order: 3 }}
+                            lg={{ span: 7, order: 3 }}>
                             <div>
                               <div className="princing-item blue">
                                 <div className="pricing-divider ">
@@ -1296,7 +1299,114 @@ const Services = ({ login }) => {
                   </Row>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="вариант услуг 3" key="3">
-                  Content of Tab Pane 3
+                  <Row gutter={[16, 16]} justify="space-around">
+                    <Col span={24}>
+                      <Divider orientation="left">Интернет + IPTV</Divider>
+                      <Row
+                        gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
+                        justify="space-around">
+                        <Col
+                          xs={{ span: 24, order: 1 }}
+                          md={{ span: 8, order: 1 }}
+                          lg={{ span: 8, order: 1 }}>
+                          <ServiceCard title={'Интернет 100'} />
+                        </Col>
+
+                        <Col
+                          xs={{ span: 24, order: 2 }}
+                          md={{ span: 8, order: 2 }}
+                          lg={{ span: 8, order: 2 }}>
+                          <ServiceCard title={'Интернет 100'} />
+                        </Col>
+                        <Col
+                          xs={{ span: 24, order: 3 }}
+                          md={{ span: 8, order: 3 }}
+                          lg={{ span: 8, order: 3 }}>
+                          <ServiceCard title={'Интернет 100'} />
+                        </Col>
+                        <Col
+                          xs={{ span: 24, order: 4 }}
+                          md={{ span: 24, order: 4 }}
+                          lg={{ span: 24, order: 4 }}>
+                          <Paragraph>
+                            * провайдер, в случае необходимости, предоставляет
+                            кабель, разъемы, на безоплатной основе, для
+                            обеспечения качественного предоставления услуг. При
+                            наличии у абонента уже проложенного кабеля,
+                            предприятие осуществляет подключение с
+                            использованием абонентского кабеля
+                          </Paragraph>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col span={24}>
+                      <div>
+                        <Divider orientation="left">Технические услуги</Divider>
+                        <Row
+                          gutter={[16, { xs: 16, sm: 32, md: 48, lg: 64 }]}
+                          justify="space-around">
+                          <Col
+                            xs={{ span: 24, order: 1 }}
+                            md={{ span: 8, order: 1 }}
+                            lg={{ span: 8, order: 1 }}>
+                            <Card
+                              hoverable
+                              cover={
+                                <img
+                                  alt="example"
+                                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                />
+                              }
+                              actions={[
+                                <Button
+                                  style={{ width: 200 }}
+                                  size={'large'}
+                                  danger
+                                  type={'primary'}
+                                  shape={'round'}>
+                                  Заказать
+                                </Button>,
+                              ]}>
+                              <Card.Meta
+                                title={
+                                  <Typography.Title level={5}>
+                                    Отключение КТВ
+                                  </Typography.Title>
+                                }
+                                description={
+                                  <Space direction="vertical" size="small">
+                                    <Text>
+                                      "Кабельное телевидение" можно
+                                      приостановить 1(один)раз в 90(девяносто)
+                                      календарных дней путем написания заявления
+                                      в Абонентской отделе, на срок не более чем
+                                      180(сто восемдесят) дней. Спасибо за
+                                      обращение!
+                                    </Text>
+                                  </Space>
+                                }
+                              />
+                            </Card>
+                          </Col>
+                          <Col
+                            xs={{ span: 24, order: 4 }}
+                            md={{ span: 24, order: 4 }}
+                            lg={{ span: 24, order: 4 }}>
+                            <Paragraph>
+                              <Typography.Title level={5}>
+                                Обратите внимание
+                              </Typography.Title>
+                              <Typography.Paragraph>
+                                Работает только безналичный расчет. Оплата за
+                                дополнительные услуги взымается с Вашего
+                                лицевого счета.
+                              </Typography.Paragraph>
+                            </Paragraph>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Col>
+                  </Row>
                 </Tabs.TabPane>
               </Tabs>
               {/*<Row gutter={[16, 16]} justify="space-around">

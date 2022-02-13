@@ -60,7 +60,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="sc1">
       <Routes>
         <Route path="/" element={<PageContent />}>
           <Route index element={<Profile login={login} />} />

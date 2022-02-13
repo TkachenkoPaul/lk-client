@@ -80,7 +80,10 @@ const Chat = props => {
           className={`comment-list ${style.header}`}
           header={'Сообщения'}
           itemLayout="horizontal">
-          <ScrollToBottom mode={'bottom'} className={style.scrollerBox}>
+          <ScrollToBottom
+            mode={'bottom'}
+            className={`${style.scrollerBox} `}
+            scrollViewClassName={'sc1'}>
             {comments(data)}
           </ScrollToBottom>
         </List>
