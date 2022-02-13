@@ -1,5 +1,4 @@
 import axios from 'axios'
-import moment from 'moment'
 
 const baseURL = 'https://test.rck-api.rck.su/api/v1/'
 
@@ -52,7 +51,6 @@ export async function setMessageReply(text = '', msgID = '') {
 }
 export async function addMessage(subject, message) {
   const body = {
-    chapter: 0,
     message: message,
     subject: subject,
   }

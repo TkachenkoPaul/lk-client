@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Breadcrumb, Col, Dropdown, Menu, PageHeader, Row } from 'antd'
-import { Link, useParams } from 'react-router-dom'
-import Chat from './Chat'
-import { useID } from '../../hooks/useID'
 import { useDispatch, useSelector } from 'react-redux'
+import { Breadcrumb, Button, Col, PageHeader, Row } from 'antd'
+import { uuid } from 'uuidv4'
+import { Link, useParams } from 'react-router-dom'
+
 import { getMessage } from '../../store/actionCreators/SupportActionCreator'
 import MessageInformation from './MessageInformation'
+import Chat from './Chat'
+import { useID } from '../../hooks/useID'
 
 const Message = () => {
-  const dispatch = useDispatch()
   const message = useSelector(state => state.support.message)
   const { messageId } = useParams()
-  const userID = useID()
   const [msg, setMsg] = useState(message)
-  const [msgId, setMsgId] = useState(messageId)
+  const [msgId] = useState(messageId)
+  const dispatch = useDispatch()
+  const userID = useID()
+
   const routes = [
     //TODO настроить нормальный роутинг
     {
@@ -44,17 +47,7 @@ const Message = () => {
       <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
     )
   }
-  const handleMenuClick = e => {
-    console.log('click', e)
-  }
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="2">Не выполнена и закрата</Menu.Item>
-      <Menu.Item key="3">Приостановлено</Menu.Item>
-      <Menu.Item key="4">Открыта</Menu.Item>
-    </Menu>
-  )
-  console.log('message files:')
+
   return (
     <>
       <PageHeader
@@ -65,9 +58,9 @@ const Message = () => {
         title={msg.subject}
         subTitle={userID}
         extra={[
-          <Dropdown.Button overlay={menu} onClick={handleMenuClick} key="1">
-            Выполнена и закрыта
-          </Dropdown.Button>,
+          <Button key={uuid()} type={'primary'}>
+            Закрыть
+          </Button>,
         ]}>
         <Row gutter={[16, 16]}>
           <Col
