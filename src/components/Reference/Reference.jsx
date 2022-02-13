@@ -11,7 +11,7 @@ import {
 } from 'antd'
 import { Link } from 'react-router-dom'
 
-const Reference = () => {
+const Reference = ({ login }) => {
   const routes = [
     {
       path: 'index',
@@ -39,7 +39,7 @@ const Reference = () => {
         ghost={false}
         onBack={() => window.history.back()}
         title="Справка"
-        subTitle="erem-7-001"
+        subTitle={login}
         extra={[]}>
         <Row gutter={[16, 16]}>
           <Col
