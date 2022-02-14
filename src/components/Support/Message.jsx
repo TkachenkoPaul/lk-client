@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Breadcrumb, Button, Col, PageHeader, Row } from 'antd'
-import { uuid } from 'uuidv4'
+import { v4 as uuid } from 'uuid'
 import { Link, useParams } from 'react-router-dom'
 
 import { getMessage } from '../../store/actionCreators/SupportActionCreator'

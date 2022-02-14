@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Image } from 'antd'
+import { v4 as uuid } from 'uuid'
 
 const ReplyFiles = ({ files }) => {
   const [visible, setVisible] = useState(false)
   return (
     <>
       <Image
+        key={uuid()}
         preview={{ visible: false }}
         height={100}
         src={`https://test.rck-api.rck.su${files[0]?.file}`}
@@ -19,7 +21,10 @@ const ReplyFiles = ({ files }) => {
             onVisibleChange: vis => setVisible(vis),
           }}>
           {files?.map(file => (
-            <Image src={`https://test.rck-api.rck.su${file.file}`} />
+            <Image
+              key={uuid()}
+              src={`https://test.rck-api.rck.su${file.file}`}
+            />
           ))}
         </Image.PreviewGroup>
       </div>

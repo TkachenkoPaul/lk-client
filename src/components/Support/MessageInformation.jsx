@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Descriptions, Image, Skeleton } from 'antd'
+import { v4 as uuid } from 'uuid'
 
 const MessageInformation = ({ message }) => {
   const [visible, setVisible] = useState(false)
@@ -12,19 +13,26 @@ const MessageInformation = ({ message }) => {
         column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
         size="small"
         layout="vertical">
-        <Descriptions.Item label="Статус:">{message.state}</Descriptions.Item>
-        <Descriptions.Item label="Приоритет:">
+        <Descriptions.Item key={uuid()} label="Статус:">
+          {message.state}
+        </Descriptions.Item>
+        <Descriptions.Item key={uuid()} label="Приоритет:">
           {message.priority}
         </Descriptions.Item>
-        <Descriptions.Item label="Создана:">{message.date}</Descriptions.Item>
-        <Descriptions.Item label="Закрыта:">
+        <Descriptions.Item key={uuid()} label="Создана:">
+          {message.date}
+        </Descriptions.Item>
+        <Descriptions.Item key={uuid()} label="Закрыта:">
           {message.closed_date}
         </Descriptions.Item>
-        <Descriptions.Item label="Раздел:">{message.chapter}</Descriptions.Item>
-        <Descriptions.Item label="Файлы:">
+        <Descriptions.Item key={uuid()} label="Раздел:">
+          {message.chapter}
+        </Descriptions.Item>
+        <Descriptions.Item key={uuid()} label="Файлы:">
           {!!message.files ? (
             <>
               <Image
+                key={uuid()}
                 preview={{ visible: false }}
                 height={100}
                 src={`https://test.rck-api.rck.su${message.files[0]?.file}`}
@@ -38,7 +46,10 @@ const MessageInformation = ({ message }) => {
                     onVisibleChange: vis => setVisible(vis),
                   }}>
                   {message.files.map(file => (
-                    <Image src={`https://test.rck-api.rck.su${file.file}`} />
+                    <Image
+                      key={uuid()}
+                      src={`https://test.rck-api.rck.su${file.file}`}
+                    />
                   ))}
                 </Image.PreviewGroup>
               </div>
@@ -62,11 +73,11 @@ const MessageInformation = ({ message }) => {
   } else {
     return (
       <>
-        <Skeleton paragraph={{ rows: 2 }} />
-        <Skeleton paragraph={{ rows: 2 }} />
-        <Skeleton paragraph={{ rows: 2 }} />
-        <Skeleton paragraph={{ rows: 2 }} />
-        <Skeleton paragraph={{ rows: 2 }} />
+        <Skeleton key={uuid()} paragraph={{ rows: 2 }} />
+        <Skeleton key={uuid()} paragraph={{ rows: 2 }} />
+        <Skeleton key={uuid()} paragraph={{ rows: 2 }} />
+        <Skeleton key={uuid()} paragraph={{ rows: 2 }} />
+        <Skeleton key={uuid()} paragraph={{ rows: 2 }} />
       </>
     )
   }

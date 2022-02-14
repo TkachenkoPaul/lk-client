@@ -1,6 +1,6 @@
 import { call, spawn, all } from 'redux-saga/effects'
 import { authUser } from './authUser'
-import { getUser } from './getProfile'
+import { getUser, setCreditSagaWatcher } from './getProfile'
 import { getPaymentsSagaWatcher } from './getPayments'
 import { getFeesSagaWatcher } from './getFees'
 import {
@@ -14,6 +14,7 @@ export default function* rootSaga() {
   const sagas = [
     authUser,
     getUser,
+    setCreditSagaWatcher,
     getPaymentsSagaWatcher,
     getFeesSagaWatcher,
     getMessagesSagaWatcher,

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { supportInitialState } from '../initialState'
+import { v4 as uuid } from 'uuid'
 
 // const configMessage = (message,chapters,status) => {
 //   let newMessage = {... message, chapter: chapters[message.chapter], state: status[message.state]}
@@ -24,7 +25,7 @@ const supportSlice = createSlice({
     },
     setMessages: (state, action) => {
       state.messages = action.payload.data.map(message => {
-        message.key = message.id
+        message.key = uuid()
         return message
       })
     },

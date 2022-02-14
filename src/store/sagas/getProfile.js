@@ -1,8 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { getUserRequest } from '../../api'
-import { setLoading, setLoaded, setProfile } from '../slices/profileSlice'
-import { GET_PROFILE } from '../actions/ProfileActions'
+import { getUserRequest, setUserCreditRequest } from '../../api'
+import {
+  setLoading,
+  setLoaded,
+  setProfile,
+  setCreditError,
+} from '../slices/profileSlice'
+import { GET_PROFILE, SET_CREDIT } from '../actions/ProfileActions'
 import { setError } from '../slices/authSlice'
 
 export function* getProfileSagaWorker() {
@@ -19,6 +24,23 @@ export function* getProfileSagaWorker() {
   }
 }
 
+export function* setCreditSagaWorker() {
+  yield put(setLoading())
+  try {
+    const response = yield call(setUserCreditRequest)
+    yield put(setProfile(response))
+    yield put(setLoaded())
+  } catch (error) {
+    //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404
+    console.log('profile error: ', error.response)
+    yield put(setCreditError(error.response))
+    yield put(setLoaded())
+  }
+}
+
+export function* setCreditSagaWatcher() {
+  yield takeLatest(SET_CREDIT, setCreditSagaWorker)
+}
 export function* getUser() {
   yield takeLatest(GET_PROFILE, getProfileSagaWorker)
 }

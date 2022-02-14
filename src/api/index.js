@@ -24,6 +24,9 @@ export async function authRequest(username, password) {
 export async function getUserRequest(config = {}) {
   return api.get('users/me', config)
 }
+export async function setUserCreditRequest(config = {}) {
+  return api.get('users/credit', config)
+}
 export async function getUserPaymentsRequest(config = {}) {
   return api.get('payments/me', config)
 }

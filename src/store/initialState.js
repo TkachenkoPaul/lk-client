@@ -39,6 +39,10 @@ export const supportInitialState = {
 }
 export const profileInitialState = {
   data: {},
+  credit: {
+    isVisible: false,
+    disabled: false,
+  },
   isLoading: false,
   isLoaded: false,
   isDebtor: false,

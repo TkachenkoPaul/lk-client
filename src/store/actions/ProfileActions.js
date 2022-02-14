@@ -1,1 +1,2 @@
 export const GET_PROFILE = 'GET_PROFILE_INFORMATION'
+export const SET_CREDIT = 'SET_CREDIT'

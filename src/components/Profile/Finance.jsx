@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Alert, Descriptions, Tag, Typography } from 'antd'
 import styles from './Profile.module.scss'
+import CreditModal from './Credit/CreditModal'
 
 export const Finance = ({
   deposit,
@@ -10,7 +11,18 @@ export const Finance = ({
   paidDays,
   paidTo,
   fee,
+  isCreditModalVisible,
+  showCreditModal,
+  handleCreditModalCancel,
+  handleCreditModalOk,
+  modalDisabled,
 }) => {
+  useEffect(() => {
+    if (deposit < fee && !modalDisabled) {
+      showCreditModal()
+    }
+  }, [deposit, fee])
+
   return (
     <>
       {deposit < fee && (
@@ -20,14 +32,31 @@ export const Finance = ({
           type="error"
           message="Внимание!"
           description={
-            <Typography.Text type={'danger'}>
-              У вас не достаточно средств на счету. Для возобновления
-              пользования услугой интернет нужно внести денежные средства на
-              лицевой счет, который указан в вашем договоре.{' '}
-              <Typography.Link href="https://bank24.gosbank.su" target="_blank">
-                Интернет-Банк
-              </Typography.Link>
-            </Typography.Text>
+            <Typography.Paragraph type={'danger'}>
+              <Typography.Text>
+                У вас не достаточно средств на счету. Для возобновления
+                пользования услугой интернет нужно внести денежные средства на
+                лицевой счет, который указан в вашем договоре.
+              </Typography.Text>
+              <Typography.Text>
+                {' '}
+                Вы можете это сделать с помощью{' '}
+                <Typography.Link
+                  href="https://bank24.gosbank.su"
+                  target="_blank">
+                  Интернет-Банк
+                </Typography.Link>
+                .
+              </Typography.Text>
+              <Typography.Text>
+                {' '}
+                Или воспользоваться услугой{' '}
+                <Typography.Link onClick={showCreditModal}>
+                  Кредит
+                </Typography.Link>
+                .
+              </Typography.Text>
+            </Typography.Paragraph>
           }
           // description="У вас не достаточно средств на счету. Для возобновления пользования услугой интернет нужно внести денежные средства на лицевой счет, который указан в вашем договоре."
           // <Marquee
@@ -45,6 +74,14 @@ export const Finance = ({
           // </Marquee>
         />
       )}
+      <CreditModal
+        isModalVisible={isCreditModalVisible}
+        handleCancel={handleCreditModalCancel}
+        handleOk={handleCreditModalOk}
+        deposit={deposit}
+        fee={fee}
+        paidTo={paidTo}
+      />
       <Descriptions
         title={
           <h6 className={`${styles.divider} ${styles.gradient}`}>Финансы</h6>

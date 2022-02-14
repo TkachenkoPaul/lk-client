@@ -21,6 +21,7 @@ import {
 } from '../../store/actionCreators/SupportActionCreator'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import ReplyFiles from './ReplyFile'
+import { v4 as uuid } from 'uuid'
 
 const Chat = props => {
   const dispatch = useDispatch()
@@ -28,7 +29,7 @@ const Chat = props => {
   const getChatMessages = (msg, userId) => {
     const chatMessages = msg.msgs_reply?.map(reply => {
       const chat = {}
-      chat.key = reply.id
+      chat.key = uuid()
       chat.actions =
         reply.files?.length > 1 ? [<ReplyFiles files={reply.files} />] : []
       chat.author = reply.aid
@@ -65,6 +66,7 @@ const Chat = props => {
   const comments = data => {
     return data.map(item => (
       <Comment
+        key={item.key}
         actions={item.actions}
         author={item.author}
         avatar={item.avatar}

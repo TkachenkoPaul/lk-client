@@ -18,11 +18,16 @@ import {
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as dayjs from 'dayjs'
+import { v4 as uuid } from 'uuid'
 
 import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 import { PersonalInformation } from './PersonalInformation'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
 import { Finance } from './Finance'
+import {
+  setCreditModal,
+  setCreditModalDisabled,
+} from '../../store/slices/profileSlice'
 
 const Profile = ({ login }) => {
   //TODO add popovers
@@ -63,7 +68,7 @@ const Profile = ({ login }) => {
     // устанавлюваю дневную абоненплату  и назваение тарифа
     profile.data?.dvmain?.tariff && setFee(profile.data.dvmain.tariff.day_fee)
     profile.data?.dvmain?.tariff &&
-      setTariffName(profile.data.dvmain.tariff.name)
+      setTariffName(profile.data.dvmain.tariff.comments)
   }, [profile.data.bill, profile.data.dvmain])
   useEffect(() => {
     //устанавливаю статус тарифного плана
@@ -184,21 +189,43 @@ const Profile = ({ login }) => {
     )
   }
 
+  const [isCreditModalVisible, setIsCreditModalVisible] = useState(false)
+  const showCreditModal = () => {
+    // setIsCreditModalVisible(true)
+    dispatch(setCreditModal({ isVisible: true }))
+  }
+  const handleCreditModalOk = () => {
+    setIsCreditModalVisible(false)
+  }
+  const handleCreditModalCancel = () => {
+    // setIsCreditModalVisible(false)
+    dispatch(setCreditModal({ isVisible: false }))
+    dispatch(setCreditModalDisabled())
+  }
   const menu = (
     <Menu key={'menu1'}>
-      <Menu.Item onClick={showModalPhoneEdit} key="1">
+      <Menu.Item onClick={showCreditModal} key={uuid()}>
+        Кредит
+      </Menu.Item>
+      <Menu.Item onClick={showModalPhoneEdit} key={uuid()}>
         Редактировать телефон
       </Menu.Item>
-      <Menu.Item onClick={handleSuccessPassword} key="2">
+      <Menu.Item onClick={handleSuccessPassword} key={uuid()}>
         Изменить пароль
       </Menu.Item>
-      <Menu.Item onClick={() => setDeposit(deposit + 20)} key="4">
+      <Menu.Item onClick={() => setDeposit(deposit + 20)} key={uuid()}>
         Добавить денег абоненту
       </Menu.Item>
-      <Menu.SubMenu title="Инфо панели">
-        <Menu.Item onClick={() => setType(0)}> Вариант 1</Menu.Item>
-        <Menu.Item onClick={() => setType(1)}>Вариант 2</Menu.Item>
-        <Menu.Item onClick={() => setType(2)}>Вариант 3</Menu.Item>
+      <Menu.SubMenu title="Инфо панели" key={uuid()}>
+        <Menu.Item onClick={() => setType(0)} key={uuid()}>
+          Вариант 1
+        </Menu.Item>
+        <Menu.Item onClick={() => setType(1)} key={uuid()}>
+          Вариант 2
+        </Menu.Item>
+        <Menu.Item onClick={() => setType(2)} key={uuid()}>
+          Вариант 3
+        </Menu.Item>
       </Menu.SubMenu>
     </Menu>
   )
@@ -257,6 +284,14 @@ const Profile = ({ login }) => {
                   tariffState={tariffState}
                   tariffInfo={tariffInfo}
                   fee={fee}
+                  // showCreditModal={showCreditModal}
+                  // closeCreditModal={closeCreditModal}
+                  // isCreditModalVisible={isCreditModalVisible}
+                  showCreditModal={showCreditModal}
+                  isCreditModalVisible={profile.credit.isVisible}
+                  handleCreditModalOk={handleCreditModalOk}
+                  handleCreditModalCancel={handleCreditModalCancel}
+                  modalDisabled={profile.credit.disabled}
                 />
               )}
             </Col>

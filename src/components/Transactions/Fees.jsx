@@ -41,7 +41,13 @@ function Fees() {
     }
   }
   const columns = [
-    { title: '#', dataIndex: 'id', key: 'id', responsive: ['lg'] },
+    {
+      title: '#',
+      dataIndex: 'id',
+      key: 'id',
+      responsive: ['lg'],
+      sorter: (a, b) => a.id - b.id,
+    },
     {
       title: 'Дата',
       dataIndex: 'date',
