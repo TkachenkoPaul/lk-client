@@ -43,6 +43,12 @@ const supportSlice = createSlice({
     setNewMessageLoaded: state => {
       state.newMessage.isLoading = false
     },
+    setNewMessageIsAdded: state => {
+      state.newMessage.isAdded = true
+    },
+    setNewMessageIsNotAdded: state => {
+      state.newMessage.isAdded = false
+    },
     addNewMessage: (state, action) => {
       const msg = action.payload.data
       state.messages.push({
@@ -64,6 +70,8 @@ export const {
   setMessageLoading,
   setNewMessageLoading,
   setNewMessageLoaded,
+  setNewMessageIsAdded,
+  setNewMessageIsNotAdded,
   addNewMessage,
   setReply,
 } = supportSlice.actions

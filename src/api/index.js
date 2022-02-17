@@ -74,13 +74,28 @@ export async function addMessageFileRequest(messageID, files) {
     },
   }
   if (Array.isArray(files)) {
-    console.log('files ->>>>>>', files)
+    files.forEach(file => {
+      let data = new FormData()
+      data.append('file', file.originFileObj)
+      return api.post(`msgs/${messageID}/upload_file`, data, config)
+    })
+  }
+}
+
+export async function addReplyFileRequest(replyID, files) {
+  const config = {
+    headers: {
+      Accept: '*/*',
+      'Content-Type': 'multipart/form-data',
+    },
+  }
+  if (Array.isArray(files)) {
     files.forEach(file => {
       console.log('file is =>', file)
       let data = new FormData()
       console.log('file upload element', file)
       data.append('file', file.originFileObj)
-      return api.post(`msgs/${messageID}/upload_file`, data, config)
+      return api.post(`msgs/reply/${replyID}/upload_file`, data, config)
     })
   }
 }

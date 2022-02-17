@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal, Upload, message } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { UploadOutlined } from '@ant-design/icons'
 
@@ -15,6 +15,9 @@ const AddMessageFormCollection = ({
   const [form] = Form.useForm()
   const [fileList, setFileList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    console.log('confirm loading', confirmLoading)
+  }, [])
   const onOk = () => {
     form
       .validateFields()
@@ -37,6 +40,8 @@ const AddMessageFormCollection = ({
   }
   const props = {
     name: 'file',
+    listType: 'picture',
+    maxCount: '20',
     beforeUpload(file) {
       return false
     },
@@ -51,7 +56,6 @@ const AddMessageFormCollection = ({
       }
     },
   }
-
   return (
     <Modal
       visible={visible}

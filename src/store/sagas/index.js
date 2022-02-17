@@ -1,5 +1,6 @@
 import {
   addMessageFileSagaWatcher,
+  addReplyFileSagaWatcher,
   getMessageSagaWatcher,
   getMessagesSagaWatcher,
   setMessageReplySagaWatcher,
@@ -24,6 +25,7 @@ export default function* rootSaga() {
     setMessageReplySagaWatcher,
     setMessageSagaWatcher,
     addMessageFileSagaWatcher,
+    addReplyFileSagaWatcher,
   ]
   const retrySagas = sagas.map(saga => {
     return spawn(function* () {

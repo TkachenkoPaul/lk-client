@@ -1,37 +1,41 @@
-import React from 'react'
+import 'dayjs/locale/ru'
+
 import {
-  List,
   Avatar,
+  Button,
   Comment,
   Form,
-  Button,
   Input,
-  Upload,
+  List,
   Skeleton,
+  Upload,
 } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
-import user from './user.png'
-import operator from './operator.png'
-import style from './Support.module.css'
-import 'dayjs/locale/ru'
-import { useDispatch } from 'react-redux'
 import {
   getMessage,
   setMessageReply,
 } from '../../store/actionCreators/SupportActionCreator'
-import ScrollToBottom from 'react-scroll-to-bottom'
+
+import React from 'react'
 import ReplyFiles from './ReplyFile'
+import ScrollToBottom from 'react-scroll-to-bottom'
+import { UploadOutlined } from '@ant-design/icons'
+import { locale } from 'antd/lib/locale/ru_RU'
+import operator from './operator.png'
+import style from './Support.module.css'
+import { useDispatch } from 'react-redux'
+import user from './user.png'
 import { v4 as uuid } from 'uuid'
 
 const Chat = props => {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
   const getChatMessages = (msg, userId) => {
+    console.log('get chat messages', msg)
     const chatMessages = msg.msgs_reply?.map(reply => {
       const chat = {}
       chat.key = uuid()
       chat.actions =
-        reply.files?.length > 1 ? [<ReplyFiles files={reply.files} />] : []
+        reply.files?.length >= 1 ? [<ReplyFiles files={reply.files} />] : []
       chat.author = reply.aid
       chat.avatar = reply.aid === 'Оператор' ? operator : user
       chat.content = <p>{reply.text}</p>
@@ -39,7 +43,7 @@ const Chat = props => {
       return chat
     })
     chatMessages?.unshift({
-      key: msg.id,
+      key: uuid(),
       actions: [],
       author: userId,
       avatar: user,
@@ -49,6 +53,22 @@ const Chat = props => {
     return chatMessages
   }
   const data = getChatMessages(props.msg, props.userId)
+  const getFile = e => {
+    console.log('Upload event:', e)
+
+    if (Array.isArray(e)) {
+      return e
+    }
+    return e && e.fileList
+  }
+  const uploadConfig = {
+    name: 'file',
+    beforeUpload(file) {
+      return false
+    },
+    listType: 'picture',
+    maxCount: '20',
+  }
   const normFile = e => {
     console.log('Upload event:', e)
 
@@ -59,7 +79,14 @@ const Chat = props => {
     return e && e.fileList
   }
   const onFinish = values => {
-    dispatch(setMessageReply({ text: values.text, msgId: props.msg.id }))
+    console.log('values', values)
+    dispatch(
+      setMessageReply({
+        text: values.text,
+        file: values.file,
+        msgId: props.msg.id,
+      })
+    )
     dispatch(getMessage(props.msg.id))
     form.resetFields()
   }
@@ -104,24 +131,10 @@ const Chat = props => {
                   ]}>
                   <Input.TextArea autoSize={{ minRows: 2, maxRows: 6 }} />
                 </Form.Item>
-                <Form.Item
-                  name="file"
-                  label=""
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                  extra="Загрузите изображения ">
+                <Form.Item name="file" getValueFromEvent={getFile}>
                   {/*TODO добавить валидацию загружаемых файлов*/}
-                  <Upload
-                    name="file"
-                    action={`https://test.rck-api.rck.su/api/v1/msgs/${props.msg.id}/upload_file`}
-                    listType="picture"
-                    maxCount={20}
-                    withCredentials={true}
-                    headers={{
-                      'Content-Type': 'multipart/form-data',
-                      Accept: '*/*',
-                    }}>
-                    <Button icon={<UploadOutlined />} type="primary">
+                  <Upload {...uploadConfig}>
+                    <Button icon={<UploadOutlined />}>
                       Нажмите для загрузки
                     </Button>
                   </Upload>

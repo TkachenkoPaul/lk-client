@@ -11,6 +11,8 @@ export const supportInitialState = {
   },
   newMessage: {
     isLoading: false,
+    isAdded: false,
+    files: [],
   },
   newMessageFileIsLoading: false,
   isLoading: false,

@@ -91,10 +91,6 @@ const Support = () => {
     },
   ]
 
-  const handleCancel = () => {
-    console.log('Clicked cancel button')
-    setVisible(false)
-  }
   const showModal = () => {
     setVisible(true)
   }
@@ -142,6 +138,7 @@ const Support = () => {
             lg={{ span: 24, offset: 0 }}>
             <Divider orientation="left">История заявок</Divider>
             <AddMessageFormCollection
+              confirmLoading={support.newMessage.isLoading}
               visible={visible}
               onCancel={hideModal}
               onCreate={onCreate}

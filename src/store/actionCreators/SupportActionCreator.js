@@ -1,5 +1,6 @@
 import {
   ADD_MESSAGE_FILE,
+  ADD_REPLY_FILE,
   GET_MESSAGE,
   GET_MESSAGES,
   SET_MESSAGE,
@@ -24,4 +25,7 @@ export const setMessage = payload => {
 
 export const addMessageFile = payload => {
   return { type: ADD_MESSAGE_FILE, payload }
+}
+export const addReplyFile = payload => {
+  return { type: ADD_REPLY_FILE, payload }
 }

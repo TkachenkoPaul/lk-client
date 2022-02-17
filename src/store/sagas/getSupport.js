@@ -1,5 +1,6 @@
 import {
   ADD_MESSAGE_FILE,
+  ADD_REPLY_FILE,
   GET_MESSAGE,
   GET_MESSAGES,
   SET_MESSAGE,
@@ -8,10 +9,15 @@ import {
 import {
   addMessage,
   addMessageFileRequest,
+  addReplyFileRequest,
   getMessage,
   getMessages as getMessagesApi,
   setMessageReply,
 } from '../../api'
+import {
+  addMessageFile,
+  addReplyFile,
+} from '../actionCreators/SupportActionCreator'
 import {
   addNewMessage,
   setLoaded,
@@ -25,9 +31,6 @@ import {
   setReply,
 } from '../slices/supportSlice'
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-
-import { LockFilled } from '@ant-design/icons/lib/icons'
-import { addMessageFile } from '../actionCreators/SupportActionCreator'
 
 export function* getMessagesSagaWorker() {
   yield put(setLoading())
@@ -66,6 +69,14 @@ export function* setMessageReplySagaWorker(action) {
       action.payload.msgId
     )
     if (response.status === 200) {
+      console.log('setMessageReplySaga worker:', response)
+      console.log('setMessageReplySaga action:', action)
+      yield put(
+        addReplyFile({
+          replyID: response.data.id,
+          files: action.payload.file,
+        })
+      )
       yield put(setReply(response))
     }
     console.log('message reply', response)
@@ -86,8 +97,6 @@ export function* setMessageSagaWorker(action) {
       action.payload.message
     )
     if (response.status === 200) {
-      console.log('set message saga action:', action)
-      console.log('set message saga response:', response)
       yield put(
         addMessageFile({
           messageID: response.data.id,
@@ -105,18 +114,30 @@ export function* setMessageSagaWorker(action) {
 }
 
 export function* addMessageFileSagaWorker(action) {
-  // yield put(setNewMessageLoading())
   try {
-    console.log('addMessageFileSagaWorker action:', action)
-    if (Array.isArray(action.payload.files)) {
-      console.log('files is set')
-      const response = yield call(
-        addMessageFileRequest,
-        action.payload.messageID,
-        action.payload.files
-      )
-      console.log('api file upload response', response)
-    }
+    const response = yield call(
+      addMessageFileRequest,
+      action.payload.messageID,
+      action.payload.files
+    )
+    console.log('api file upload response', response)
+    console.log('files is NOT SET')
+  } catch (error) {
+    //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404. переделать как на логине
+    console.log('profile error: ', error.response)
+    yield put(setNewMessageLoaded())
+  }
+}
+
+export function* addReplyFileSagaWorker(action) {
+  try {
+    console.log('addReplyFileSagaWorker action:', action)
+    const response = yield call(
+      addReplyFileRequest,
+      action.payload.replyID,
+      action.payload.files
+    )
+    console.log('api file upload response', response)
     console.log('files is NOT SET')
     // const response = yield call(
     //   addMessageFileRequest,
@@ -153,4 +174,7 @@ export function* setMessageSagaWatcher() {
 
 export function* addMessageFileSagaWatcher() {
   yield takeEvery(ADD_MESSAGE_FILE, addMessageFileSagaWorker)
+}
+export function* addReplyFileSagaWatcher() {
+  yield takeEvery(ADD_REPLY_FILE, addReplyFileSagaWorker)
 }
