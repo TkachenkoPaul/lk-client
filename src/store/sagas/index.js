@@ -1,14 +1,16 @@
-import { call, spawn, all } from 'redux-saga/effects'
-import { authUser } from './authUser'
-import { getUser, setCreditSagaWatcher } from './getProfile'
-import { getPaymentsSagaWatcher } from './getPayments'
-import { getFeesSagaWatcher } from './getFees'
 import {
+  addMessageFileSagaWatcher,
   getMessageSagaWatcher,
   getMessagesSagaWatcher,
   setMessageReplySagaWatcher,
   setMessageSagaWatcher,
 } from './getSupport'
+import { all, call, spawn } from 'redux-saga/effects'
+import { getUser, setCreditSagaWatcher } from './getProfile'
+
+import { authUser } from './authUser'
+import { getFeesSagaWatcher } from './getFees'
+import { getPaymentsSagaWatcher } from './getPayments'
 
 export default function* rootSaga() {
   const sagas = [
@@ -21,6 +23,7 @@ export default function* rootSaga() {
     getMessageSagaWatcher,
     setMessageReplySagaWatcher,
     setMessageSagaWatcher,
+    addMessageFileSagaWatcher,
   ]
   const retrySagas = sagas.map(saga => {
     return spawn(function* () {

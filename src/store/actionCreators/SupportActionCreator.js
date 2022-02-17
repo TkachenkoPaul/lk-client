@@ -1,4 +1,5 @@
 import {
+  ADD_MESSAGE_FILE,
   GET_MESSAGE,
   GET_MESSAGES,
   SET_MESSAGE,
@@ -19,4 +20,8 @@ export const setMessageReply = text => {
 
 export const setMessage = payload => {
   return { type: SET_MESSAGE, payload }
+}
+
+export const addMessageFile = payload => {
+  return { type: ADD_MESSAGE_FILE, payload }
 }

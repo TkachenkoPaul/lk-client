@@ -12,6 +12,7 @@ export const supportInitialState = {
   newMessage: {
     isLoading: false,
   },
+  newMessageFileIsLoading: false,
   isLoading: false,
   error: {
     code: '',
@@ -42,6 +43,7 @@ export const profileInitialState = {
   credit: {
     isVisible: false,
     disabled: false,
+    error: null,
   },
   isLoading: false,
   isLoaded: false,

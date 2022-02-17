@@ -54,6 +54,7 @@ export async function setMessageReply(text = '', msgID = '') {
 }
 export async function addMessage(subject, message) {
   const body = {
+    chapter: 4,
     message: message,
     subject: subject,
   }
@@ -64,4 +65,24 @@ export async function addMessage(subject, message) {
   }
   return api.post(`msgs/create`, body, config)
 }
+
+export async function addMessageFileRequest(messageID, files) {
+  const config = {
+    headers: {
+      Accept: '*/*',
+      'Content-Type': 'multipart/form-data',
+    },
+  }
+  if (Array.isArray(files)) {
+    console.log('files ->>>>>>', files)
+    files.forEach(file => {
+      console.log('file is =>', file)
+      let data = new FormData()
+      console.log('file upload element', file)
+      data.append('file', file.originFileObj)
+      return api.post(`msgs/${messageID}/upload_file`, data, config)
+    })
+  }
+}
+
 export default api

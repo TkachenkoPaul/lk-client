@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import * as dayjs from 'dayjs'
+
 import {
-  message,
   Breadcrumb,
   Button,
   Col,
@@ -11,23 +11,24 @@ import {
   Modal,
   PageHeader,
   Row,
-  Switch,
   Skeleton,
   Space,
+  Switch,
+  message,
 } from 'antd'
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import * as dayjs from 'dayjs'
-import { v4 as uuid } from 'uuid'
-
-import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
-import { PersonalInformation } from './PersonalInformation'
-import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
-import { Finance } from './Finance'
+import React, { useEffect, useState } from 'react'
 import {
   setCreditModal,
   setCreditModalDisabled,
 } from '../../store/slices/profileSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { Finance } from './Finance'
+import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
+import { Link } from 'react-router-dom'
+import { PersonalInformation } from './PersonalInformation'
+import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
+import { v4 as uuid } from 'uuid'
 
 const Profile = ({ login }) => {
   //TODO add popovers
@@ -36,7 +37,7 @@ const Profile = ({ login }) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getProfile())
-  }, [])
+  }, [dispatch])
   // finance
   const [deposit, setDeposit] = useState(0)
   const [fee, setFee] = useState(0)
@@ -292,6 +293,7 @@ const Profile = ({ login }) => {
                   handleCreditModalOk={handleCreditModalOk}
                   handleCreditModalCancel={handleCreditModalCancel}
                   modalDisabled={profile.credit.disabled}
+                  creditError={profile.credit?.error}
                 />
               )}
             </Col>

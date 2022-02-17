@@ -1,17 +1,17 @@
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects'
 import {
-  addMessage,
-  getMessage,
-  getMessages as getMessagesApi,
-  setMessageReply,
-} from '../../api'
-import {
+  ADD_MESSAGE_FILE,
   GET_MESSAGE,
   GET_MESSAGES,
   SET_MESSAGE,
   SET_REPLY,
 } from '../actions/SupportActions'
-
+import {
+  addMessage,
+  addMessageFileRequest,
+  getMessage,
+  getMessages as getMessagesApi,
+  setMessageReply,
+} from '../../api'
 import {
   addNewMessage,
   setLoaded,
@@ -24,6 +24,10 @@ import {
   setNewMessageLoading,
   setReply,
 } from '../slices/supportSlice'
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+
+import { LockFilled } from '@ant-design/icons/lib/icons'
+import { addMessageFile } from '../actionCreators/SupportActionCreator'
 
 export function* getMessagesSagaWorker() {
   yield put(setLoading())
@@ -82,9 +86,49 @@ export function* setMessageSagaWorker(action) {
       action.payload.message
     )
     if (response.status === 200) {
+      console.log('set message saga action:', action)
+      console.log('set message saga response:', response)
+      yield put(
+        addMessageFile({
+          messageID: response.data.id,
+          files: action.payload.file,
+        })
+      )
       yield put(addNewMessage(response))
       yield put(setNewMessageLoaded())
     }
+  } catch (error) {
+    //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404. переделать как на логине
+    console.log('profile error: ', error.response)
+    yield put(setNewMessageLoaded())
+  }
+}
+
+export function* addMessageFileSagaWorker(action) {
+  // yield put(setNewMessageLoading())
+  try {
+    console.log('addMessageFileSagaWorker action:', action)
+    if (Array.isArray(action.payload.files)) {
+      console.log('files is set')
+      const response = yield call(
+        addMessageFileRequest,
+        action.payload.messageID,
+        action.payload.files
+      )
+      console.log('api file upload response', response)
+    }
+    console.log('files is NOT SET')
+    // const response = yield call(
+    //   addMessageFileRequest,
+    //   action.payload.messageID,
+    //   action.payload.files
+    // )
+    // if (response.status === 200) {
+    //   console.log('set message saga action:', action)
+    //   console.log('set message saga response:', response)
+    //   yield put(addNewMessage(response))
+    //   yield put(setNewMessageLoaded())
+    // }
   } catch (error) {
     //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404. переделать как на логине
     console.log('profile error: ', error.response)
@@ -105,4 +149,8 @@ export function* setMessageReplySagaWatcher() {
 
 export function* setMessageSagaWatcher() {
   yield takeEvery(SET_MESSAGE, setMessageSagaWorker)
+}
+
+export function* addMessageFileSagaWatcher() {
+  yield takeEvery(ADD_MESSAGE_FILE, addMessageFileSagaWorker)
 }

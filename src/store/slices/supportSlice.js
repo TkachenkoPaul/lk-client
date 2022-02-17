@@ -2,17 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import { supportInitialState } from '../initialState'
 import { v4 as uuid } from 'uuid'
 
-// const configMessage = (message,chapters,status) => {
-//   let newMessage = {... message, chapter: chapters[message.chapter], state: status[message.state]}
-//   for (const property  in message) {
-//     console.log(`${property}: ${message[property]}`);
-//   }
-//   console.log('chapters: ', chapters)
-//   console.log('status: ', status)
-//   console.log('newMessage: ', newMessage)
-//   return message
-// }
-
 const supportSlice = createSlice({
   name: 'support ',
   initialState: supportInitialState,

@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react'
+import './App.css'
+
 import { BackTop, Button, Col, Layout, Result, Row } from 'antd'
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+
+import Error from './components/Errors/Error'
 import Footer from './components/layout/Footer/Footer'
+import Login from './components/Login/Login'
+import Logout from './components/Logout/Logout'
+import Message from './components/Support/Message'
 import NavBar from './components/layout/Navbar/NavBar'
 import Profile from './components/Profile/Profile'
-import Transactions from './components/Transactions/Transactions'
-import Support from './components/Support/Support'
-import Services from './components/Services/Services'
-import Error from './components/Errors/Error'
-import './App.css'
-import Message from './components/Support/Message'
 import Reference from './components/Reference/Reference'
+import Services from './components/Services/Services'
+import Support from './components/Support/Support'
 import Test from './components/Test'
-import Login from './components/Login/Login'
-import { useDispatch } from 'react-redux'
-import Logout from './components/Logout/Logout'
-import { useAuth } from './hooks/useAuth'
+import Transactions from './components/Transactions/Transactions'
 import { getProfile } from './store/actionCreators/ProfileActionCreator'
+import { useAuth } from './hooks/useAuth'
+import { useDispatch } from 'react-redux'
 import { useID } from './hooks/useID'
 
 const { Content } = Layout
@@ -32,13 +34,13 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getProfile())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (!authUser.isAuth) {
       navigate('/login')
     }
-  }, [authUser.isAuth])
+  }, [authUser.isAuth, navigate])
 
   if (!!authUser.error.code) {
     return (

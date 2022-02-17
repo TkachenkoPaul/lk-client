@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
 import { Alert, Descriptions, Tag, Typography } from 'antd'
-import styles from './Profile.module.scss'
+import React, { useEffect } from 'react'
+
 import CreditModal from './Credit/CreditModal'
+import styles from './Profile.module.scss'
 
 export const Finance = ({
   deposit,
@@ -16,12 +17,13 @@ export const Finance = ({
   handleCreditModalCancel,
   handleCreditModalOk,
   modalDisabled,
+  creditError,
 }) => {
   useEffect(() => {
     if (deposit < fee && !modalDisabled) {
       showCreditModal()
     }
-  }, [deposit, fee])
+  }, [deposit, fee, modalDisabled, showCreditModal])
 
   return (
     <>
@@ -81,6 +83,7 @@ export const Finance = ({
         deposit={deposit}
         fee={fee}
         paidTo={paidTo}
+        creditError={creditError}
       />
       <Descriptions
         title={

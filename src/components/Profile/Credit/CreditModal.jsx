@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import { v4 as uuid } from 'uuid'
 import { Button, Checkbox, Modal, Typography, notification } from 'antd'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+
 import { setCredit } from '../../../store/actionCreators/ProfileActionCreator'
+import { setCreditError } from '../../../store/slices/profileSlice'
+import { useDispatch } from 'react-redux'
+import { v4 as uuid } from 'uuid'
 
 const CreditModal = ({
   isModalVisible,
@@ -11,14 +13,31 @@ const CreditModal = ({
   deposit,
   fee,
   paidTo,
+  creditError,
 }) => {
   const dispatch = useDispatch()
   const [checkBox, setCheckBox] = useState(false)
-  const opeNotification = () => {
+
+  const openNotificationCredit = (title, message) => {
     notification.warning({
-      message: 'Отказано',
-      description: 'Вы не приняли условия предоставления услуги',
+      key: uuid(),
+      message: title,
+      description: message,
     })
+  }
+  const closeCreditErrorHandler = () => {
+    dispatch(setCreditError({ data: { errors: { credit: null } } }))
+  }
+  const openNotificationCreditError = (title, message) => {
+    notification.warning({
+      key: uuid(),
+      message: title,
+      description: message,
+      onClose: closeCreditErrorHandler,
+    })
+  }
+  if (creditError) {
+    openNotificationCreditError('Завершение операции', creditError)
   }
   const modalBody = () => {
     if (deposit < fee) {
@@ -61,7 +80,10 @@ const CreditModal = ({
     if (checkBox) {
       dispatch(setCredit())
     } else {
-      opeNotification()
+      openNotificationCredit(
+        'Отказано',
+        'Вы не приняли условия предоставления услуги'
+      )
     }
     handleCancel()
     setCheckBox(false)

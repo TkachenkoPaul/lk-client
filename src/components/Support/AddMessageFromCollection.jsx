@@ -1,5 +1,7 @@
-import { Form, Input, Modal } from 'antd'
-import React from 'react'
+import { Button, Form, Input, Modal, Upload, message } from 'antd'
+import React, { useState } from 'react'
+
+import { UploadOutlined } from '@ant-design/icons'
 
 const AddMessageFormCollection = ({
   visible,
@@ -11,6 +13,8 @@ const AddMessageFormCollection = ({
   //TODO добавить стиль к обязательным для заполнения полям
 
   const [form] = Form.useForm()
+  const [fileList, setFileList] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const onOk = () => {
     form
       .validateFields()
@@ -21,6 +25,31 @@ const AddMessageFormCollection = ({
       .catch(info => {
         console.log('Validate Failed:', info)
       })
+  }
+
+  const getFile = e => {
+    console.log('Upload event:', e)
+
+    if (Array.isArray(e)) {
+      return e
+    }
+    return e && e.fileList
+  }
+  const props = {
+    name: 'file',
+    beforeUpload(file) {
+      return false
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList)
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`)
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`)
+      }
+    },
   }
 
   return (
@@ -54,6 +83,11 @@ const AddMessageFormCollection = ({
             },
           ]}>
           <Input.TextArea showCount rows={4} />
+        </Form.Item>
+        <Form.Item name={'file'} getValueFromEvent={getFile}>
+          <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Нажмите для загрузки</Button>
+          </Upload>
         </Form.Item>
       </Form>
     </Modal>

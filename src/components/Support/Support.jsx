@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import {
   Breadcrumb,
   Button,
@@ -9,16 +8,18 @@ import {
   Space,
   Table,
 } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useID } from '../../hooks/useID'
+import React, { useEffect, useState } from 'react'
 import {
   getMessages,
   setMessage,
 } from '../../store/actionCreators/SupportActionCreator'
-import moment from 'moment'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { AddMessageFormCollection } from './AddMessageFromCollection'
+import { PlusOutlined } from '@ant-design/icons'
+import moment from 'moment'
+import { useID } from '../../hooks/useID'
 
 const Support = () => {
   //TODO индикация загрузки данных в таблице
