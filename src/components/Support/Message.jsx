@@ -1,13 +1,13 @@
+import { Breadcrumb, Button, Col, PageHeader, Row } from 'antd'
+import { Link, useParams } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Breadcrumb, Button, Col, PageHeader, Row } from 'antd'
-import { v4 as uuid } from 'uuid'
-import { Link, useParams } from 'react-router-dom'
 
-import { getMessage } from '../../store/actionCreators/SupportActionCreator'
-import MessageInformation from './MessageInformation'
 import Chat from './Chat'
+import MessageInformation from './MessageInformation'
+import { getMessage } from '../../store/actionCreators/SupportActionCreator'
 import { useID } from '../../hooks/useID'
+import { v4 as uuid } from 'uuid'
 
 const Message = () => {
   const message = useSelector(state => state.support.message)

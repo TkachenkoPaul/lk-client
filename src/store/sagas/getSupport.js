@@ -17,6 +17,7 @@ import {
 import {
   addMessageFile,
   addReplyFile,
+  getMessage as getMessageAPI,
 } from '../actionCreators/SupportActionCreator'
 import {
   addNewMessage,
@@ -69,14 +70,13 @@ export function* setMessageReplySagaWorker(action) {
       action.payload.msgId
     )
     if (response.status === 200) {
-      console.log('setMessageReplySaga worker:', response)
-      console.log('setMessageReplySaga action:', action)
       yield put(
         addReplyFile({
           replyID: response.data.id,
           files: action.payload.file,
         })
       )
+      yield put(getMessageAPI(action.payload.msgId))
       yield put(setReply(response))
     }
     console.log('message reply', response)
@@ -120,8 +120,6 @@ export function* addMessageFileSagaWorker(action) {
       action.payload.messageID,
       action.payload.files
     )
-    console.log('api file upload response', response)
-    console.log('files is NOT SET')
   } catch (error) {
     //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404. переделать как на логине
     console.log('profile error: ', error.response)
@@ -131,25 +129,11 @@ export function* addMessageFileSagaWorker(action) {
 
 export function* addReplyFileSagaWorker(action) {
   try {
-    console.log('addReplyFileSagaWorker action:', action)
     const response = yield call(
       addReplyFileRequest,
       action.payload.replyID,
       action.payload.files
     )
-    console.log('api file upload response', response)
-    console.log('files is NOT SET')
-    // const response = yield call(
-    //   addMessageFileRequest,
-    //   action.payload.messageID,
-    //   action.payload.files
-    // )
-    // if (response.status === 200) {
-    //   console.log('set message saga action:', action)
-    //   console.log('set message saga response:', response)
-    //   yield put(addNewMessage(response))
-    //   yield put(setNewMessageLoaded())
-    // }
   } catch (error) {
     //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404. переделать как на логине
     console.log('profile error: ', error.response)
