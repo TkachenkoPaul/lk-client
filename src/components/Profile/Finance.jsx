@@ -1,8 +1,10 @@
-import { Alert, Descriptions, Tag, Typography } from 'antd'
+import { Descriptions, Tag } from 'antd'
 import React, { useEffect } from 'react'
 
 import CreditModal from './Credit/CreditModal'
+import FinanceDebtorAlert from './FinanceDebtorAlert'
 import styles from './Profile.module.scss'
+import { v4 as uuid } from 'uuid'
 
 export const Finance = ({
   deposit,
@@ -27,55 +29,13 @@ export const Finance = ({
 
   return (
     <>
-      {deposit < fee && (
-        <Alert
-          showIcon
-          closable
-          type="error"
-          message="Внимание!"
-          description={
-            <Typography.Paragraph type={'danger'}>
-              <Typography.Text>
-                У вас не достаточно средств на счету. Для возобновления
-                пользования услугой интернет нужно внести денежные средства на
-                лицевой счет, который указан в вашем договоре.
-              </Typography.Text>
-              <Typography.Text>
-                {' '}
-                Вы можете это сделать с помощью{' '}
-                <Typography.Link
-                  href="https://bank24.gosbank.su"
-                  target="_blank">
-                  Интернет-Банк
-                </Typography.Link>
-                .
-              </Typography.Text>
-              <Typography.Text>
-                {' '}
-                Или воспользоваться услугой{' '}
-                <Typography.Link onClick={showCreditModal}>
-                  Кредит
-                </Typography.Link>
-                .
-              </Typography.Text>
-            </Typography.Paragraph>
-          }
-          // description="У вас не достаточно средств на счету. Для возобновления пользования услугой интернет нужно внести денежные средства на лицевой счет, который указан в вашем договоре."
-          // <Marquee
-          //   style={{ zIndex: 1 }}
-          //   gradient={false}
-          //   pauseOnHover={true}
-          //   speed={'25'}
-          //   gradientColor={[229, 57, 53]}
-          //   direction={'left'}>
-          //   <Typography.Title level={5} type={'danger'}>
-          //     У вас не достаточно средств на счету. Для возобновления
-          //     пользования услугой интернет нужно внести денежные средства на
-          //     лицевой счет, который указан в вашем договоре.
-          //   </Typography.Title>
-          // </Marquee>
-        />
-      )}
+      {/* отображение окна напоминания оплаты */}
+      <FinanceDebtorAlert
+        fee={fee}
+        deposit={deposit}
+        showCreditModal={showCreditModal}
+      />
+      {/* модальное окно для получение кредита */}
       <CreditModal
         isModalVisible={isCreditModalVisible}
         handleCancel={handleCreditModalCancel}
@@ -91,7 +51,7 @@ export const Finance = ({
         }
         bordered
         column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
-        <Descriptions.Item label="Баланс руб." key={1}>
+        <Descriptions.Item label="Баланс руб." key={uuid()}>
           <div style={{ fontSize: '16px' }}>
             {deposit >= 0 ? (
               deposit
@@ -102,24 +62,23 @@ export const Finance = ({
             )}
           </div>
         </Descriptions.Item>
-        <Descriptions.Item label="Тарифный пакет" key={2}>
-          <div style={{ fontSize: '15px' }}>{tariffName}</div>
-        </Descriptions.Item>
-        <Descriptions.Item label="Статус тарифного плана" key={3}>
-          {tariffState}
-        </Descriptions.Item>
-        <Descriptions.Item label="Оплачено дней" key={4}>
+        <Descriptions.Item label="Оплачено дней" key={uuid()}>
           {paidDays}
         </Descriptions.Item>
-        <Descriptions.Item label="Дата окончания тарифа" key={5}>
+        <Descriptions.Item label="Тарифный пакет" key={uuid()}>
+          <div style={{ fontSize: '15px' }}>{tariffName}</div>
+        </Descriptions.Item>
+        <Descriptions.Item label="Дата окончания тарифа" key={uuid()}>
           {paidTo}
         </Descriptions.Item>
-
+        <Descriptions.Item label="Статус тарифного плана" key={uuid()}>
+          {tariffState}
+        </Descriptions.Item>
+        <Descriptions.Item label="К оплате, руб./сутки" key={uuid()}>
+          <div style={{ fontSize: '15px' }}>{fee} руб.</div>
+        </Descriptions.Item>
         <Descriptions.Item label="Оплата за тарифный пакет, руб./сутки" key={6}>
           {tariffInfo}
-        </Descriptions.Item>
-        <Descriptions.Item label="К оплате, руб./сутки" key={7}>
-          <div style={{ fontSize: '15px' }}>{fee} руб.</div>
         </Descriptions.Item>
       </Descriptions>
     </>

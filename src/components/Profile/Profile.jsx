@@ -13,6 +13,7 @@ import {
   Row,
   Skeleton,
   Space,
+  Spin,
   Switch,
   message,
 } from 'antd'
@@ -26,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Finance } from './Finance'
 import InfoBoxes from '../common/InfoBoxes/InfoBoxes'
 import { Link } from 'react-router-dom'
+import Loader from './../common/Loader'
 import { PersonalInformation } from './PersonalInformation'
 import { getProfile } from '../../store/actionCreators/ProfileActionCreator'
 import { v4 as uuid } from 'uuid'
@@ -60,56 +62,32 @@ const Profile = ({ login }) => {
     secondary: '0664841472',
   })
   const profile = useSelector(state => state.profile)
-  // finance effects
+
+  // нужно оставить
   useEffect(() => {
-    // устанивливаю баланс
-    profile.data?.bill?.deposit && setDeposit(+profile.data.bill.deposit)
-  }, [profile.data.bill])
-  useEffect(() => {
-    // устанавлюваю дневную абоненплату  и назваение тарифа
-    profile.data?.dvmain?.tariff && setFee(profile.data.dvmain.tariff.day_fee)
-    profile.data?.dvmain?.tariff &&
-      setTariffName(profile.data.dvmain.tariff.comments)
-  }, [profile.data.bill, profile.data.dvmain])
-  useEffect(() => {
-    //устанавливаю статус тарифного плана
-    //TODO переписать на нормальный вид
-    if (profile?.data?.dvmain?.disable) {
-      switch (profile.data.dvmain.disable) {
-        case 0:
-          setTariffState('Активно')
-          break
-        case 1:
-          setTariffState('Отключено')
-          break
-        case 2:
-          setTariffState('Не активизирован')
-          break
-        case 3:
-          setTariffState('Приостановление')
-          break
-        case 4:
-          setTariffState('Отключено: Неуплата')
-          break
-        case 5:
-          setTariffState('Слишком маленький депозит')
-          break
-        default:
-          setTariffState('Недоступно')
-      }
-    }
-  }, [profile.data.dvmain])
-  useEffect(() => {
-    // устанавливаю количество оплаченных дней
-    deposit > 0 ? setDays(Math.floor(deposit / fee)) : setDays(0)
-  }, [deposit, fee])
+    setTariffInfo(
+      `${profile.data.dvmain?.tariff.comments} : ${profile.data.dvmain?.tariff.day_fee} руб.`
+    )
+  }, [
+    profile.data.dvmain?.tariff.comments,
+    profile.data.dvmain?.tariff.day_fee,
+  ])
+
   useEffect(() => {
     // устанавливаю дату окончани тарифа
     setPaidTo(dayjs().add(paidDays, 'day').format('YYYY-MM-DD'))
   }, [paidDays])
+
   useEffect(() => {
-    setTariffInfo(`${tariffName} : ${fee} руб.`)
-  }, [tariffName, fee])
+    // устанавливаю количество оплаченных дней
+    profile.data.bill?.deposit > 0
+      ? setDays(
+          Math.floor(
+            profile.data.bill?.deposit / profile.data.dvmain?.tariff.day_fee
+          )
+        )
+      : setDays(0)
+  }, [profile.data.bill?.deposit, profile.data.dvmain?.tariff.day_fee])
   useEffect(() => {
     profile.data?.users_pi && setFio(profile.data.users_pi.fio)
   }, [profile.data.users_pi])
@@ -245,95 +223,77 @@ const Profile = ({ login }) => {
         <InfoBoxes
           paidTo={paidTo}
           type={type}
-          deposit={deposit}
+          deposit={profile.data.bill?.deposit}
           paidDays={paidDays}
-          fee={fee}
+          fee={profile.data.dvmain?.tariff.day_fee}
           loading={profile.isLoading}
         />
-
-        <PageHeader
-          style={{ height: '100%' }}
-          breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
-          ghost={false}
-          onBack={() => window.history.back()}
-          title="Профиль"
-          subTitle={login}
-          extra={[
-            <Dropdown
-              overlay={menu}
-              placement="bottomRight"
-              arrow
-              key={'pagekey1'}>
-              <Button type="primary" key={1}>
-                Дополнительно
-              </Button>
-            </Dropdown>,
-          ]}>
-          <Row gutter={[16, 16]}>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 24, offset: 0 }}
-              lg={{ span: 24, offset: 0 }}>
-              {profile.isLoading ? (
-                <Skeleton active />
-              ) : (
+        {profile.isLoading ? (
+          <Loader />
+        ) : (
+          <PageHeader
+            style={{ height: '100%' }}
+            breadcrumb={<Breadcrumb itemRender={itemRender} routes={routes} />}
+            ghost={false}
+            onBack={() => window.history.back()}
+            title="Профиль"
+            subTitle={login}
+            extra={[
+              <Dropdown
+                overlay={menu}
+                placement="bottomRight"
+                arrow
+                key={'pagekey1'}>
+                <Button type="primary" key={1}>
+                  Дополнительно
+                </Button>
+              </Dropdown>,
+            ]}>
+            <Row gutter={[16, 16]}>
+              <Col
+                xs={{ span: 24 }}
+                md={{ span: 24, offset: 0 }}
+                lg={{ span: 24, offset: 0 }}>
                 <Finance
-                  deposit={deposit}
+                  deposit={profile.data.bill?.deposit}
+                  fee={profile.data.dvmain?.tariff.day_fee}
+                  modalDisabled={profile.credit?.disabled}
+                  creditError={profile.credit?.error}
+                  tariffName={profile.data.dvmain?.tariff.comments}
+                  tariffState={profile.data.state}
+                  isCreditModalVisible={profile.credit.isVisible}
                   paidTo={paidTo}
                   paidDays={paidDays}
-                  tariffName={tariffName}
-                  tariffState={tariffState}
                   tariffInfo={tariffInfo}
-                  fee={fee}
                   showCreditModal={showCreditModal}
-                  isCreditModalVisible={profile.credit.isVisible}
                   handleCreditModalOk={handleCreditModalOk}
                   handleCreditModalCancel={handleCreditModalCancel}
-                  modalDisabled={profile.credit.disabled}
-                  creditError={profile.credit?.error}
                 />
-
-                //   <Finance
-                //   deposit={deposit}
-                //   paidTo={paidTo}
-                //   paidDays={paidDays}
-                //   tariffName={tariffName}
-                //   tariffState={tariffState}
-                //   tariffInfo={tariffInfo}
-                //   fee={fee}
-                //   showCreditModal={showCreditModal}
-                //   isCreditModalVisible={profile.credit.isVisible}
-                //   handleCreditModalOk={handleCreditModalOk}
-                //   handleCreditModalCancel={handleCreditModalCancel}
-                //   modalDisabled={profile.credit.disabled}
-                //   creditError={profile.credit?.error}
-                // />
-              )}
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 24, offset: 0 }}
-              lg={{ span: 24, offset: 0 }}>
-              <div className="mb-4">
-                {profile.isLoading ? (
-                  <Skeleton active />
-                ) : (
+              </Col>
+              <Col
+                xs={{ span: 24 }}
+                md={{ span: 24, offset: 0 }}
+                lg={{ span: 24, offset: 0 }}>
+                <div className="mb-4">
                   <PersonalInformation
-                    activation={activation}
-                    registration={registration}
-                    address={address}
-                    phone={phone}
-                    personalPhone={personalPhone}
-                    contract={contract}
-                    login={login}
-                    fio={fio}
-                    uid={uid}
+                    activation={profile.data.activate}
+                    registration={profile.data.registration}
+                    address={{
+                      street: profile.data.users_pi?.address_street,
+                      flat: profile.data.users_pi?.address_flat,
+                      build: profile.data.users_pi?.address_build,
+                    }}
+                    phone={profile.data.users_pi?.phone}
+                    contract={profile.data.users_pi?.contract_id}
+                    login={profile.data.id}
+                    fio={profile.data.users_pi?.fio}
+                    uid={profile.data.uid}
                   />
-                )}
-              </div>
-            </Col>
-          </Row>
-        </PageHeader>
+                </div>
+              </Col>
+            </Row>
+          </PageHeader>
+        )}
       </Space>
     </>
   )

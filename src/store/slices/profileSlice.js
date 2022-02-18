@@ -12,8 +12,6 @@ const profileSlice = createSlice({
       }
     },
     setCreditModal: (state, action) => {
-      console.log('state', state)
-      console.log('setCreditModal', action.payload.isVisible)
       state.credit.isVisible = action.payload.isVisible
     },
     setCreditModalDisabled: state => {
@@ -26,7 +24,6 @@ const profileSlice = createSlice({
       state.isLoading = false
     },
     setCreditError: (state, action) => {
-      console.log('serCreditError', action)
       state.credit.error = action.payload.data.errors.credit
     },
   },

@@ -6,6 +6,7 @@ import React, { useEffect } from 'react'
 
 import Error from './components/Errors/Error'
 import Footer from './components/layout/Footer/Footer'
+import Loader from './components/common/Loader'
 import Login from './components/Login/Login'
 import Logout from './components/Logout/Logout'
 import Message from './components/Support/Message'
@@ -66,7 +67,8 @@ function App() {
       <Routes>
         <Route path="/" element={<PageContent />}>
           <Route index element={<Profile login={login} />} />
-          <Route path="/test" element={<Test />} />
+          {/* <Route path="/test" element={<Test />} />
+          <Route path="/loader" element={<Loader />} /> */}
           <Route
             path="/transactions"
             element={<Transactions login={login} />}
