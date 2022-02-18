@@ -6,7 +6,10 @@ const profileSlice = createSlice({
   initialState: profileInitialState,
   reducers: {
     setProfile: (state, action) => {
-      state.data = { ...action.payload.data }
+      state.data = {
+        ...action.payload.data,
+        state: state.tariffStates[action.payload.data.dvmain.disable],
+      }
     },
     setCreditModal: (state, action) => {
       console.log('state', state)

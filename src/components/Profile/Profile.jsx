@@ -285,9 +285,6 @@ const Profile = ({ login }) => {
                   tariffState={tariffState}
                   tariffInfo={tariffInfo}
                   fee={fee}
-                  // showCreditModal={showCreditModal}
-                  // closeCreditModal={closeCreditModal}
-                  // isCreditModalVisible={isCreditModalVisible}
                   showCreditModal={showCreditModal}
                   isCreditModalVisible={profile.credit.isVisible}
                   handleCreditModalOk={handleCreditModalOk}
@@ -295,6 +292,22 @@ const Profile = ({ login }) => {
                   modalDisabled={profile.credit.disabled}
                   creditError={profile.credit?.error}
                 />
+
+                //   <Finance
+                //   deposit={deposit}
+                //   paidTo={paidTo}
+                //   paidDays={paidDays}
+                //   tariffName={tariffName}
+                //   tariffState={tariffState}
+                //   tariffInfo={tariffInfo}
+                //   fee={fee}
+                //   showCreditModal={showCreditModal}
+                //   isCreditModalVisible={profile.credit.isVisible}
+                //   handleCreditModalOk={handleCreditModalOk}
+                //   handleCreditModalCancel={handleCreditModalCancel}
+                //   modalDisabled={profile.credit.disabled}
+                //   creditError={profile.credit?.error}
+                // />
               )}
             </Col>
             <Col

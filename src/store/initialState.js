@@ -50,6 +50,14 @@ export const profileInitialState = {
   isLoading: false,
   isLoaded: false,
   isDebtor: false,
+  tariffStates: {
+    0: 'Активно',
+    1: 'Отключено',
+    2: 'Не активизирован',
+    3: 'Приостановление',
+    4: 'Отключено: Неуплата',
+    5: 'Слишком маленький депозит',
+  },
 }
 export const authInitialState = {
   token: null,
