@@ -54,10 +54,10 @@ export const Finance = ({
         <Descriptions.Item label="Баланс руб." key={uuid()}>
           <div style={{ fontSize: '16px' }}>
             {deposit >= 0 ? (
-              deposit
+              Number(deposit).toFixed(2)
             ) : (
               <Tag color="error" style={{ fontSize: '16px', padding: '10px' }}>
-                {deposit}
+                {Number(deposit).toFixed(2)}
               </Tag>
             )}
           </div>

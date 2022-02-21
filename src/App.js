@@ -1,7 +1,13 @@
 import './App.css'
 
 import { BackTop, Button, Col, Layout, Result, Row } from 'antd'
-import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
+import {
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom'
 import React, { useEffect } from 'react'
 
 import Error from './components/Errors/Error'
@@ -30,6 +36,8 @@ function App() {
   // TODO добавить кастомный скролбар
 
   const navigate = useNavigate()
+  const location = useLocation()
+  console.log('location:', location)
   const login = useID()
   const authUser = useAuth()
   const dispatch = useDispatch()

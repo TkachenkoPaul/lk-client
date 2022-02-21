@@ -1,31 +1,34 @@
-import React, { useEffect, useState } from 'react'
 import { Alert, Layout, Spin } from 'antd'
-import { Form, Input, Button } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { Button, Form, Input } from 'antd'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import Footer from '../layout/Footer/Footer'
+import { doGetAuthToken } from '../../store/actionCreators/AuthCationCreator'
 import logo from './logo.png'
 import style from './Login.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { doGetAuthToken } from '../../store/actionCreators/AuthCationCreator'
-import { useNavigate } from 'react-router-dom'
 
 const { Content } = Layout
 const Login = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const auth = useSelector(state => state.auth)
   const [alert, setAlert] = useState('')
 
+  console.log('location:', location)
   useEffect(() => {
     if (!!auth.error) {
       setAlert(auth.error.message)
     }
-  }, [auth.error.code, auth.error.message])
+  }, [auth.error])
 
   useEffect(() => {
     if (auth.isAuth) {
-      navigate(-1)
+      navigate('/')
     }
-  }, [auth.isAuth])
+  }, [auth.isAuth, navigate])
   if (auth.isLoading) {
     return <Spin size="large" />
   }
