@@ -1,18 +1,11 @@
 import './App.css'
 
 import { BackTop, Button, Col, Layout, Result, Row } from 'antd'
-import {
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom'
+import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import React, { useEffect } from 'react'
 
 import Error from './components/Errors/Error'
 import Footer from './components/layout/Footer/Footer'
-import Loader from './components/common/Loader'
 import Login from './components/Login/Login'
 import Logout from './components/Logout/Logout'
 import Message from './components/Support/Message'
@@ -21,7 +14,6 @@ import Profile from './components/Profile/Profile'
 import Reference from './components/Reference/Reference'
 import Services from './components/Services/Services'
 import Support from './components/Support/Support'
-import Test from './components/Test'
 import Transactions from './components/Transactions/Transactions'
 import { getProfile } from './store/actionCreators/ProfileActionCreator'
 import { useAuth } from './hooks/useAuth'
@@ -36,7 +28,6 @@ function App() {
   // TODO добавить кастомный скролбар
 
   const navigate = useNavigate()
-  const location = useLocation()
   const login = useID()
   const authUser = useAuth()
   const dispatch = useDispatch()

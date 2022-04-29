@@ -19,8 +19,6 @@ import {
 import {
   LeftCircleOutlined,
   PlayCircleTwoTone,
-  RightCircleFilled,
-  RightCircleOutlined,
 } from '@ant-design/icons'
 
 import { Link } from 'react-router-dom'
@@ -174,7 +172,7 @@ const Services = ({ login }) => {
                             md={{ span: 7, order: 1 }}
                             lg={{ span: 7, order: 1 }}>
                             <div>
-                              <div className="princing-item blue">
+                              <div className="pricing-item blue">
                                 <div className="pricing-divider ">
                                   <h4
                                     className="pl-4 text-light"
@@ -277,7 +275,7 @@ const Services = ({ login }) => {
                             md={{ span: 7, order: 2 }}
                             lg={{ span: 7, order: 2 }}>
                             <div>
-                              <div className="princing-item blue">
+                              <div className="pricing-item blue">
                                 <div className="pricing-divider ">
                                   <h4
                                     className="pl-4 text-light"
@@ -380,7 +378,7 @@ const Services = ({ login }) => {
                             md={{ span: 7, order: 3 }}
                             lg={{ span: 7, order: 3 }}>
                             <div>
-                              <div className="princing-item blue">
+                              <div className="pricing-item blue">
                                 <div className="pricing-divider ">
                                   <h4
                                     className="pl-4 text-light"
@@ -484,7 +482,7 @@ const Services = ({ login }) => {
                             lg={{ span: 24, order: 4 }}>
                             <Paragraph>
                               * провайдер, в случае необходимости, предоставляет
-                              кабель, разъемы, на безоплатной основе, для
+                              кабель, разъемы, на бесоплатной основе, для
                               обеспечения качественного предоставления услуг.
                               При наличии у абонента уже проложенного кабеля,
                               предприятие осуществляет подключение с
@@ -505,7 +503,7 @@ const Services = ({ login }) => {
                             md={{ span: 7, order: 1 }}
                             lg={{ span: 7, order: 1 }}>
                             <div>
-                              <div className="princing-item blue">
+                              <div className="pricing-item blue">
                                 <div className="pricing-divider ">
                                   <h4
                                     className="pl-4 text-light"
@@ -605,7 +603,7 @@ const Services = ({ login }) => {
                             md={{ span: 7, order: 2 }}
                             lg={{ span: 7, order: 2 }}>
                             <div>
-                              <div className="princing-item blue">
+                              <div className="pricing-item blue">
                                 <div className="pricing-divider ">
                                   <h4
                                     className="pl-4 text-light"
@@ -704,14 +702,14 @@ const Services = ({ login }) => {
                             md={{ span: 7, order: 3 }}
                             lg={{ span: 7, order: 3 }}>
                             <div>
-                              <div className="princing-item blue">
+                              <div className="pricing-item blue">
                                 <div className="pricing-divider ">
                                   <h4
                                     className="pl-4 text-light"
                                     style={{
                                       fontSize: size.tariffNameFontSize,
                                     }}>
-                                    Статитческий IP адрес
+                                    Статический IP адрес
                                   </h4>
                                   <h4
                                     className="my-0 display-2 text-light font-weight-normal mb-3 pl-4"
@@ -805,7 +803,7 @@ const Services = ({ login }) => {
                             lg={{ span: 24, order: 4 }}>
                             <Paragraph>
                               * провайдер, в случае необходимости, предоставляет
-                              кабель, разъемы, на безоплатной основе, для
+                              кабель, разъемы, на бесплатной основе, для
                               обеспечения качественного предоставления услуг.
                               При наличии у абонента уже проложенного кабеля,
                               предприятие осуществляет подключение с
@@ -972,7 +970,7 @@ const Services = ({ login }) => {
                           lg={{ span: 24, order: 4 }}>
                           <Paragraph>
                             * провайдер, в случае необходимости, предоставляет
-                            кабель, разъемы, на безоплатной основе, для
+                            кабель, разъемы, на бесплатной основе, для
                             обеспечения качественного предоставления услуг. При
                             наличии у абонента уже проложенного кабеля,
                             предприятие осуществляет подключение с
@@ -1022,7 +1020,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1065,7 +1063,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1108,7 +1106,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1151,7 +1149,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1194,7 +1192,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1237,7 +1235,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1280,7 +1278,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1299,7 +1297,7 @@ const Services = ({ login }) => {
                               </Typography.Title>
                               <Typography.Paragraph>
                                 Работает только безналичный расчет. Оплата за
-                                дополнительные услуги взымается с Вашего
+                                дополнительные услуги взимается с Вашего
                                 лицевого счета.
                               </Typography.Paragraph>
                             </Paragraph>
@@ -1341,7 +1339,7 @@ const Services = ({ login }) => {
                           lg={{ span: 24, order: 4 }}>
                           <Paragraph>
                             * провайдер, в случае необходимости, предоставляет
-                            кабель, разъемы, на безоплатной основе, для
+                            кабель, разъемы, на бесплатной основе, для
                             обеспечения качественного предоставления услуг. При
                             наличии у абонента уже проложенного кабеля,
                             предприятие осуществляет подключение с
@@ -1391,7 +1389,7 @@ const Services = ({ login }) => {
                                       приостановить 1(один)раз в 90(девяносто)
                                       календарных дней путем написания заявления
                                       в Абонентской отделе, на срок не более чем
-                                      180(сто восемдесят) дней. Спасибо за
+                                      180(сто восемьдесят) дней. Спасибо за
                                       обращение!
                                     </Text>
                                   </Space>
@@ -1409,7 +1407,7 @@ const Services = ({ login }) => {
                               </Typography.Title>
                               <Typography.Paragraph>
                                 Работает только безналичный расчет. Оплата за
-                                дополнительные услуги взымается с Вашего
+                                дополнительные услуги взимается с Вашего
                                 лицевого счета.
                               </Typography.Paragraph>
                             </Paragraph>

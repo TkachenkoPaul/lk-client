@@ -4,7 +4,7 @@
     background: -webkit-linear-gradient(to right, #E2E2E2, #C9D6FF);
     background: linear-gradient(to right, #E2E2E2, #C9D6FF);
 }
-.princing-item ul li {
+.pricing-item ul li {
     margin-bottom:1.4rem;
 }
 .pricing-divider {
@@ -47,17 +47,17 @@
     width:50px; position:absolute;top:-3.5rem;right:1rem
 }
 
-.princing-item {
+.pricing-item {
     transition: all 150ms ease-out;
 }
-.princing-item:hover {
+.pricing-item:hover {
     transform: scale(1.05);
 }
-.princing-item:hover .deco-layer--1 {
+.pricing-item:hover .deco-layer--1 {
     -webkit-transform: translate3d(15px, 0, 0);
     transform: translate3d(15px, 0, 0);
 }
-.princing-item:hover .deco-layer--2 {
+.pricing-item:hover .deco-layer--2 {
     -webkit-transform: translate3d(-15px, 0, 0);
     transform: translate3d(-15px, 0, 0);
 }
