@@ -37,19 +37,23 @@ function App() {
 
   const navigate = useNavigate()
   const location = useLocation()
-  console.log('location:', location)
   const login = useID()
   const authUser = useAuth()
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getProfile())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(getProfile())
+  // }, [dispatch])
 
   useEffect(() => {
     if (!authUser.isAuth) {
       navigate('/login')
+    } else {
+      dispatch(getProfile())
     }
-  }, [authUser.isAuth, navigate])
+    // if (!authUser.token & !authUser.isAuth) {
+    //   navigate('/login')
+    // }
+  }, [authUser.isAuth, navigate, dispatch])
 
   if (!!authUser.error.code) {
     return (
@@ -75,8 +79,6 @@ function App() {
       <Routes>
         <Route path="/" element={<PageContent />}>
           <Route index element={<Profile login={login} />} />
-          {/* <Route path="/test" element={<Test />} />
-          <Route path="/loader" element={<Loader />} /> */}
           <Route
             path="/transactions"
             element={<Transactions login={login} />}

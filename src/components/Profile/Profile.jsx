@@ -115,10 +115,10 @@ const Profile = ({ login }) => {
   }, [profile.data.users_pi])
   useEffect(() => {
     profile.data && setRegistration(profile.data.registration)
-  }, [profile.data.registration])
+  }, [profile.data,profile.data.registration])
   useEffect(() => {
     profile.data && setActivation(profile.data.activate)
-  }, [profile.data.activate])
+  }, [profile.data,profile.data.activate])
 
   const success = text => {
     message.success(text).then(res => console.log(res))

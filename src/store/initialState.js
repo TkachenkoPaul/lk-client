@@ -74,6 +74,11 @@ export const feesInitialState = {
   data: [],
   credits: [],
 }
+
+export const servicesInitialState = {
+  isLoading: false,
+  data: [],
+}
 export const testInitialState = {
   starships: {
     total: 0,

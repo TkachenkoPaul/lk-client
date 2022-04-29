@@ -1,13 +1,13 @@
+import { GET_PROFILE, SET_CREDIT } from '../actions/ProfileActions'
 import { call, put, takeLatest } from 'redux-saga/effects'
-
 import { getUserRequest, setUserCreditRequest } from '../../api'
 import {
-  setLoading,
-  setLoaded,
-  setProfile,
   setCreditError,
+  setLoaded,
+  setLoading,
+  setProfile,
 } from '../slices/profileSlice'
-import { GET_PROFILE, SET_CREDIT } from '../actions/ProfileActions'
+
 import { setError } from '../slices/authSlice'
 
 export function* getProfileSagaWorker() {

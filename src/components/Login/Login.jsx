@@ -13,11 +13,9 @@ import style from './Login.module.scss'
 const { Content } = Layout
 const Login = () => {
   const navigate = useNavigate()
-  const location = useLocation()
   const auth = useSelector(state => state.auth)
   const [alert, setAlert] = useState('')
 
-  console.log('location:', location)
   useEffect(() => {
     if (!!auth.error) {
       setAlert(auth.error.message)
@@ -29,6 +27,7 @@ const Login = () => {
       navigate('/')
     }
   }, [auth.isAuth, navigate])
+
   if (auth.isLoading) {
     return <Spin size="large" />
   }
@@ -41,7 +40,7 @@ const Login = () => {
             src={logo}
             style={{ marginBottom: '24px' }}
             className="img-fluid"
-            alt="Responsive image"
+            alt="Responsive"
           />
           <div className={style.siteLayoutContent}>
             <LoginForm alert={alert} />
