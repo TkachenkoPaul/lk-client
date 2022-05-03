@@ -94,7 +94,7 @@ const Services = ({ login }) => {
     },
     services: [
       {
-        name: 'Автонастройка телевизионного вещания',
+        name: 'Автонастройка ТВ',
         desc: 'Автонастройка телевизионных каналов телевизионного приемника для физический лиц (автонастройка телевизионного вещания)',
         price: 121,
         img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=8B7BCDC2',
@@ -104,12 +104,6 @@ const Services = ({ login }) => {
         desc: 'Настройка оконечного оборудования абонента для доступа к информационно-телекоммуникационной сети Интернет (настройка роутера, IPTV-приставка)',
         price: 231,
         img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=500B67FB',
-      },
-      {
-        name: 'Настройка роутера',
-        desc: 'Настройка оконечного оборудования абонента для доступа к информационно-телекоммуникационной сети Интернет (настройка роутера, IPTV-приставка)',
-        price: 231,
-        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=A89D0DE6',
       },
       {
         name: 'Замена коннектора',
@@ -191,8 +185,8 @@ const Services = ({ login }) => {
                   <Row
                     gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
                     justify="space-around">
-                    {data.tariffs.internet.map(tariff => (
-                      <ServiceCard key={uuid()} {...tariff} />
+                    {data.services.map(service => (
+                      <ServiceCard key={uuid()} {...service} />
                     ))}
                   </Row>
                   <Divider orientation="left">Информация</Divider>

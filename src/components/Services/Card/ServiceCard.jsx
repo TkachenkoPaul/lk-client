@@ -53,36 +53,73 @@ const ServiceCard = props => {
               Заказать
             </Button>,
           ]}>
-          <Card.Meta
-            title={<Typography.Title level={4}>{props.name}</Typography.Title>}
-            description={
-              <Space direction="vertical" size="small">
-                {/* <Typography.Title level={5}>
+          {props.desc ? (
+            <Card.Meta
+              title={
+                <Typography.Title level={4}>{props.name}</Typography.Title>
+              }
+              description={
+                <Space direction="vertical" size="small">
+                  {/* <Typography.Title level={5}>
                   {props.price} руб./ 30 дней
                 </Typography.Title>
                 <Text>
                   <Text strong>{props.price / 30}</Text> руб./день
                 </Text> */}
-                {props.speed ? (
-                  <>
-                    <Text>
-                      Скорость до <Text strong>{props.speed}</Text> МБит/c
-                    </Text>
-                    {/* <Text type={'secondary'}>
+                  {props.speed ? (
+                    <>
+                      <Text>
+                        Скорость до <Text strong>{props.speed}</Text> МБит/c
+                      </Text>
+                      {/* <Text type={'secondary'}>
                       Без ограничений по объему трафика
                     </Text> */}
-                    {/* <Text type={'secondary'}>
+                      {/* <Text type={'secondary'}>
                       IP-TV - бесплатно, от 156 каналов
                     </Text> */}
-                  </>
-                ) : (
-                  ''
-                )}
-                {/* <Text type={'secondary'}>Посуточная тарификация</Text>
+                    </>
+                  ) : (
+                    ''
+                  )}
+                  {/* <Text type={'secondary'}>Посуточная тарификация</Text>
                 <Text type={'secondary'}>Бесплатное подключение</Text> */}
-              </Space>
-            }
-          />
+                </Space>
+              }
+            />
+          ) : (
+            <Card.Meta
+              title={
+                <Typography.Title level={4}>{props.name}</Typography.Title>
+              }
+              description={
+                <Space direction="vertical" size="small">
+                  {/* <Typography.Title level={5}>
+                  {props.price} руб./ 30 дней
+                </Typography.Title>
+                <Text>
+                  <Text strong>{props.price / 30}</Text> руб./день
+                </Text> */}
+                  {props.speed ? (
+                    <>
+                      <Text>
+                        Скорость до <Text strong>{props.speed}</Text> МБит/c
+                      </Text>
+                      {/* <Text type={'secondary'}>
+                      Без ограничений по объему трафика
+                    </Text> */}
+                      {/* <Text type={'secondary'}>
+                      IP-TV - бесплатно, от 156 каналов
+                    </Text> */}
+                    </>
+                  ) : (
+                    ''
+                  )}
+                  {/* <Text type={'secondary'}>Посуточная тарификация</Text>
+                <Text type={'secondary'}>Бесплатное подключение</Text> */}
+                </Space>
+              }
+            />
+          )}
         </Card>
       </Badge.Ribbon>
 
