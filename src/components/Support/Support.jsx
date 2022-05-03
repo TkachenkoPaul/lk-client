@@ -26,9 +26,9 @@ const Support = () => {
   //TODO индикация загрузки заявки со скелетоном
   const userID = useID()
   const support = useSelector(state => state.support)
-  const [visible, setVisible] = React.useState(false)
-  const [confirmLoading, setConfirmLoading] = React.useState(false)
-  const [modalText, setModalText] = React.useState('Content of the modal')
+  const [visible, setVisible] = useState(false)
+  const [confirmLoading, setConfirmLoading] = useState(false)
+  const [modalText, setModalText] = useState('Content of the modal')
   const [isLoading, setIsLoading] = useState(support.isLoading)
   const [messages, setMessages] = useState(support.messages)
   useEffect(() => {

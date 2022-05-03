@@ -1,53 +1,24 @@
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 import './Services.css'
 
 import {
   Breadcrumb,
-  Button,
-  Card,
   Col,
   Divider,
-  Grid,
   Layout,
   List,
   PageHeader,
   Row,
-  Space,
-  Tabs,
   Typography,
 } from 'antd'
-import { LeftCircleOutlined, PlayCircleTwoTone } from '@ant-design/icons'
 
 import { Link } from 'react-router-dom'
 import React from 'react'
 import ServiceCard from './Card/ServiceCard'
 import { Slides } from './Slides/Slides'
+import { v4 as uuid } from 'uuid'
 
 const Services = ({ login }) => {
-  const { Text, Paragraph } = Typography
-  const { useBreakpoint } = Grid
-  const screens = useBreakpoint()
-  let size = {}
-  console.log(screens)
-  for (const screensKey in screens) {
-    console.log(screensKey)
-    console.log(screens[screensKey])
-  }
-  console.log('test', screens['xs'])
-  if (screens['xs']) {
-    size = {
-      tariffNameFontSize: 18,
-      tariffCostFontSize: 26,
-      tariffAdsFontSize: 12,
-    }
-  } else if (screens['md']) {
-    size = {
-      tariffNameFontSize: 18,
-      tariffCostFontSize: 26,
-      tariffAdsFontSize: 12,
-    }
-  }
+  const { Paragraph } = Typography
   const routes = [
     {
       path: '/',
@@ -71,42 +42,42 @@ const Services = ({ login }) => {
       internet: [
         {
           name: 'Интернет 1000 + IPTV',
-          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=8B7BCDC2',
           speed: '1000',
           price: 780,
           price2: 360,
         },
         {
           name: 'Интернет 500 + IPTV',
-          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=500B67FB',
           speed: '500',
           price: 510,
           price2: 210,
         },
         {
           name: 'Интернет 250 + IPTV',
-          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=A89D0DE6',
           speed: '250',
           price: 420,
           price2: 180,
         },
         {
           name: 'Интернет 100 + IPTV',
-          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=9D9539E7',
           speed: '100',
           price: 330,
           price2: 150,
         },
         {
           name: 'Интернет 10 + IPTV',
-          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          img: 'https://api.lorem.space/image/shoes?w=1300&h=800&h=150&hash=BDC01094',
           speed: '10',
           price: 270,
           price2: 120,
         },
         {
           name: 'Интернет Социальный + IPTV',
-          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=7F5AE56A',
           speed: '2',
           price: 150,
           price2: 60,
@@ -115,7 +86,7 @@ const Services = ({ login }) => {
       ktv: [
         {
           name: 'Кабельное ТВ',
-          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=4F32C4CF',
           price: 99,
           price2: 40,
         },
@@ -123,8 +94,40 @@ const Services = ({ login }) => {
     },
     services: [
       {
-        name: '',
-        img: 'https://api.lorem.space/image/book?w=260&h=160',
+        name: 'Автонастройка телевизионного вещания',
+        desc: 'Автонастройка телевизионных каналов телевизионного приемника для физический лиц (автонастройка телевизионного вещания)',
+        price: 121,
+        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=8B7BCDC2',
+      },
+      {
+        name: 'Настройка роутера',
+        desc: 'Настройка оконечного оборудования абонента для доступа к информационно-телекоммуникационной сети Интернет (настройка роутера, IPTV-приставка)',
+        price: 231,
+        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=500B67FB',
+      },
+      {
+        name: 'Настройка роутера',
+        desc: 'Настройка оконечного оборудования абонента для доступа к информационно-телекоммуникационной сети Интернет (настройка роутера, IPTV-приставка)',
+        price: 231,
+        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=A89D0DE6',
+      },
+      {
+        name: 'Замена коннектора',
+        desc: 'Замена коннектора (F,FS-IP,FS-FS, RJ-45) с учетом стоимости материала (для телевизионного вещания и услуги Интернет)',
+        price: 76,
+        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=9D9539E7',
+      },
+      {
+        name: 'Замена коаксиального кабеля',
+        desc: 'Замена абонентского коаксиального кабеля RG-6 (10м) для физических лиц с учетом стоимости материалов (для телевизионного вещания)',
+        price: 424,
+        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=7F5AE56A',
+      },
+      {
+        name: 'Замена абонентского кабеля UTP',
+        desc: 'Замена абонентского кабеля UTP (10м) с учетом стоимости материалов (для услуги Интернет)',
+        price: 383,
+        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=2D297A22',
       },
     ],
   }
@@ -153,10 +156,6 @@ const Services = ({ login }) => {
       text: 'Цифровое - современный формат, работает на телевизорах при поддержке формата DVB-C, так же вы можете параллельно пользоваться аналоговым вещанием.',
     },
   ]
-  let tariffs = data.tariffs.internet.map(tariff => {
-    return <ServiceCard {...tariff} />
-  })
-  console.log('tariffs', tariffs)
   return (
     <>
       <Layout>
@@ -182,10 +181,10 @@ const Services = ({ login }) => {
                     gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
                     justify="space-around">
                     {data.tariffs.internet.map(tariff => (
-                      <ServiceCard {...tariff} />
+                      <ServiceCard key={uuid()} {...tariff} />
                     ))}
                     {data.tariffs.ktv.map(tariff => (
-                      <ServiceCard {...tariff} />
+                      <ServiceCard key={uuid()} {...tariff} />
                     ))}
                   </Row>
                   <Divider orientation="left">Технические услуги</Divider>
@@ -193,7 +192,7 @@ const Services = ({ login }) => {
                     gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
                     justify="space-around">
                     {data.tariffs.internet.map(tariff => (
-                      <ServiceCard {...tariff} />
+                      <ServiceCard key={uuid()} {...tariff} />
                     ))}
                   </Row>
                   <Divider orientation="left">Информация</Divider>
@@ -207,7 +206,9 @@ const Services = ({ login }) => {
                       <List
                         size="small"
                         dataSource={tariffDescription}
-                        renderItem={item => <List.Item>{item.text}</List.Item>}
+                        renderItem={item => (
+                          <List.Item key={uuid()}>{item.text}</List.Item>
+                        )}
                       />
                       <Typography.Title level={5}>
                         Кабельное телевидение
@@ -218,14 +219,16 @@ const Services = ({ login }) => {
                           <div>По одному кабелю предоставляется 2 вещания:</div>
                         }
                         dataSource={ktvDescription}
-                        renderItem={item => <List.Item>{item.text}</List.Item>}
+                        renderItem={item => (
+                          <List.Item key={uuid()}>{item.text}</List.Item>
+                        )}
                       />
                       <Paragraph>
                         <Typography.Title level={5}>
                           Обратите внимание:
                         </Typography.Title>
                         <ul>
-                          <li>
+                          <li key={uuid()}>
                             провайдер, в случае необходимости, предоставляет
                             кабель, разъемы, на бесплатной основе, для
                             обеспечения качественного предоставления услуг. При
@@ -233,15 +236,15 @@ const Services = ({ login }) => {
                             предприятие осуществляет подключение с
                             использованием абонентского кабеля
                           </li>
-                          <li>
+                          <li key={uuid()}>
                             IPTV – это цифровое интерактивное телевидение нового
                             поколения с возможностью просмотра телевизионных
                             программ на экране компьютера, на телевизоре, Smart
                             TV, а также на планшете или смартфоне.
                           </li>
-                          <li>
+                          <li key={uuid()}>
                             Рекомендуется выбирать двухдиапазонный
-                            роутер/марштутизатор на частоте работы 5 ГГц и 2.4
+                            роутер/маршрутизатор на частоте работы 5 ГГц и 2.4
                             ГГц стандарта 802.11ac
                           </li>
                         </ul>
@@ -1519,27 +1522,4 @@ const Services = ({ login }) => {
   )
 }
 
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props
-  return (
-    <div
-      className={className}
-      style={{ ...style, color: 'black' }}
-      onClick={onClick}>
-      <PlayCircleTwoTone />
-    </div>
-  )
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: 'block', background: 'green', color: 'blue' }}
-      onClick={onClick}>
-      <LeftCircleOutlined />
-    </div>
-  )
-}
 export default Services
