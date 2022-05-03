@@ -1,5 +1,5 @@
 export const initialState = {
-  auth: null,
+  auth: false,
   profile: {},
   isLoading: null,
 }

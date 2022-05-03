@@ -7,6 +7,7 @@ const authSlice = createSlice({
   reducers: {
     setAuth: state => {
       state.isAuth = true
+      state.error = {}
       localStorage.setItem('isAuth', 'true')
     },
     setNotAuth: state => {
@@ -43,7 +44,7 @@ const authSlice = createSlice({
         state.error.code = action.payload.status
       }
     },
-    clearError: (state) => {
+    clearError: state => {
       state.error = {}
     },
   },

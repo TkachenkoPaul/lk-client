@@ -1,10 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
 import {
   deleteToken,
   setAuth,
   setNotAuth,
   setToken,
 } from '../store/slices/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const useAuth = () => {
   const dispatch = useDispatch()
@@ -12,6 +12,8 @@ const useAuth = () => {
   const token = localStorage.getItem('token')
   const auth = useSelector(state => state.auth)
   if (isAuth && token) {
+    console.log('isAuth', isAuth)
+    console.log('token', token)
     if (!auth.token && !auth.isAuth) {
       dispatch(setToken({ token: token }))
       dispatch(setAuth())
@@ -28,6 +30,7 @@ const useAuth = () => {
       isAuth: false,
       token: null,
       error: { code: auth.error.code, message: auth.error.message },
+      // error: {},
     }
   }
 }

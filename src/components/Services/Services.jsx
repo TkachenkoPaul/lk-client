@@ -10,21 +10,19 @@ import {
   Divider,
   Grid,
   Layout,
+  List,
   PageHeader,
   Row,
   Space,
   Tabs,
   Typography,
 } from 'antd'
-import {
-  LeftCircleOutlined,
-  PlayCircleTwoTone,
-} from '@ant-design/icons'
+import { LeftCircleOutlined, PlayCircleTwoTone } from '@ant-design/icons'
 
 import { Link } from 'react-router-dom'
 import React from 'react'
 import ServiceCard from './Card/ServiceCard'
-import Slider from 'react-slick'
+import { Slides } from './Slides/Slides'
 
 const Services = ({ login }) => {
   const { Text, Paragraph } = Typography
@@ -68,84 +66,103 @@ const Services = ({ login }) => {
       <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
     )
   }
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 1500,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    fade: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    initialSlide: 1,
-    adaptiveHeight: true,
-    pauseOnHover: true,
-    swipeToSlide: true,
-    focusOnSelect: true,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
+  let data = {
+    tariffs: {
+      internet: [
+        {
+          name: 'Интернет 1000 + IPTV',
+          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          speed: '1000',
+          price: 780,
+          price2: 360,
         },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+        {
+          name: 'Интернет 500 + IPTV',
+          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          speed: '500',
+          price: 510,
+          price2: 210,
         },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+        {
+          name: 'Интернет 250 + IPTV',
+          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          speed: '250',
+          price: 420,
+          price2: 180,
         },
+        {
+          name: 'Интернет 100 + IPTV',
+          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          speed: '100',
+          price: 330,
+          price2: 150,
+        },
+        {
+          name: 'Интернет 10 + IPTV',
+          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          speed: '10',
+          price: 270,
+          price2: 120,
+        },
+        {
+          name: 'Интернет Социальный + IPTV',
+          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          speed: '2',
+          price: 150,
+          price2: 60,
+        },
+      ],
+      ktv: [
+        {
+          name: 'Кабельное ТВ',
+          img: 'https://api.lorem.space/image/book?w=260&h=160',
+          price: 99,
+          price2: 40,
+        },
+      ],
+    },
+    services: [
+      {
+        name: '',
+        img: 'https://api.lorem.space/image/book?w=260&h=160',
       },
     ],
   }
+  let tariffDescription = [
+    {
+      text: '1. Для подключения тарифа "Интернет 250 + IPTV", «Интернет 500 + IPTV», «Интернет 1000 + IPTV» Вам необходимо подать заявку на подключение подключаемый дом должен входить в зону нашего покрытия).',
+    },
+    {
+      text: '2.Рассмотрение технической возможности подключения заявки выполняется в течении трех дней.',
+    },
+    {
+      text: '3. Подключение выполняется в течении двух дней с момента внесения авансового платежа.',
+    },
+    {
+      text: '4. Для подключения и использования тарифа скорость которого превышает 100 Мбит/сек обязательно наличие поддерживаемого оборудования: - в технических характеристиках роутера или маршрутизатора должна быть указана поддержка N300 и выше; - сетевая карта с поддержкой 1 Гбит/сек, Роутер с поддержкой 1 Гбит/сек; - подключение производится с помощью кабеля стандарта UTP категории 5E. ',
+    },
+    {
+      text: ' 5. Настройка вашего оборудования – бесплатно (*единоразово при подключении).',
+    },
+  ]
+  let ktvDescription = [
+    {
+      text: 'Аналоговое - неприхотливый формат, работает на всех телевизорах, даже на старых',
+    },
+    {
+      text: 'Цифровое - современный формат, работает на телевизорах при поддержке формата DVB-C, так же вы можете параллельно пользоваться аналоговым вещанием.',
+    },
+  ]
+  let tariffs = data.tariffs.internet.map(tariff => {
+    return <ServiceCard {...tariff} />
+  })
+  console.log('tariffs', tariffs)
   return (
     <>
       <Layout>
         <Row gutter={[32, 32]}>
           <Col span={24}>
-            <Slider {...sliderSettings}>
-              <div style={{ height: 500 }}>
-                <img
-                  className="img-fluid rounded mx-auto d-block"
-                  src="https://rck.su/media/uploads/2021/10/14/is.jpg"
-                  alt="slide #1"
-                />
-              </div>
-              <div style={{ height: 500 }}>
-                <img
-                  className="img-fluid rounded mx-auto d-block"
-                  src="https://rck.su/media/uploads/2021/10/14/bez_imeni-1.jpg"
-                  alt="slide #1"
-                />
-              </div>
-              <div style={{ height: 500 }}>
-                <img
-                  className="img-fluid rounded mx-auto d-block"
-                  src="https://rck.su/media/uploads/2021/10/14/is.jpg"
-                  alt="slide #1"
-                />
-              </div>
-              <div style={{ height: 500 }}>
-                <img
-                  className="img-fluid rounded mx-auto d-block"
-                  src="https://rck.su/media/uploads/2021/10/14/bez_imeni-1.jpg"
-                  alt="slide #1"
-                />
-              </div>
-            </Slider>
+            <Slides />
           </Col>
           <Col span={24}>
             <PageHeader
@@ -158,7 +175,83 @@ const Services = ({ login }) => {
               title="Заказать услугу"
               subTitle={login}
               extra={[]}>
-              <Tabs defaultActiveKey="3">
+              <Row gutter={[16, 16]} justify="space-around">
+                <Col span={24}>
+                  <Divider orientation="left">Тарифные планы</Divider>
+                  <Row
+                    gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
+                    justify="space-around">
+                    {data.tariffs.internet.map(tariff => (
+                      <ServiceCard {...tariff} />
+                    ))}
+                    {data.tariffs.ktv.map(tariff => (
+                      <ServiceCard {...tariff} />
+                    ))}
+                  </Row>
+                  <Divider orientation="left">Технические услуги</Divider>
+                  <Row
+                    gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
+                    justify="space-around">
+                    {data.tariffs.internet.map(tariff => (
+                      <ServiceCard {...tariff} />
+                    ))}
+                  </Row>
+                  <Divider orientation="left">Информация</Divider>
+                  <Row
+                    gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
+                    justify="space-around">
+                    <Col
+                      xs={{ span: 24, order: 4 }}
+                      md={{ span: 24, order: 4 }}
+                      lg={{ span: 24, order: 4 }}>
+                      <List
+                        size="small"
+                        dataSource={tariffDescription}
+                        renderItem={item => <List.Item>{item.text}</List.Item>}
+                      />
+                      <Typography.Title level={5}>
+                        Кабельное телевидение
+                      </Typography.Title>
+                      <List
+                        size="small"
+                        header={
+                          <div>По одному кабелю предоставляется 2 вещания:</div>
+                        }
+                        dataSource={ktvDescription}
+                        renderItem={item => <List.Item>{item.text}</List.Item>}
+                      />
+                      <Paragraph>
+                        <Typography.Title level={5}>
+                          Обратите внимание:
+                        </Typography.Title>
+                        <ul>
+                          <li>
+                            провайдер, в случае необходимости, предоставляет
+                            кабель, разъемы, на бесплатной основе, для
+                            обеспечения качественного предоставления услуг. При
+                            наличии у абонента уже проложенного кабеля,
+                            предприятие осуществляет подключение с
+                            использованием абонентского кабеля
+                          </li>
+                          <li>
+                            IPTV – это цифровое интерактивное телевидение нового
+                            поколения с возможностью просмотра телевизионных
+                            программ на экране компьютера, на телевизоре, Smart
+                            TV, а также на планшете или смартфоне.
+                          </li>
+                          <li>
+                            Рекомендуется выбирать двухдиапазонный
+                            роутер/марштутизатор на частоте работы 5 ГГц и 2.4
+                            ГГц стандарта 802.11ac
+                          </li>
+                        </ul>
+                      </Paragraph>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+
+              {/* <Tabs defaultActiveKey="3">
                 <Tabs.TabPane tab="Вариант услуг 1" key="1">
                   <Row gutter={[32, 16]} justify="space-between">
                     <Col span={24}>
@@ -1417,7 +1510,7 @@ const Services = ({ login }) => {
                     </Col>
                   </Row>
                 </Tabs.TabPane>
-              </Tabs>
+              </Tabs> */}
             </PageHeader>
           </Col>
         </Row>

@@ -36,9 +36,13 @@ function App() {
   // }, [dispatch])
 
   useEffect(() => {
+    console.log('1 !authUser.isAuth:', !authUser.isAuth)
+    console.log('2 authUser.isAuth:', authUser.isAuth)
     if (!authUser.isAuth) {
+      console.log('need to go to login page')
       navigate('/login')
     } else {
+      console.log('need to get profile information')
       dispatch(getProfile())
     }
     // if (!authUser.token & !authUser.isAuth) {
