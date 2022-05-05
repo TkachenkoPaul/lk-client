@@ -57,7 +57,7 @@ const Support = () => {
     return last ? (
       <span>{route.breadcrumbName}</span>
     ) : (
-      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+      <Link to={route.path}>{route.breadcrumbName}</Link>
     )
   }
   const columns = [

@@ -17,15 +17,8 @@ export const Slides = () => {
       img: 'https://api.lorem.space/image/furniture?w=1920&h=600&hash=225E6693',
     },
   ]
-  const contentStyle = {
-    height: '160px',
-    color: '#fff',
-    lineHeight: '160px',
-    textAlign: 'center',
-    background: '#364d79',
-  }
   return (
-    <Carousel autoplay effect="fade" dotPosition="right">
+    <Carousel autoplay effect="fade" dotPosition="bottom">
       {slides.map(slide => (
         <img key={uuid()} src={slide.img} alt="desc" />
       ))}

@@ -115,10 +115,10 @@ const Profile = ({ login }) => {
   }, [profile.data.users_pi])
   useEffect(() => {
     profile.data && setRegistration(profile.data.registration)
-  }, [profile.data,profile.data.registration])
+  }, [profile.data, profile.data.registration])
   useEffect(() => {
     profile.data && setActivation(profile.data.activate)
-  }, [profile.data,profile.data.activate])
+  }, [profile.data, profile.data.activate])
 
   const success = text => {
     message.success(text).then(res => console.log(res))
@@ -149,7 +149,7 @@ const Profile = ({ login }) => {
   }
   const routes = [
     {
-      path: 'index',
+      path: '/',
       breadcrumbName: 'Домашняя',
     },
     {
@@ -158,6 +158,10 @@ const Profile = ({ login }) => {
     },
   ]
   function itemRender(route, params, routes, paths) {
+    console.log('route:', route)
+    console.log('params:', params)
+    console.log('routes:', routes)
+    console.log('paths:', paths)
     const last = routes.indexOf(route) === routes.length - 1
     return last ? (
       <span>{route.breadcrumbName}</span>
@@ -186,7 +190,7 @@ const Profile = ({ login }) => {
       <Menu.Item onClick={showCreditModal} key={uuid()}>
         Кредит
       </Menu.Item>
-      <Menu.Item onClick={showModalPhoneEdit} key={uuid()}>
+      {/* <Menu.Item onClick={showModalPhoneEdit} key={uuid()}>
         Редактировать телефон
       </Menu.Item>
       <Menu.Item onClick={handleSuccessPassword} key={uuid()}>
@@ -205,7 +209,7 @@ const Profile = ({ login }) => {
         <Menu.Item onClick={() => setType(2)} key={uuid()}>
           Вариант 3
         </Menu.Item>
-      </Menu.SubMenu>
+      </Menu.SubMenu> */}
     </Menu>
   )
   return (
@@ -283,7 +287,7 @@ const Profile = ({ login }) => {
                       flat: profile.data.users_pi?.address_flat,
                       build: profile.data.users_pi?.address_build,
                     }}
-                    phone={profile.data.users_pi?.phone}
+                    personalPhone={profile.data.users_pi?.phone}
                     contract={profile.data.users_pi?.contract_id}
                     login={profile.data.id}
                     fio={profile.data.users_pi?.fio}

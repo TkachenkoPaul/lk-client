@@ -1,12 +1,15 @@
+import { Col, Row, Spin } from 'antd'
+
 import React from 'react'
-import { Spin } from 'antd'
 import style from './Loader.module.css'
 
 const Loader = () => {
   return (
-    <div className={`${style.example}`}>
-      <Spin tip="Загрузка..." />
-    </div>
+    <Row justify="center" align="middle">
+      <Col className={`${style.align}`} style={{ minHeight: '70vh' }}>
+        <Spin tip="Загрузка..." size="large" />
+      </Col>
+    </Row>
   )
 }
 

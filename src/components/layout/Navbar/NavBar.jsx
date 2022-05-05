@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Layout, Menu, Row } from 'antd'
+import './NavBar.module.scss'
+
 import {
   AppstoreAddOutlined,
   BookOutlined,
@@ -8,10 +8,12 @@ import {
   IdcardOutlined,
   WalletOutlined,
 } from '@ant-design/icons'
-import { useLocation, useNavigate } from 'react-router-dom'
-import './NavBar.module.scss'
-import logoImage from '../sider/smallLogo.png'
+import { Col, Layout, Menu, Row } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { deleteToken, setNotAuth } from '../../../store/slices/authSlice'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import logoImage from '../sider/smallLogo.png'
 import { useDispatch } from 'react-redux'
 
 const NavBar = () => {
@@ -102,9 +104,9 @@ const NavBar = () => {
       <Layout.Header
         style={{
           position: 'fixed',
-          zIndex: 1,
+          zIndex: 100,
           width: '100%',
-          padding: '0 15px',
+          // padding: '0 15px',
         }}>
         <Row>
           <Col

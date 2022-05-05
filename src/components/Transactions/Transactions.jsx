@@ -1,13 +1,14 @@
-import React from 'react'
 import { Breadcrumb, Col, PageHeader, Row } from 'antd'
+
+import Fees from './Fees'
 import { Link } from 'react-router-dom'
 import Payments from './Payments'
-import Fees from './Fees'
+import React from 'react'
 
 const Transactions = ({ login }) => {
   const routes = [
     {
-      path: '',
+      path: '/',
       breadcrumbName: 'Домашняя',
     },
     {
@@ -16,11 +17,18 @@ const Transactions = ({ login }) => {
     },
   ]
   function itemRender(route, params, routes, paths) {
+    console.log('route:', route)
+    console.log('params:', params)
+    console.log('routes:', routes)
+    console.log('paths:', paths)
     const last = routes.indexOf(route) === routes.length - 1
+    console.log('last:', last)
     return last ? (
       <span>{route.breadcrumbName}</span>
     ) : (
-      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+      <Link to={route.path} key={paths}>
+        {route.breadcrumbName}
+      </Link>
     )
   }
 

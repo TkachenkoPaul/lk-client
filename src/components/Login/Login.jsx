@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import Footer from '../layout/Footer/Footer'
+import Loader from './../common/Loader'
 import { doGetAuthToken } from '../../store/actionCreators/AuthCationCreator'
 import logo from './logo.png'
 import style from './Login.module.scss'
@@ -29,7 +30,7 @@ const Login = () => {
   }, [auth.isAuth, navigate])
 
   if (auth.isLoading) {
-    return <Spin size="large" />
+    return <Loader />
   }
   return (
     <Layout style={{ minHeight: '100vh' }}>

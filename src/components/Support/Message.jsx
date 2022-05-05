@@ -24,11 +24,11 @@ const Message = () => {
       breadcrumbName: 'Домашняя',
     },
     {
-      path: 'support',
+      path: '/support',
       breadcrumbName: 'Заявки',
     },
     {
-      path: `messages/${msgId}`,
+      path: `/support/messages/${msgId}`,
       breadcrumbName: `${msg.subject} [№${msgId}]`,
     },
   ]
@@ -44,7 +44,7 @@ const Message = () => {
     return last ? (
       <span>{route.breadcrumbName}</span>
     ) : (
-      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+      <Link to={route.path}>{route.breadcrumbName}</Link>
     )
   }
 

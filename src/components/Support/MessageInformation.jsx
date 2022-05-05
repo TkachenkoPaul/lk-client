@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
 import { Descriptions, Image, Skeleton } from 'antd'
+import React, { useState } from 'react'
+
 import { v4 as uuid } from 'uuid'
 
 const MessageInformation = ({ message }) => {
@@ -16,9 +17,9 @@ const MessageInformation = ({ message }) => {
         <Descriptions.Item key={uuid()} label="Статус:">
           {message.state}
         </Descriptions.Item>
-        <Descriptions.Item key={uuid()} label="Приоритет:">
+        {/* <Descriptions.Item key={uuid()} label="Приоритет:">
           {message.priority}
-        </Descriptions.Item>
+        </Descriptions.Item> */}
         <Descriptions.Item key={uuid()} label="Создана:">
           {message.date}
         </Descriptions.Item>

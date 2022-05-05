@@ -1,6 +1,7 @@
+import { Descriptions, List, Typography } from 'antd'
+
 import React from 'react'
 import styles from './Profile.module.scss'
-import { Descriptions, Typography } from 'antd'
 
 export const PersonalInformation = ({
   fio,
@@ -12,6 +13,13 @@ export const PersonalInformation = ({
   registration,
   activation,
 }) => {
+  const data = [
+    'Racing car sprays burning fuel into crowd.',
+    'Japanese princess to wed commoner.',
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.',
+    'Los Angeles battles huge wildfires.',
+  ]
   return (
     <Descriptions
       layout=""
@@ -20,6 +28,7 @@ export const PersonalInformation = ({
           Личная информация
         </h6>
       }
+      size="small"
       bordered
       column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}
       key={1}>
@@ -52,10 +61,21 @@ export const PersonalInformation = ({
       <Descriptions.Item label="Кваритра" key={7}>
         {address.flat}
       </Descriptions.Item>
-      <Descriptions.Item
-        label="Телефон"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={11}>
+      <Descriptions.Item label="Контакты" key={11}>
+        {/* <Typography.Paragraph
+          ellipsis={{
+            rows: 5,
+            expandable: true,
+            symbol: 'Показать',
+            tooltip: true,
+          }}>
+          {data.map(item => (
+            <>
+              {item}
+              <br />
+            </>
+          ))}
+        </Typography.Paragraph> */}
         {personalPhone === '0' ? '' : personalPhone}
       </Descriptions.Item>
       <Descriptions.Item

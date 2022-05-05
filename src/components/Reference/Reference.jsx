@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   Breadcrumb,
   Col,
@@ -9,12 +7,14 @@ import {
   Row,
   Typography,
 } from 'antd'
+
 import { Link } from 'react-router-dom'
+import React from 'react'
 
 const Reference = ({ login }) => {
   const routes = [
     {
-      path: 'index',
+      path: '/',
       breadcrumbName: 'Домашняя',
     },
     {
@@ -27,7 +27,7 @@ const Reference = ({ login }) => {
     return last ? (
       <span>{route.breadcrumbName}</span>
     ) : (
-      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+      <Link to={route.path}>{route.breadcrumbName}</Link>
     )
   }
 

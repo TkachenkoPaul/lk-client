@@ -2,45 +2,34 @@ import './Services.css'
 
 import {
   Breadcrumb,
+  Button,
   Col,
   Divider,
   Layout,
   List,
+  Modal,
   PageHeader,
   Row,
   Typography,
 } from 'antd'
+import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
-import React from 'react'
 import ServiceCard from './Card/ServiceCard'
 import { Slides } from './Slides/Slides'
+import { useSelector } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 
 const Services = ({ login }) => {
-  const { Paragraph } = Typography
-  const routes = [
-    {
-      path: '/',
-      breadcrumbName: 'Домашняя',
-    },
-    {
-      path: '/services',
-      breadcrumbName: 'Услуги',
-    },
-  ]
-  function itemRender(route, params, routes, paths) {
-    const last = routes.indexOf(route) === routes.length - 1
-    return last ? (
-      <span>{route.breadcrumbName}</span>
-    ) : (
-      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-    )
-  }
+  const dvMain = useSelector(state => state.profile.data.dvmain)
+  const tariffs = useSelector(state => state.profile.tariffs)
+  const [showKtv, setShowKtv] = useState(true)
+  const [blockInternetTariff, setBlockInternetTariff] = useState(null)
   let data = {
     tariffs: {
       internet: [
         {
+          id: 1000,
           name: 'Интернет 1000 + IPTV',
           img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=8B7BCDC2',
           speed: '1000',
@@ -48,6 +37,7 @@ const Services = ({ login }) => {
           price2: 360,
         },
         {
+          id: 500,
           name: 'Интернет 500 + IPTV',
           img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=500B67FB',
           speed: '500',
@@ -55,6 +45,7 @@ const Services = ({ login }) => {
           price2: 210,
         },
         {
+          id: 250,
           name: 'Интернет 250 + IPTV',
           img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=A89D0DE6',
           speed: '250',
@@ -62,6 +53,7 @@ const Services = ({ login }) => {
           price2: 180,
         },
         {
+          id: 100,
           name: 'Интернет 100 + IPTV',
           img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=9D9539E7',
           speed: '100',
@@ -69,6 +61,7 @@ const Services = ({ login }) => {
           price2: 150,
         },
         {
+          id: 10,
           name: 'Интернет 10 + IPTV',
           img: 'https://api.lorem.space/image/shoes?w=1300&h=800&h=150&hash=BDC01094',
           speed: '10',
@@ -76,6 +69,7 @@ const Services = ({ login }) => {
           price2: 120,
         },
         {
+          id: 2,
           name: 'Интернет Социальный + IPTV',
           img: 'https://api.lorem.space/image/shoes?w=1300&h=800&hash=7F5AE56A',
           speed: '2',
@@ -93,6 +87,12 @@ const Services = ({ login }) => {
       ],
     },
     services: [
+      {
+        name: 'Статический IP-адрес',
+        desc: 'В ближайшее время с Вами свяжется наш оператор, по номеру который указан у Вас в личном кабинете!Напоминаем, что стоимость услуги составляет 150 рублей за 30(тридцать) календарных дней! Спасибо за обращение!',
+        price: 150,
+        img: 'https://api.lorem.space/image/car?w=1300&h=800&hash=2D297A22',
+      },
       {
         name: 'Автонастройка ТВ',
         desc: 'Автонастройка телевизионных каналов телевизионного приемника для физический лиц (автонастройка телевизионного вещания)',
@@ -150,6 +150,45 @@ const Services = ({ login }) => {
       text: 'Цифровое - современный формат, работает на телевизорах при поддержке формата DVB-C, так же вы можете параллельно пользоваться аналоговым вещанием.',
     },
   ]
+  useEffect(() => {
+    if (tariffs?.withKtv.includes(dvMain?.tp_id)) {
+      setShowKtv(false)
+    }
+    for (const [index, value] of Object.entries(tariffs?.withInet)) {
+      if (value.includes(dvMain?.tp_id)) {
+        setBlockInternetTariff(index)
+      }
+    }
+  }, [tariffs?.withKtv, dvMain?.tp_id, tariffs?.withInet])
+  const { Paragraph } = Typography
+  const routes = [
+    {
+      path: '/',
+      breadcrumbName: 'Домашняя',
+    },
+    {
+      path: '/services',
+      breadcrumbName: 'Услуги',
+    },
+  ]
+  function itemRender(route, params, routes, paths) {
+    const last = routes.indexOf(route) === routes.length - 1
+    return last ? (
+      <span>{route.breadcrumbName}</span>
+    ) : (
+      <Link to={route.path}>{route.breadcrumbName}</Link>
+    )
+  }
+
+  const ktvElements = data.tariffs.ktv.map(tariff => (
+    <ServiceCard key={uuid()} {...tariff} />
+  ))
+  const inetElements = data.tariffs.internet.map(tariff => {
+    if (tariff.id != blockInternetTariff) {
+      return <ServiceCard key={uuid()} {...tariff} />
+    }
+  })
+
   return (
     <>
       <Layout>
@@ -172,18 +211,21 @@ const Services = ({ login }) => {
                 <Col span={24}>
                   <Divider orientation="left">Тарифные планы</Divider>
                   <Row
-                    gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
+                    gutter={[
+                      { xs: 16, sm: 16, md: 24, lg: 24 },
+                      { xs: 16, sm: 16, md: 24, lg: 24 },
+                    ]}
                     justify="space-around">
-                    {data.tariffs.internet.map(tariff => (
-                      <ServiceCard key={uuid()} {...tariff} />
-                    ))}
-                    {data.tariffs.ktv.map(tariff => (
-                      <ServiceCard key={uuid()} {...tariff} />
-                    ))}
+                    {inetElements}
+                    {/* не показывать тариф ктв, если он уже есть */}
+                    {showKtv ? ktvElements : ''}
                   </Row>
-                  <Divider orientation="left">Технические услуги</Divider>
+                  <Divider orientation="left">Дополнительные услуги</Divider>
                   <Row
-                    gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
+                    gutter={[
+                      { xs: 16, sm: 16, md: 24, lg: 24 },
+                      { xs: 16, sm: 16, md: 24, lg: 24 },
+                    ]}
                     justify="space-around">
                     {data.services.map(service => (
                       <ServiceCard key={uuid()} {...service} />
@@ -191,7 +233,10 @@ const Services = ({ login }) => {
                   </Row>
                   <Divider orientation="left">Информация</Divider>
                   <Row
-                    gutter={[16, { xs: 16, sm: 24, md: 32, lg: 40 }]}
+                    gutter={[
+                      { xs: 16, sm: 16, md: 24, lg: 24 },
+                      { xs: 16, sm: 16, md: 24, lg: 24 },
+                    ]}
                     justify="space-around">
                     <Col
                       xs={{ span: 24, order: 4 }}

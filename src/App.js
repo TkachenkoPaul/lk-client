@@ -6,6 +6,7 @@ import React, { useEffect } from 'react'
 
 import Error from './components/Errors/Error'
 import Footer from './components/layout/Footer/Footer'
+import Loader from './components/common/Loader'
 import Login from './components/Login/Login'
 import Logout from './components/Logout/Logout'
 import Message from './components/Support/Message'
@@ -26,6 +27,7 @@ function App() {
   // TODO добавить  индикатор загрузки
   // TODO разобраться с хлебными крошками
   // TODO добавить кастомный скролбар
+  // TODO доработать индикатор загрузки
 
   const navigate = useNavigate()
   const login = useID()
@@ -79,6 +81,7 @@ function App() {
             element={<Transactions login={login} />}
           />
           <Route path="/support" element={<Support login={login} />} />
+          <Route path="/loader" element={<Loader />} />
           <Route
             path="/support/message/:messageId"
             element={<Message login={login} />}

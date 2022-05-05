@@ -1,4 +1,4 @@
-import { Descriptions, Tag } from 'antd'
+import { Badge, Descriptions, Tag } from 'antd'
 import React, { useEffect } from 'react'
 
 import CreditModal from './Credit/CreditModal'
@@ -49,6 +49,7 @@ export const Finance = ({
         title={
           <h6 className={`${styles.divider} ${styles.gradient}`}>Финансы</h6>
         }
+        size="small"
         bordered
         column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}>
         <Descriptions.Item label="Баланс руб." key={uuid()}>
@@ -65,14 +66,18 @@ export const Finance = ({
         <Descriptions.Item label="Оплачено дней" key={uuid()}>
           {paidDays}
         </Descriptions.Item>
-        <Descriptions.Item label="Тарифный пакет" key={uuid()}>
+        <Descriptions.Item label="Тарифный план" key={uuid()}>
           <div style={{ fontSize: '15px' }}>{tariffName}</div>
         </Descriptions.Item>
         <Descriptions.Item label="Дата окончания тарифа" key={uuid()}>
           {paidTo}
         </Descriptions.Item>
         <Descriptions.Item label="Статус тарифного плана" key={uuid()}>
-          {tariffState}
+          {tariffState === 'Активно' ? (
+            <Badge status="processing" text={tariffState} />
+          ) : (
+            <Badge status="error" text={tariffState} />
+          )}
         </Descriptions.Item>
         <Descriptions.Item label="К оплате, руб./сутки" key={uuid()}>
           <div style={{ fontSize: '15px' }}>{fee} руб.</div>
