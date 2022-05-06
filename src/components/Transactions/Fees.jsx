@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
 import { DatePicker, Divider, Table } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { getFees } from '../../store/actionCreators/FeesActionCreator'
 import moment from 'moment'
 
@@ -60,12 +61,6 @@ function Fees() {
       title: 'Депозит, руб.',
       dataIndex: 'last_deposit',
       key: 'last_deposit',
-      responsive: ['md'],
-    },
-    {
-      title: 'Вид операции',
-      dataIndex: 'method',
-      key: 'id',
       responsive: ['md'],
     },
   ]

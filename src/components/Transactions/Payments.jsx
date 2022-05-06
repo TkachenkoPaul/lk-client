@@ -1,7 +1,8 @@
+import { Divider, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { getPayments } from '../../store/actionCreators/PaymentsActionCreator'
-import { Divider, Table } from 'antd'
 
 const Payments = ({}) => {
   const dispatch = useDispatch()
@@ -23,7 +24,6 @@ const Payments = ({}) => {
     { title: 'Дата', dataIndex: 'date', key: 'date' },
     { title: 'Сумма, руб.', dataIndex: 'amount', key: 'amount' },
     { title: 'Депозит, руб.', dataIndex: 'last_deposit', key: 'dep' },
-    { title: 'Вид оплаты', dataIndex: 'method', key: 'method' },
   ]
   return (
     <>

@@ -258,20 +258,19 @@ const Profile = ({ login }) => {
                 xs={{ span: 24 }}
                 md={{ span: 24, offset: 0 }}
                 lg={{ span: 24, offset: 0 }}>
-                <Finance
-                  deposit={profile.data.bill?.deposit}
-                  fee={profile.data.dvmain?.tariff.day_fee}
-                  modalDisabled={profile.credit?.disabled}
-                  creditError={profile.credit?.error}
-                  tariffName={profile.data.dvmain?.tariff.comments}
-                  tariffState={profile.data.state}
-                  isCreditModalVisible={profile.credit.isVisible}
-                  paidTo={paidTo}
-                  paidDays={paidDays}
-                  tariffInfo={tariffInfo}
-                  showCreditModal={showCreditModal}
-                  handleCreditModalOk={handleCreditModalOk}
-                  handleCreditModalCancel={handleCreditModalCancel}
+                <PersonalInformation
+                  activation={profile.data.activate}
+                  registration={profile.data.registration}
+                  address={{
+                    street: profile.data.users_pi?.address_street,
+                    flat: profile.data.users_pi?.address_flat,
+                    build: profile.data.users_pi?.address_build,
+                  }}
+                  personalPhone={profile.data.users_pi?.phone}
+                  contract={profile.data.users_pi?.contract_id}
+                  login={profile.data.id}
+                  fio={profile.data.users_pi?.fio}
+                  uid={profile.data.uid}
                 />
               </Col>
               <Col
@@ -279,19 +278,20 @@ const Profile = ({ login }) => {
                 md={{ span: 24, offset: 0 }}
                 lg={{ span: 24, offset: 0 }}>
                 <div className="mb-4">
-                  <PersonalInformation
-                    activation={profile.data.activate}
-                    registration={profile.data.registration}
-                    address={{
-                      street: profile.data.users_pi?.address_street,
-                      flat: profile.data.users_pi?.address_flat,
-                      build: profile.data.users_pi?.address_build,
-                    }}
-                    personalPhone={profile.data.users_pi?.phone}
-                    contract={profile.data.users_pi?.contract_id}
-                    login={profile.data.id}
-                    fio={profile.data.users_pi?.fio}
-                    uid={profile.data.uid}
+                  <Finance
+                    deposit={profile.data.bill?.deposit}
+                    fee={profile.data.dvmain?.tariff.day_fee}
+                    modalDisabled={profile.credit?.disabled}
+                    creditError={profile.credit?.error}
+                    tariffName={profile.data.dvmain?.tariff.comments}
+                    tariffState={profile.data.state}
+                    isCreditModalVisible={profile.credit.isVisible}
+                    paidTo={paidTo}
+                    paidDays={paidDays}
+                    tariffInfo={tariffInfo}
+                    showCreditModal={showCreditModal}
+                    handleCreditModalOk={handleCreditModalOk}
+                    handleCreditModalCancel={handleCreditModalCancel}
                   />
                 </div>
               </Col>

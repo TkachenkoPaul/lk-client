@@ -79,21 +79,11 @@ const ServiceCard = props => {
             <>
               <Card.Meta
                 title={
-                  <Typography.Title level={4}>{props.name}</Typography.Title>
+                  <Typography.Title level={4} style={{ textAlign: 'center' }}>
+                    {props.name}
+                  </Typography.Title>
                 }
-                description={
-                  <Space direction="vertical" size="small">
-                    {props.speed ? (
-                      <>
-                        <Text>
-                          Скорость до <Text strong>{props.speed}</Text> МБит/c
-                        </Text>
-                      </>
-                    ) : (
-                      ''
-                    )}
-                  </Space>
-                }
+                description={<Space direction="vertical" size="small"></Space>}
               />
               <Modal
                 visible={isModalVisible}
@@ -134,13 +124,19 @@ const ServiceCard = props => {
             <>
               <Card.Meta
                 title={
-                  <Typography.Title level={4}>{props.name}</Typography.Title>
+                  <Typography.Title level={4} style={{ textAlign: 'center' }}>
+                    {props.name}
+                  </Typography.Title>
                 }
                 description={
-                  <Space direction="vertical" size="small">
+                  <Space
+                    direction="horizontal"
+                    align="center"
+                    size="small"
+                    style={{ width: '100%', justifyContent: 'center' }}>
                     {props.speed ? (
                       <>
-                        <Text>
+                        <Text style={{ textAlign: 'center' }}>
                           Скорость до <Text strong>{props.speed}</Text> МБит/c
                         </Text>
                       </>

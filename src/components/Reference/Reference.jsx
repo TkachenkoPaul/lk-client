@@ -66,6 +66,15 @@ const Reference = ({ login }) => {
                   Перейти
                 </Typography.Link>
               </Collapse.Panel>
+              <Collapse.Panel
+                header=" Об утверждении платных услуг, предоставляемых Государственным унитарным предприятием ЛНР 'Республиканские цифровые коммуникации' в новой редакции от 21.03.2022 № 55-ОД"
+                key="3">
+                <Typography.Link
+                  href="https://rck.su/media/uploads/2022/03/24/rdc_prikaz.pdf"
+                  target="_blank">
+                  Перейти
+                </Typography.Link>
+              </Collapse.Panel>
             </Collapse>
           </Col>
         </Row>

@@ -84,18 +84,6 @@ export const PersonalInformation = ({
         key={13}>
         {contract === '0' ? '' : contract}
       </Descriptions.Item>
-      <Descriptions.Item
-        label="Дата регистрации"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={15}>
-        {registration === '0' ? '' : registration}
-      </Descriptions.Item>
-      <Descriptions.Item
-        label="Дата активации"
-        contentStyle={{ whiteSpace: 'nowrap' }}
-        key={16}>
-        {activation === '0' ? '' : activation}
-      </Descriptions.Item>
     </Descriptions>
   )
 }
