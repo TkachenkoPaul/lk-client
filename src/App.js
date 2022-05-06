@@ -3,6 +3,8 @@ import './App.css'
 import { BackTop, Button, Col, Layout, Result, Row } from 'antd'
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import React, { useEffect } from 'react'
+import { clearErrors, isErrors } from '../src/store/slices/errorSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Error from './components/Errors/Error'
 import Footer from './components/layout/Footer/Footer'
@@ -18,7 +20,6 @@ import Support from './components/Support/Support'
 import Transactions from './components/Transactions/Transactions'
 import { getProfile } from './store/actionCreators/ProfileActionCreator'
 import { useAuth } from './hooks/useAuth'
-import { useDispatch } from 'react-redux'
 import { useID } from './hooks/useID'
 
 const { Content } = Layout
@@ -33,6 +34,7 @@ function App() {
   const login = useID()
   const authUser = useAuth()
   const dispatch = useDispatch()
+  const error = useSelector(state => state.errors)
   // useEffect(() => {
   //   dispatch(getProfile())
   // }, [dispatch])
@@ -42,7 +44,8 @@ function App() {
     console.log('2 authUser.isAuth:', authUser.isAuth)
     if (!authUser.isAuth) {
       console.log('need to go to login page')
-      navigate('/login')
+      navigate('login')
+      return ''
     } else {
       console.log('need to get profile information')
       dispatch(getProfile())
@@ -50,32 +53,69 @@ function App() {
     // if (!authUser.token & !authUser.isAuth) {
     //   navigate('/login')
     // }
-  }, [authUser.isAuth, navigate, dispatch])
+  }, [authUser.isAuth, navigate, dispatch, error])
 
-  if (!!authUser.error.code) {
-    return (
-      <Result
-        status="404"
-        title={authUser.error.code}
-        subTitle={authUser.error.message}
-        extra={
-          <Button
-            onClick={() => {
-              navigate('/')
-            }}
-            type="primary">
-            Главная
-          </Button>
-        }
-      />
-    )
-  }
+  // if (!!authUser.error.code) {
+  //   return (
+  //     <Result
+  //       status="404"
+  //       title={authUser.error.code}
+  //       subTitle={authUser.error.message}
+  //       extra={
+  //         <Button
+  //           onClick={() => {
+  //             navigate('/')
+  //           }}
+  //           type="primary">
+  //           Главная
+  //         </Button>
+  //       }
+  //     />
+  //   )
+  // }
+
+  // if (!!error.isErrors) {
+  //   console.log('!!error.isErrors', error)
+  //   let status = ''
+  //   let title = ''
+  //   let subTitle = ''
+  //   if (error.errors.status === '404') {
+  //     status = 404
+  //     title = 404
+  //     subTitle = error.errors.message
+  //   } else {
+  //     status = error.errors.status
+  //     title = error.errors.status
+  //     subTitle = error.errors.data.msg
+  //   }
+  //   return (
+  //     <Result
+  //       status={403}
+  //       title={'title'}
+  //       subTitle={'subTitle'}
+  //       extra={
+  //         <Button
+  //           onClick={() => {
+  //             // navigate('/')
+  //             dispatch(clearErrors())
+  //             dispatch(isErrors(false))
+  //           }}
+  //           type="primary">
+  //           Главная
+  //         </Button>
+  //       }
+  //     />
+  //   )
+  // }
 
   return (
     <div className="sc1">
       <Routes>
         <Route path="/" element={<PageContent />}>
-          <Route index element={<Profile login={login} />} />
+          <Route
+            index
+            element={<Profile errors={error.isErrors} login={login} />}
+          />
           <Route
             path="/transactions"
             element={<Transactions login={login} />}

@@ -1,4 +1,4 @@
-import { Alert, Layout, Spin } from 'antd'
+import { Alert, Layout } from 'antd'
 import { Button, Form, Input } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
@@ -24,7 +24,8 @@ const Login = () => {
   }, [auth.error])
 
   useEffect(() => {
-    if (auth.isAuth) {
+    if (!!auth.isAuth) {
+      console.log('login', auth.isAuth)
       navigate('/')
     }
   }, [auth.isAuth, navigate])

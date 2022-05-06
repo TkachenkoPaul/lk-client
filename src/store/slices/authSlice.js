@@ -40,7 +40,7 @@ const authSlice = createSlice({
         state.error.message = 'Сервер не отвечает'
         state.error.code = status
       } else {
-        state.error.message = action.payload.data.msg
+        state.error.message = action.payload.data.message
         state.error.code = action.payload.status
       }
     },

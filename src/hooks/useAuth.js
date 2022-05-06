@@ -24,8 +24,8 @@ const useAuth = () => {
       error: { code: auth.error.code, message: auth.error.message },
     }
   } else {
-    dispatch(setNotAuth())
-    dispatch(deleteToken())
+    // dispatch(setNotAuth())
+    // dispatch(deleteToken())
     return {
       isAuth: false,
       token: null,

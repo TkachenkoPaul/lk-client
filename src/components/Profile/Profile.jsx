@@ -11,9 +11,7 @@ import {
   Modal,
   PageHeader,
   Row,
-  Skeleton,
   Space,
-  Spin,
   Switch,
   message,
 } from 'antd'
@@ -158,10 +156,6 @@ const Profile = ({ login }) => {
     },
   ]
   function itemRender(route, params, routes, paths) {
-    console.log('route:', route)
-    console.log('params:', params)
-    console.log('routes:', routes)
-    console.log('paths:', paths)
     const last = routes.indexOf(route) === routes.length - 1
     return last ? (
       <span>{route.breadcrumbName}</span>
@@ -174,14 +168,12 @@ const Profile = ({ login }) => {
 
   const [isCreditModalVisible, setIsCreditModalVisible] = useState(false)
   const showCreditModal = () => {
-    // setIsCreditModalVisible(true)
     dispatch(setCreditModal({ isVisible: true }))
   }
   const handleCreditModalOk = () => {
     setIsCreditModalVisible(false)
   }
   const handleCreditModalCancel = () => {
-    // setIsCreditModalVisible(false)
     dispatch(setCreditModal({ isVisible: false }))
     dispatch(setCreditModalDisabled())
   }

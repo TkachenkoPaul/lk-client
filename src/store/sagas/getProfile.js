@@ -1,6 +1,7 @@
 import { GET_PROFILE, SET_CREDIT } from '../actions/ProfileActions'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { getUserRequest, setUserCreditRequest } from '../../api'
+import { isErrors, setErrors } from '../slices/errorSlice'
 import {
   setCreditError,
   setLoaded,
@@ -8,18 +9,18 @@ import {
   setProfile,
 } from '../slices/profileSlice'
 
-import { setError } from '../slices/authSlice'
-
 export function* getProfileSagaWorker() {
   yield put(setLoading())
   try {
     const response = yield call(getUserRequest)
     yield put(setProfile(response))
     yield put(setLoaded())
+    yield put(isErrors(false))
   } catch (error) {
     //TODO нужно добавить обработку ошибок.вывод страницы ошибки если 502 или 404
     console.log('profile error: ', error.response)
-    yield put(setError(error.response))
+    yield put(setErrors(error.response))
+    yield put(isErrors(true))
     yield put(setLoaded())
   }
 }

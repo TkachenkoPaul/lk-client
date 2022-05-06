@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import supportReducer from './slices/supportSlice'
-import profileReducer from './slices/profileSlice'
-import paymentsReducer from './slices/paymentsSlice'
+
 import authReducer from './slices/authSlice'
-import testReducer from './slices/testSlice'
-import feesReducer from './slices/feesSlice'
 import createSagaMiddleware from 'redux-saga'
+import errorReducer from './slices/errorSlice'
+import feesReducer from './slices/feesSlice'
+import paymentsReducer from './slices/paymentsSlice'
+import profileReducer from './slices/profileSlice'
 import rootSaga from './sagas'
+import supportReducer from './slices/supportSlice'
+import testReducer from './slices/testSlice'
 
 const sagaMiddleware = createSagaMiddleware()
 const rootReducer = combineReducers({
@@ -15,6 +17,7 @@ const rootReducer = combineReducers({
   payments: paymentsReducer,
   fees: feesReducer,
   support: supportReducer,
+  errors: errorReducer,
   test: testReducer,
 })
 
